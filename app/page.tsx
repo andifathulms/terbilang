@@ -17,12 +17,13 @@ export default function Akar() {
   }, [router]);
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-24">
+    <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center px-6">
       <p className="font-display text-2xl">
-        <Link href="/id/" className="text-bank underline underline-offset-4">
+        <Link href="/id/" className="text-bank underline decoration-guilloche underline-offset-4">
           Terbilang
         </Link>
       </p>
+      <p className="mt-2 text-sm text-ink/60">Bilangan Indonesia dieja menjadi kata.</p>
     </main>
   );
 }

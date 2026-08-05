@@ -12,17 +12,44 @@ export function lokalSah(nilai: string): nilai is Lokal {
   return (LOKAL as readonly string[]).includes(nilai);
 }
 
+interface Sifat {
+  readonly nilai: string;
+  readonly label: string;
+}
+
+interface Kartu {
+  readonly judul: string;
+  readonly isi: string;
+  readonly tautan: string;
+  readonly ke: 'ubah' | 'aturan' | 'survei';
+}
+
 interface Teks {
   readonly judulSitus: string;
   readonly taglineSitus: string;
   readonly nav: { readonly ubah: string; readonly aturan: string; readonly survei: string };
+  readonly umum: {
+    readonly lewatiKe: string;
+    readonly tema: string;
+    readonly siang: string;
+    readonly malam: string;
+    readonly bahasa: string;
+    readonly navigasi: string;
+  };
   readonly beranda: {
     readonly sorot: string;
+    readonly angkaSorot: string;
+    readonly kepala: string;
     readonly paragraf: readonly string[];
     readonly ajakan: string;
+    readonly ajakanDua: string;
+    readonly sifat: readonly Sifat[];
+    readonly judulContoh: string;
+    readonly kartu: readonly Kartu[];
   };
   readonly ubah: {
     readonly judul: string;
+    readonly ringkas: string;
     readonly labelAngka: string;
     readonly labelKata: string;
     readonly labelKataKeAngka: string;
@@ -31,13 +58,45 @@ interface Teks {
     readonly modeDokumen: string;
     readonly salin: string;
     readonly tersalin: string;
+    readonly salinDokumen: string;
+    readonly bagikan: string;
+    readonly tertaut: string;
     readonly kelompok: string;
     readonly kosong: string;
     readonly opsi: string;
     readonly hasilAngka: string;
+    readonly contoh: string;
+    readonly pintas: string;
+    readonly kosongkan: string;
+    readonly tukar: string;
   };
-  readonly aturan: { readonly judul: string; readonly ringkas: string };
-  readonly survei: { readonly judul: string; readonly ringkas: string };
+  readonly aturan: {
+    readonly judul: string;
+    readonly ringkas: string;
+    readonly daftarIsi: string;
+    readonly keliru: string;
+    readonly sumber: string;
+    readonly varian: string;
+    readonly varianRingkas: string;
+    readonly bawaan: string;
+  };
+  readonly survei: {
+    readonly judul: string;
+    readonly ringkas: string;
+    readonly masukan: string;
+    readonly sama: string;
+    readonly beda: string;
+    readonly menolak: string;
+    readonly keterangan: string;
+    readonly catatan: string;
+    readonly belum: string;
+    readonly belumIsi: string;
+  };
+  readonly takDitemukan: {
+    readonly judul: string;
+    readonly isi: string;
+    readonly kembali: string;
+  };
   readonly galat: Record<string, string>;
 }
 
@@ -45,38 +104,108 @@ const id: Teks = {
   judulSitus: 'Terbilang',
   taglineSitus: 'Bilangan Indonesia dieja menjadi kata, dan dibaca kembali.',
   nav: { ubah: 'Ubah', aturan: 'Aturan', survei: 'Survei' },
+  umum: {
+    lewatiKe: 'Lewati ke isi',
+    tema: 'Tema',
+    siang: 'Siang',
+    malam: 'Malam',
+    bahasa: 'Bahasa',
+    navigasi: 'Navigasi utama',
+  },
   beranda: {
     sorot: 'satu juta satu',
+    angkaSorot: '1.000.001',
+    kepala: 'Bilangan Indonesia dieja menjadi kata, dan dibaca kembali.',
     paragraf: [
       'Terbilang wajib ada di kuitansi, faktur, cek, dan akta. Hampir setiap sistem akuntansi Indonesia menuliskannya, dan sebagian besar salah di tempat yang sama: satu ribu alih-alih seribu, kelompok nol yang ikut terbaca, dan presisi yang runtuh di atas triliun.',
       'Pustaka ini dua arah, berbasis BigInt, tanpa dependensi, dan diverifikasi lengkap untuk sejuta nilai pertama — bukan disampel.',
     ],
     ajakan: 'Coba pengubahnya',
+    ajakanDua: 'Baca aturannya',
+    sifat: [
+      { nilai: '1.000.001', label: 'nilai diuji tuntas, bukan disampel' },
+      { nilai: '0', label: 'dependensi runtime di pustaka' },
+      { nilai: '2', label: 'arah — mengeja dan membaca kembali' },
+      { nilai: '2⁵³', label: 'batas presisi yang dilewati BigInt' },
+    ],
+    judulContoh: 'Tempat implementasi lain patah',
+    kartu: [
+      {
+        judul: 'Pengubah',
+        isi: 'Angka masuk, kata keluar — dan sebaliknya. Kelompok tiga angka digambar saat Anda mengetik, karena pengelompokan itulah algoritmanya.',
+        tautan: 'Buka pengubah',
+        ke: 'ubah',
+      },
+      {
+        judul: 'Aturan',
+        isi: 'Setiap aturan dengan sitasinya dan contoh yang dihitung pustaka saat halaman dibangun, termasuk penolakan yang ditampilkan sebagai penolakan.',
+        tautan: 'Baca aturan',
+        ke: 'aturan',
+      },
+      {
+        judul: 'Survei',
+        isi: 'Paket yang beredar dijalankan dengan masukan yang sama, berversi dan bertanggal. Peta masalah bersama, bukan papan skor.',
+        tautan: 'Lihat survei',
+        ke: 'survei',
+      },
+    ],
   },
   ubah: {
     judul: 'Pengubah',
+    ringkas:
+      'Ketik di satu sisi, lihat sisi lainnya. Semua nilai berasal dari pustaka; tidak ada yang dihitung di halaman ini.',
     labelAngka: 'Angka',
     labelKata: 'Terbilang',
     labelKataKeAngka: 'Kata',
-    petunjukAngka: 'Ketik angka. Koma untuk desimal, titik boleh sebagai pemisah ribuan.',
+    petunjukAngka:
+      'Titik dipasang sendiri sebagai pemisah ribuan; koma untuk desimal. Panah atas dan bawah mengubah nilai sepuluh kali lipat.',
     petunjukKata: 'Ketik terbilang, misalnya dua ratus lima puluh ribu.',
     modeDokumen: 'Mode dokumen',
     salin: 'Salin',
     tersalin: 'Tersalin',
+    salinDokumen: 'Salin bentuk dokumen',
+    bagikan: 'Salin tautan',
+    tertaut: 'Tautan tersalin',
     kelompok: 'Kelompok tiga angka',
     kosong: 'kelompok kosong — tidak menghasilkan kata',
-    opsi: 'Opsi',
+    opsi: 'Opsi tersitasi',
     hasilAngka: 'Angka',
+    contoh: 'Coba nilai ini',
+    pintas: 'Tekan / untuk menuju kolom masukan',
+    kosongkan: 'Kosongkan',
+    tukar: 'Tukar arah',
   },
   aturan: {
     judul: 'Aturan',
     ringkas:
       'Setiap aturan dengan sumbernya dan contoh yang berjalan, termasuk kasus yang paling sering gagal.',
+    daftarIsi: 'Daftar isi',
+    keliru: 'sering keliru',
+    sumber: 'Sumber',
+    varian: 'Varian tersitasi',
+    varianRingkas:
+      'Setiap opsi menyebut pemakaian yang mendasari kedua sisinya. Tidak ada bawaan diam-diam.',
+    bawaan: 'bawaan',
   },
   survei: {
     judul: 'Survei implementasi',
     ringkas:
       'Paket yang beredar diuji dengan masukan yang sama. Faktual, berversi, bertanggal — peta masalah bersama, bukan papan skor.',
+    masukan: 'Masukan',
+    sama: 'sama',
+    beda: 'berbeda',
+    menolak: 'menolak',
+    keterangan: 'Keterangan',
+    catatan:
+      'Perbedaan ditandai, lalu diklasifikasikan tertulis sebagai bug kami, bug mereka, atau varian yang sah — catatannya ada di tests/survey/.',
+    belum: 'Belum ada rekaman.',
+    belumIsi:
+      'Tabel ini hanya menampilkan hasil yang benar-benar diukur. Jalankan skrip pengembangan dengan nama paket yang ingin disurvei; setiap klaim akan membawa versi paket dan tanggal pengukurannya.',
+  },
+  takDitemukan: {
+    judul: 'Halaman tidak ditemukan',
+    isi: 'Alamat ini tidak ada di situs. Seperti pustakanya: menolak, bukan menebak.',
+    kembali: 'Kembali ke beranda',
   },
   galat: {
     'masukan-kosong': 'Masukan kosong.',
@@ -96,38 +225,108 @@ const en: Teks = {
   judulSitus: 'Terbilang',
   taglineSitus: 'Indonesian numbers spelled out in words, and read back again.',
   nav: { ubah: 'Convert', aturan: 'Rules', survei: 'Survey' },
+  umum: {
+    lewatiKe: 'Skip to content',
+    tema: 'Theme',
+    siang: 'Day',
+    malam: 'Night',
+    bahasa: 'Language',
+    navigasi: 'Main navigation',
+  },
   beranda: {
     sorot: 'satu juta satu',
+    angkaSorot: '1,000,001',
+    kepala: 'Indonesian numbers spelled out in words, and read back again.',
     paragraf: [
       'Terbilang is required on Indonesian receipts, invoices, cheques, and deeds. Nearly every accounting system writes it, and most break in the same places: satu ribu for seribu, empty groups read aloud, and precision collapsing above triliun.',
       'This library is bidirectional, BigInt-based, dependency-free, and verified completely for the first million values — not sampled.',
     ],
     ajakan: 'Try the converter',
+    ajakanDua: 'Read the rules',
+    sifat: [
+      { nilai: '1,000,001', label: 'values verified exhaustively, not sampled' },
+      { nilai: '0', label: 'runtime dependencies in the library' },
+      { nilai: '2', label: 'directions — spell out and read back' },
+      { nilai: '2⁵³', label: 'the precision boundary BigInt walks past' },
+    ],
+    judulContoh: 'Where other implementations break',
+    kartu: [
+      {
+        judul: 'Converter',
+        isi: 'Digits in, words out — and back again. The three-digit groups are drawn as you type, because that grouping is the algorithm.',
+        tautan: 'Open the converter',
+        ke: 'ubah',
+      },
+      {
+        judul: 'Rules',
+        isi: 'Every rule with its citation and examples computed by the library at build time, including the refusals shown as refusals.',
+        tautan: 'Read the rules',
+        ke: 'aturan',
+      },
+      {
+        judul: 'Survey',
+        isi: 'Published packages run against the same inputs, versioned and dated. A map of a shared problem, not a scoreboard.',
+        tautan: 'See the survey',
+        ke: 'survei',
+      },
+    ],
   },
   ubah: {
     judul: 'Converter',
+    ringkas:
+      'Type on one side, watch the other. Every value comes from the library; nothing is computed on this page.',
     labelAngka: 'Digits',
     labelKata: 'In words',
     labelKataKeAngka: 'Words',
-    petunjukAngka: 'Type digits. Comma for decimals; dots may separate thousands.',
+    petunjukAngka:
+      'Thousands separators are inserted for you; comma for decimals. Arrow up and down scale the value by ten.',
     petunjukKata: 'Type the words, e.g. dua ratus lima puluh ribu.',
     modeDokumen: 'Document mode',
     salin: 'Copy',
     tersalin: 'Copied',
+    salinDokumen: 'Copy document form',
+    bagikan: 'Copy link',
+    tertaut: 'Link copied',
     kelompok: 'Three-digit groups',
     kosong: 'empty group — emits nothing',
-    opsi: 'Options',
+    opsi: 'Cited options',
     hasilAngka: 'Value',
+    contoh: 'Try these',
+    pintas: 'Press / to jump to the input',
+    kosongkan: 'Clear',
+    tukar: 'Swap direction',
   },
   aturan: {
     judul: 'Rules',
     ringkas:
       'Every rule with its citation and a worked example, including the cases implementations fail on.',
+    daftarIsi: 'Contents',
+    keliru: 'common error',
+    sumber: 'Source',
+    varian: 'Cited variants',
+    varianRingkas:
+      'Every option names the usage behind both of its sides. There is no silent default.',
+    bawaan: 'default',
   },
   survei: {
     judul: 'Implementation survey',
     ringkas:
       'Published packages run against the same inputs. Factual, versioned, dated — a map of a shared problem, not a scoreboard.',
+    masukan: 'Input',
+    sama: 'agrees',
+    beda: 'differs',
+    menolak: 'refuses',
+    keterangan: 'Legend',
+    catatan:
+      'Differences are marked, then classified in writing as our bug, their bug, or a legitimate variant — the record lives in tests/survey/.',
+    belum: 'Nothing recorded yet.',
+    belumIsi:
+      'This table only shows results that were actually measured. Run the development script with the package names to survey; every claim then carries the package version and the date it was measured.',
+  },
+  takDitemukan: {
+    judul: 'Page not found',
+    isi: 'That address does not exist on this site. Like the library: it refuses rather than guesses.',
+    kembali: 'Back to the start',
   },
   galat: {
     'masukan-kosong': 'Empty input.',
@@ -145,4 +344,4 @@ const en: Teks = {
 
 export const KAMUS: Record<Lokal, Teks> = { id, en };
 
-export type { Teks };
+export type { Teks, Sifat, Kartu };
