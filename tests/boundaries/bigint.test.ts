@@ -72,12 +72,21 @@ describe('audit sumber lib/', () => {
     expect(berkas.length).toBeGreaterThan(5);
   });
 
+  /** Baris komentar dibuang: yang diaudit adalah kode, bukan penjelasannya. */
+  function kodeSaja(isi: string): string {
+    return isi
+      .split('\n')
+      .filter((b) => {
+        const t = b.trimStart();
+        return !t.startsWith('*') && !t.startsWith('//') && !t.startsWith('/*');
+      })
+      .join('\n');
+  }
+
   for (const [nama, isi] of berkas) {
+    const kode = kodeSaja(isi);
+
     it(`${nama} tidak memakai jalur aritmetika \`number\``, () => {
-      const kode = isi
-        .split('\n')
-        .filter((b) => !b.trimStart().startsWith('*') && !b.trimStart().startsWith('//'))
-        .join('\n');
       expect(kode).not.toMatch(/\bNumber\s*\(/);
       expect(kode).not.toMatch(/\bparseInt\b/);
       expect(kode).not.toMatch(/\bparseFloat\b/);
@@ -85,9 +94,14 @@ describe('audit sumber lib/', () => {
     });
 
     it(`${nama} tidak terikat lingkungan`, () => {
-      expect(isi).not.toMatch(/\bfrom ['"](?!\.)/); // hanya impor relatif di dalam lib/
-      expect(isi).not.toMatch(/\bdocument\b|\bwindow\b|\bprocess\b/);
-      expect(isi).not.toMatch(/\bnew Date\b|\bDate\.now\b|\bIntl\b/);
+      expect(kode).not.toMatch(/\bfrom ['"](?!\.)/); // hanya impor relatif di dalam lib/
+      expect(kode).not.toMatch(/\bdocument\b|\bwindow\b|\bprocess\b/);
+      expect(kode).not.toMatch(/\bnew Date\b|\bDate\.now\b|\bIntl\b/);
+    });
+
+    it(`${nama} tidak memakai penegasan non-null`, () => {
+      expect(kode).not.toMatch(/[A-Za-z\]) ]!\./);
+      expect(kode).not.toMatch(/\]!\s*[,;)]/);
     });
   }
 });

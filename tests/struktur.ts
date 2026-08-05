@@ -7,7 +7,12 @@
 
 import { SKALA } from '@/lib';
 
-const TERLARANG = ['satu puluh', 'satu belas', 'satu ratus', 'satu ribu'] as const;
+/**
+ * Pengali yang tidak pernah sah didahului "satu": bentuk leburnya wajib.
+ * "satu ribu" perlu perlakuan terpisah — lihat periksaSatu() — karena
+ * "dua puluh satu ribu" benar dan memuat potongan kata yang sama.
+ */
+const PENGALI_LEBUR = new Set(['puluh', 'belas', 'ratus']);
 
 const KATA_SKALA = new Set<string>();
 for (const s of SKALA) {
@@ -48,10 +53,6 @@ export function pelanggaranStruktur(kata: string, nilai: bigint): string[] {
     return salah;
   }
 
-  for (const frasa of TERLARANG) {
-    if (kata.includes(frasa)) salah.push(`memuat "${frasa}"`);
-  }
-
   if (kata.includes('  ')) salah.push('spasi ganda');
   if (kata !== kata.trim()) salah.push('spasi di tepi');
 
@@ -64,6 +65,19 @@ export function pelanggaranStruktur(kata: string, nilai: bigint): string[] {
   let skalaTerakhir = Number.POSITIVE_INFINITY;
   for (let i = 0; i < token.length; i += 1) {
     const t = token[i]!;
+
+    if (t === 'satu') {
+      const sesudah = i + 1 < token.length ? token[i + 1]! : undefined;
+      if (sesudah !== undefined && PENGALI_LEBUR.has(sesudah)) {
+        // sepuluh, sebelas, seratus — bukan satu puluh, satu belas, satu ratus
+        salah.push(`memuat "satu ${sesudah}"`);
+      }
+      // "satu ribu" salah hanya ketika satu adalah seluruh kuantitas kelompok;
+      // pada "dua puluh satu ribu" ia bagian dari 21 dan sudah benar.
+      const sebelum = i > 0 ? token[i - 1]! : undefined;
+      const mulaiKelompok = sebelum === undefined || KATA_SKALA.has(sebelum);
+      if (sesudah === 'ribu' && mulaiKelompok) salah.push('memuat "satu ribu"');
+    }
 
     if (KATA_SKALA.has(t)) {
       // Kata skala wajib didahului kuantitas: satuan, pengali (dua puluh ribu),
