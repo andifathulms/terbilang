@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  uji:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm typecheck
+      - run: pnpm lint
+
+      # Sapuan menyeluruh menggerbangi seluruh sisanya. Ia berjalan dalam
+      # hitungan detik; tidak ada alasan melewatinya.
+      - run: pnpm test:run
+      - run: pnpm test:exhaustive
+
+      - run: pnpm build:lib
+      - run: pnpm build
+
+      # survey:record memasang dan menjalankan paket pihak ketiga.
+      # Hanya untuk pengembangan — tidak pernah di CI.
