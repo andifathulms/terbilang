@@ -140,4 +140,10 @@ Library publishes to npm from a tagged release; the exhaustive suite gates it. S
 
 ## Current state
 
-M0 — not yet scaffolded. Next: package skeleton with dual build and types, then the exhaustive test harness proven against a stub. **No formatter code until the harness runs.**
+M0–M5 scaffolded and green. Library formats and parses with `BigInt` throughout; the exhaustive sweep (1.000.001 values) runs in ~5s and gates the suite; site exports statically with converter, rule reference, and survey page.
+
+Open items:
+
+- **Survey data is empty by design.** `pnpm survey:record <paket>` takes package names as arguments and records versions and dates; nothing is claimed about a package that was not measured. Run it to populate `data/survey/hasil.json`, then classify every disagreement in `tests/survey/klasifikasi.ts` — the differential test fails on any unexplained difference.
+- **Scale ceiling is *kuadriliun* (10¹⁵), refusing at 10¹⁸.** Chosen because KBBI carries the lemma, and because it is what makes the above-2⁵³ tests meaningful — a *triliun* ceiling would put every in-range value below the precision boundary. Revisit if the citation does not hold.
+- Not published to npm; no tagged release yet.
