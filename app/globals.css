@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-tint text-ink font-sans antialiased;
+  }
+
+  /* Angka harus lurus, di kolom masukan maupun di kotak kelompok. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+}
+
+@layer components {
+  /*
+   * Guilloche: garis engine-turned yang halus, dipakai dengan kontras rendah
+   * sebagai tekstur di belakang kolom jumlah — tidak pernah sebagai hiasan
+   * di tempat lain.
+   */
+  .guilloche {
+    background-image:
+      repeating-linear-gradient(
+        38deg,
+        rgba(185, 199, 188, 0.55) 0 1px,
+        transparent 1px 7px
+      ),
+      repeating-linear-gradient(
+        -38deg,
+        rgba(185, 199, 188, 0.45) 0 1px,
+        transparent 1px 9px
+      );
+  }
+
+  /* Garis jumlah pada cek: kata berjalan di atas garis bergaris. */
+  .garis-jumlah {
+    border-bottom: 1px solid rgba(28, 35, 31, 0.35);
+  }
+}
+
+/*
+ * Satu-satunya gerak di halaman ini: kata setiap kelompok tiga angka
+ * dirender ulang sebagai satu kesatuan, sehingga pembaca melihat bilangan
+ * terurai kelompok demi kelompok, bukan huruf demi huruf.
+ */
+@keyframes kelompok-masuk {
+  from {
+    opacity: 0;
+    transform: translateY(0.15em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.kelompok-masuk {
+  animation: kelompok-masuk 180ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kelompok-masuk {
+    animation: none;
+  }
+}
