@@ -38,7 +38,7 @@ const config: Config = {
         /** Jumlah terbilang: pahlawan halaman, ikut lebar layar. */
         jumlah: ['clamp(1.5rem, 4.4vw, 2.75rem)', { lineHeight: '1.2' }],
         /** Sorot beranda, satu tingkat di atas jumlah. */
-        sorot: ['clamp(2.25rem, 7vw, 4.25rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        sorot: ['clamp(2rem, 4.6vw, 3.25rem)', { lineHeight: '1.1', letterSpacing: '-0.015em' }],
         /** Label kecil berhuruf besar yang berulang di seluruh situs. */
         label: ['0.6875rem', { lineHeight: '1.2', letterSpacing: '0.14em' }],
       },

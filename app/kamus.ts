@@ -44,6 +44,7 @@ interface Teks {
     readonly ajakan: string;
     readonly ajakanDua: string;
     readonly sifat: readonly Sifat[];
+    readonly cap: { readonly judul: string; readonly isi: string };
     readonly judulContoh: string;
     readonly kartu: readonly Kartu[];
   };
@@ -128,6 +129,7 @@ const id: Teks = {
       { nilai: '2', label: 'arah — mengeja dan membaca kembali' },
       { nilai: '2⁵³', label: 'batas presisi yang dilewati BigInt' },
     ],
+    cap: { judul: 'Diuji tuntas', isi: '0 … 1.000.000' },
     judulContoh: 'Tempat implementasi lain patah',
     kartu: [
       {
@@ -249,6 +251,7 @@ const en: Teks = {
       { nilai: '2', label: 'directions — spell out and read back' },
       { nilai: '2⁵³', label: 'the precision boundary BigInt walks past' },
     ],
+    cap: { judul: 'Verified whole', isi: '0 … 1,000,000' },
     judulContoh: 'Where other implementations break',
     kartu: [
       {

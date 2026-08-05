@@ -1,9 +1,10 @@
-'use client';
-
 /**
  * Garis jumlah seperti pada cek: kata berjalan di atas garis bergaris, dengan
  * kurung `#` di kedua ujung pada mode dokumen — konvensi yang mencegah
  * penambahan kata setelah dokumen ditandatangani.
+ *
+ * Kata dipecah per spasi hanya untuk memberi jeda gerak; teksnya sendiri utuh
+ * apa adanya dari format(). Tidak ada yang disusun ulang di sini.
  */
 export function GarisJumlah({
   kata,
@@ -14,14 +15,34 @@ export function GarisJumlah({
   modeDokumen: boolean;
   label: string;
 }) {
+  const potongan = kata.split(' ');
+
   return (
-    <div className="guilloche rounded-sm border border-guilloche p-4">
-      <span className="text-[0.65rem] uppercase tracking-widest text-ink/60">{label}</span>
-      <p className="garis-jumlah flex flex-wrap items-baseline gap-x-2 pb-2 pt-1">
-        {modeDokumen ? <span className="font-display text-jumlah text-bank">#</span> : null}
-        <span className="font-display text-jumlah text-bank">{kata}</span>
-        {modeDokumen ? <span className="font-display text-jumlah text-bank">#</span> : null}
+    <div className="guilloche relative overflow-hidden rounded-lembar border border-guilloche bg-kertas/60 px-4 py-3 sm:px-5">
+      <span className="label">{label}</span>
+
+      <p
+        key={`${kata}-${modeDokumen}`}
+        aria-hidden
+        className="garis-jumlah mt-1 flex flex-wrap items-baseline gap-x-[0.3em] pb-2 font-display text-jumlah text-bank"
+      >
+        {modeDokumen ? <span className="animate-naik-masuk text-bank/60">#</span> : null}
+
+        {potongan.map((p, i) => (
+          <span
+            key={`${i}-${p}`}
+            className="animate-kelompok-masuk"
+            style={{ animationDelay: `${Math.min(i, 12) * 35}ms` }}
+          >
+            {p}
+          </span>
+        ))}
+
+        {modeDokumen ? <span className="animate-naik-masuk text-bank/60">#</span> : null}
       </p>
+
+      {/* Pembacaan layar mendapat kalimat utuh, bukan potongan per kata. */}
+      <span className="sr-only">{modeDokumen ? `# ${kata} #` : kata}</span>
     </div>
   );
 }
