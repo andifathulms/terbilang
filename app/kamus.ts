@@ -37,7 +37,6 @@ interface Teks {
     readonly navigasi: string;
   };
   readonly beranda: {
-    readonly sorot: string;
     readonly angkaSorot: string;
     readonly kepala: string;
     readonly paragraf: readonly string[];
@@ -115,7 +114,6 @@ const id: Teks = {
     navigasi: 'Navigasi utama',
   },
   beranda: {
-    sorot: 'satu juta satu',
     angkaSorot: '1.000.001',
     kepala: 'Bilangan Indonesia dieja menjadi kata, dan dibaca kembali.',
     paragraf: [
@@ -238,7 +236,6 @@ const en: Teks = {
     navigasi: 'Main navigation',
   },
   beranda: {
-    sorot: 'satu juta satu',
     angkaSorot: '1,000,001',
     kepala: 'Indonesian numbers spelled out in words, and read back again.',
     paragraf: [

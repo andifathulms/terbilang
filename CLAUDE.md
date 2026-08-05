@@ -62,7 +62,8 @@ app/                        # the site
     aturan/                 # rule reference
     survei/                 # implementation survey
 components/
-  cheque/                   # amount line, group brackets, # brackets
+  cheque/                   # amount line, group brackets, # brackets, seal, refusal
+  kerangka/                 # header nav, locale switch, theme toggle, contents
 data/
   survey/                   # recorded third-party results + versions + dates
 tests/
@@ -141,6 +142,8 @@ Library publishes to npm from a tagged release; the exhaustive suite gates it. S
 ## Current state
 
 M0–M5 scaffolded and green. Library formats and parses with `BigInt` throughout; the exhaustive sweep (1.000.001 values) runs in ~5s and gates the suite; site exports statically with converter, rule reference, and survey page.
+
+The site's surface was reworked after M5. Palette lives in CSS variables so the night theme (`data-tema="malam"`, set before first paint by a small script in `<head>`) swaps values rather than adding `dark:` variants — components stay on semantic tokens and never learn which theme is active. Converter state — direction, input, document mode, and every option — round-trips through the URL hash, so a result is linkable. `KurungKelompok` and `GarisJumlah` are server-renderable and shared between the homepage and the converter.
 
 Open items:
 
