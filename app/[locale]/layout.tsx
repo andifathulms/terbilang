@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { TandaPagar } from '../../components/kerangka/Merek';
 import { Navigasi, PengalihBahasa } from '../../components/kerangka/Navigasi';
+import { TandaPembuat } from '../../components/kerangka/TandaPembuat';
 import { TombolTema } from '../../components/kerangka/TombolTema';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../kamus';
 
@@ -63,34 +64,41 @@ export default function TataLetakLokal({
       </main>
 
       <footer className="mt-6 border-t border-guilloche/60">
-        <div className="mx-auto grid max-w-5xl gap-6 px-5 py-8 text-xs text-ink/60 sm:grid-cols-3 sm:px-6">
-          <p className="leading-relaxed">
-            <span className="flex items-center gap-1.5">
-              <TandaPagar kelas="h-4 w-4 text-[0.6rem]" />
-              <span className="font-display text-sm text-ink/80">{t.judulSitus}</span>
-            </span>
-            {t.taglineSitus}
-          </p>
-          <p className="leading-relaxed">
-            KBBI &amp; PUEBI/EYD
-            <br />
-            Badan Pengembangan dan Pembinaan Bahasa
-          </p>
-          <p className="flex flex-wrap gap-x-4 gap-y-1 sm:justify-end">
-            <a
-              href="https://www.npmjs.com/package/terbilang"
-              className="underline decoration-guilloche underline-offset-4 transition-colors hover:text-bank"
-            >
-              npm
-            </a>
-            <a
-              href="https://github.com/andifathulms/terbilang"
-              className="underline decoration-guilloche underline-offset-4 transition-colors hover:text-bank"
-            >
-              GitHub
-            </a>
-            <span>MIT</span>
-          </p>
+        <div className="mx-auto max-w-5xl px-5 py-8 sm:px-6">
+          <div className="grid gap-6 text-xs text-ink/60 sm:grid-cols-3">
+            <p className="leading-relaxed">
+              <span className="flex items-center gap-1.5">
+                <TandaPagar kelas="h-4 w-4 text-[0.6rem]" />
+                <span className="font-display text-sm text-ink/80">{t.judulSitus}</span>
+              </span>
+              {t.taglineSitus}
+            </p>
+            <p className="leading-relaxed">
+              KBBI &amp; PUEBI/EYD
+              <br />
+              Badan Pengembangan dan Pembinaan Bahasa
+            </p>
+            <p className="flex flex-wrap gap-x-4 gap-y-1 sm:justify-end">
+              <a
+                href="https://www.npmjs.com/package/terbilang"
+                className="underline decoration-guilloche underline-offset-4 transition-colors hover:text-bank"
+              >
+                npm
+              </a>
+              <a
+                href="https://github.com/andifathulms/terbilang"
+                className="underline decoration-guilloche underline-offset-4 transition-colors hover:text-bank"
+              >
+                GitHub
+              </a>
+              <span>MIT</span>
+            </p>
+          </div>
+
+          {/* Kredit pembuat, dipisahkan oleh ruang saja — bukan garis kedua. */}
+          <div className="mt-8">
+            <TandaPembuat />
+          </div>
         </div>
       </footer>
     </div>
