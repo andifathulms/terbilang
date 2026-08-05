@@ -70,6 +70,7 @@ interface Teks {
     readonly pintas: string;
     readonly kosongkan: string;
     readonly tukar: string;
+    readonly pulihkan: string;
   };
   readonly aturan: {
     readonly judul: string;
@@ -176,6 +177,7 @@ const id: Teks = {
     pintas: 'Tekan / untuk menuju kolom masukan',
     kosongkan: 'Kosongkan',
     tukar: 'Tukar arah',
+    pulihkan: 'Kembalikan ke bawaan',
   },
   aturan: {
     judul: 'Aturan',
@@ -298,6 +300,7 @@ const en: Teks = {
     pintas: 'Press / to jump to the input',
     kosongkan: 'Clear',
     tukar: 'Swap direction',
+    pulihkan: 'Reset to defaults',
   },
   aturan: {
     judul: 'Rules',

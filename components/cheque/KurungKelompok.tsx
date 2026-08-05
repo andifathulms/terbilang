@@ -42,7 +42,7 @@ export function KurungKelompok({
             </span>
 
             <span
-              className={`tabular relative mt-1 rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 font-mono text-lg transition-colors duration-300 ease-kertas ${
+              className={`tabular relative mt-1 min-w-[3.4rem] rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 text-center font-mono text-lg transition-colors duration-300 ease-kertas ${
                 kosong
                   ? 'border-guilloche/50 text-ink/30 line-through decoration-guilloche'
                   : 'border-guilloche bg-tint/50 text-ink'

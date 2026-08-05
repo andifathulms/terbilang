@@ -66,8 +66,8 @@
    */
   .guilloche {
     background-image:
-      repeating-linear-gradient(38deg, rgb(var(--guilloche) / 0.5) 0 1px, transparent 1px 7px),
-      repeating-linear-gradient(-38deg, rgb(var(--guilloche) / 0.4) 0 1px, transparent 1px 9px);
+      repeating-linear-gradient(38deg, rgb(var(--guilloche) / 0.3) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(-38deg, rgb(var(--guilloche) / 0.24) 0 1px, transparent 1px 10px);
   }
 
   /*
@@ -78,12 +78,12 @@
     background-image:
       repeating-radial-gradient(
         circle at 50% 50%,
-        rgb(var(--guilloche) / 0.55) 0 1px,
-        transparent 1px 6px
+        rgb(var(--guilloche) / 0.3) 0 1px,
+        transparent 1px 7px
       ),
       repeating-conic-gradient(
         from 0deg at 50% 50%,
-        rgb(var(--guilloche) / 0.35) 0deg 1.5deg,
+        rgb(var(--guilloche) / 0.2) 0deg 1.5deg,
         transparent 1.5deg 6deg
       );
   }

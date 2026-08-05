@@ -6,9 +6,25 @@ import type { Teks } from '../app/kamus';
 import { GarisJumlah } from './cheque/GarisJumlah';
 import { KurungKelompok } from './cheque/KurungKelompok';
 import { Penolakan } from './cheque/Penolakan';
+import { KolomAngka } from './KolomAngka';
 import { PanelOpsi } from './PanelOpsi';
+import { TombolSalin } from './TombolSalin';
+import { tampilkan } from './masukan';
 
 type Arah = 'angka' | 'kata';
+
+/**
+ * Nilai yang sengaja dipilih: tempat implementasi lain patah. Labelnya angka
+ * belaka, jadi tidak perlu diterjemahkan.
+ */
+const CONTOH: ReadonlyArray<{ readonly label: string; readonly nilai: string }> = [
+  { label: '1.000', nilai: '1000' },
+  { label: '1.000.001', nilai: '1000001' },
+  { label: '101.000', nilai: '101000' },
+  { label: '1.500,25', nilai: '1500,25' },
+  { label: '2⁵³ + 1', nilai: '9007199254740993' },
+  { label: '10¹⁸', nilai: '1000000000000000000' },
+];
 
 /**
  * Tidak ada yang dihitung di komponen ini: seluruh nilai berasal dari pustaka.
@@ -20,18 +36,25 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
   const [kata, setKata] = useState('dua ratus lima puluh ribu');
   const [opsi, setOpsi] = useState<Options>(OPSI_BAWAAN);
   const [modeDokumen, setModeDokumen] = useState(false);
-  const [tersalin, setTersalin] = useState(false);
+  const [tautan, setTautan] = useState('');
 
-  // Opsi tinggal di hash supaya konfigurasi bisa ditautkan apa adanya.
+  // Masukan dan opsi tinggal di hash supaya satu hasil bisa ditautkan apa adanya.
   useEffect(() => {
-    const dariHash = bacaHash(window.location.hash);
-    if (dariHash) setOpsi(dariHash);
+    const keadaan = bacaHash(window.location.hash);
+    if (keadaan === undefined) return;
+    setOpsi(keadaan.opsi);
+    setArah(keadaan.arah);
+    setModeDokumen(keadaan.modeDokumen);
+    if (keadaan.angka !== undefined) setAngka(keadaan.angka);
+    if (keadaan.kata !== undefined) setKata(keadaan.kata);
   }, []);
 
   useEffect(() => {
-    const hash = tulisHash(opsi);
-    window.history.replaceState(null, '', hash === '' ? window.location.pathname : `#${hash}`);
-  }, [opsi]);
+    const hash = tulisHash({ arah, angka, kata, opsi, modeDokumen });
+    const alamat = `${window.location.pathname}${hash === '' ? '' : `#${hash}`}`;
+    window.history.replaceState(null, '', alamat);
+    setTautan(`${window.location.origin}${alamat}`);
+  }, [arah, angka, kata, opsi, modeDokumen]);
 
   const hasilKata = useMemo(() => format(angka, opsi), [angka, opsi]);
   const hasilAngka = useMemo(() => parse(kata, opsi), [kata, opsi]);
@@ -41,125 +64,226 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
     return bulat === undefined ? [] : kelompokkan(bulat);
   }, [angka]);
 
-  async function salin(teks: string) {
-    await navigator.clipboard.writeText(teks);
-    setTersalin(true);
-    window.setTimeout(() => setTersalin(false), 1500);
-  }
+  const kelompokTerurai: Kelompok[] = useMemo(
+    () => (hasilAngka.type === 'ok' ? kelompokkan(hasilAngka.nilai.bulat) : []),
+    [hasilAngka],
+  );
+
+  const teksKata = hasilKata.type === 'ok' ? hasilKata.nilai : '';
+  const teksDokumen = `# ${teksKata} #`;
 
   return (
     <div className="space-y-8">
-      <div className="flex gap-2">
-        {(['angka', 'kata'] as const).map((a) => (
-          <button
-            key={a}
-            type="button"
-            onClick={() => setArah(a)}
-            aria-pressed={arah === a}
-            className={`border px-3 py-1.5 text-sm ${
-              arah === a ? 'border-bank bg-bank text-tint' : 'border-guilloche hover:border-bank'
-            }`}
-          >
-            {a === 'angka' ? `${t.labelAngka} → ${t.labelKata}` : `${t.labelKataKeAngka} → ${t.labelAngka}`}
-          </button>
-        ))}
-      </div>
+      <SakelarArah t={t} arah={arah} ubah={setArah} />
 
       {arah === 'angka' ? (
-        <section className="space-y-5">
-          <label className="block">
-            <span className="text-[0.65rem] uppercase tracking-widest text-ink/60">
-              {t.labelAngka}
-            </span>
-            <input
-              value={angka}
-              onChange={(e) => setAngka(e.target.value)}
-              inputMode="decimal"
-              spellCheck={false}
-              aria-label={t.labelAngka}
-              className="tabular mt-1 w-full border border-guilloche bg-transparent px-3 py-2 font-mono text-xl outline-none focus:border-bank"
+        <section className="lembar roset overflow-hidden">
+          <div className="space-y-6 bg-kertas/90 p-5 sm:p-7">
+            <KolomAngka
+              nilai={angka}
+              ubah={setAngka}
+              label={t.labelAngka}
+              petunjuk={t.petunjukAngka}
+              kosongkan={t.kosongkan}
+              pintas={t.pintas}
             />
-            <span className="mt-1 block text-xs text-ink/60">{t.petunjukAngka}</span>
-          </label>
 
-          {kelompok.length > 0 ? (
-            <div className="space-y-1">
-              <span className="text-[0.65rem] uppercase tracking-widest text-ink/60">
-                {t.kelompok}
-              </span>
-              <KurungKelompok
-                kelompok={kelompok}
-                labelKosong={t.kosong}
-                ejaan={opsi.ejaanMiliar}
-              />
-            </div>
-          ) : null}
-
-          {hasilKata.type === 'ok' ? (
-            <div className="space-y-3">
-              <GarisJumlah
-                kata={hasilKata.nilai}
-                modeDokumen={modeDokumen}
-                label={t.labelKata}
-              />
-              <div className="flex flex-wrap items-center gap-4">
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={modeDokumen}
-                    onChange={(e) => setModeDokumen(e.target.checked)}
-                    className="accent-bank"
-                  />
-                  {t.modeDokumen}
-                </label>
-                <button
-                  type="button"
-                  onClick={() =>
-                    salin(modeDokumen ? `# ${hasilKata.nilai} #` : hasilKata.nilai)
-                  }
-                  className="border border-guilloche px-3 py-1 text-xs hover:border-bank"
-                >
-                  {tersalin ? t.tersalin : t.salin}
-                </button>
+            <div className="space-y-2">
+              <span className="label">{t.contoh}</span>
+              <div className="flex flex-wrap gap-1.5">
+                {CONTOH.map((c) => (
+                  <button
+                    key={c.nilai}
+                    type="button"
+                    onClick={() => setAngka(c.nilai)}
+                    aria-pressed={angka === c.nilai}
+                    className={`tabular rounded-full border px-3 py-1 font-mono text-xs transition-all duration-200 ease-kertas ${
+                      angka === c.nilai
+                        ? 'border-bank bg-bank text-kertas'
+                        : 'border-guilloche text-ink/70 hover:-translate-y-0.5 hover:border-bank hover:text-bank'
+                    }`}
+                  >
+                    {c.label}
+                  </button>
+                ))}
               </div>
             </div>
-          ) : (
-            <Penolakan galat={hasilKata.galat} judul={galat[hasilKata.galat.type] ?? ''} />
-          )}
+
+            {kelompok.length > 0 ? (
+              <div className="space-y-1.5">
+                <span className="label">{t.kelompok}</span>
+                <KurungKelompok
+                  kelompok={kelompok}
+                  labelKosong={t.kosong}
+                  ejaan={opsi.ejaanMiliar}
+                />
+              </div>
+            ) : null}
+
+            {hasilKata.type === 'ok' ? (
+              <div className="space-y-4">
+                <GarisJumlah kata={teksKata} modeDokumen={modeDokumen} label={t.labelKata} />
+
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+                  <Sakelar
+                    label={t.modeDokumen}
+                    aktif={modeDokumen}
+                    ubah={() => setModeDokumen((n) => !n)}
+                  />
+                  <div className="ml-auto flex flex-wrap gap-2">
+                    <TombolSalin
+                      teks={modeDokumen ? teksDokumen : teksKata}
+                      label={modeDokumen ? t.salinDokumen : t.salin}
+                      labelTersalin={t.tersalin}
+                      utama
+                    />
+                    <TombolSalin teks={tautan} label={t.bagikan} labelTersalin={t.tertaut} />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Penolakan galat={hasilKata.galat} judul={galat[hasilKata.galat.type] ?? ''} />
+            )}
+          </div>
         </section>
       ) : (
-        <section className="space-y-5">
-          <label className="block">
-            <span className="text-[0.65rem] uppercase tracking-widest text-ink/60">
-              {t.labelKataKeAngka}
-            </span>
-            <input
-              value={kata}
-              onChange={(e) => setKata(e.target.value)}
-              spellCheck={false}
-              aria-label={t.labelKataKeAngka}
-              className="mt-1 w-full border border-guilloche bg-transparent px-3 py-2 font-display text-xl outline-none focus:border-bank"
-            />
-            <span className="mt-1 block text-xs text-ink/60">{t.petunjukKata}</span>
-          </label>
+        <section className="lembar roset overflow-hidden">
+          <div className="space-y-6 bg-kertas/90 p-5 sm:p-7">
+            <label className="block">
+              <span className="label">{t.labelKataKeAngka}</span>
+              <input
+                value={kata}
+                onChange={(e) => setKata(e.target.value)}
+                spellCheck={false}
+                autoComplete="off"
+                aria-label={t.labelKataKeAngka}
+                className="mt-1.5 w-full rounded-lembar border border-guilloche bg-kertas px-4 py-3 font-display text-xl outline-none transition-colors duration-200 ease-kertas focus:border-bank"
+              />
+              <span className="mt-2 block text-xs text-ink/55">{t.petunjukKata}</span>
+            </label>
 
-          {hasilAngka.type === 'ok' ? (
-            <div className="guilloche rounded-sm border border-guilloche p-4">
-              <span className="text-[0.65rem] uppercase tracking-widest text-ink/60">
-                {t.hasilAngka}
-              </span>
-              <p className="tabular font-mono text-jumlah text-bank">
-                {tampilkanNilai(hasilAngka.nilai)}
-              </p>
-            </div>
-          ) : (
-            <Penolakan galat={hasilAngka.galat} judul={galat[hasilAngka.galat.type] ?? ''} />
-          )}
+            {hasilAngka.type === 'ok' ? (
+              <div className="space-y-5">
+                <div className="guilloche rounded-lembar border border-guilloche bg-kertas/60 px-4 py-3 sm:px-5">
+                  <span className="label">{t.hasilAngka}</span>
+                  <p
+                    key={teksNilai(hasilAngka.nilai)}
+                    className="tabular animate-kelompok-masuk mt-1 break-all font-mono text-jumlah text-bank"
+                  >
+                    {teksNilai(hasilAngka.nilai)}
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <span className="label">{t.kelompok}</span>
+                  <KurungKelompok
+                    kelompok={kelompokTerurai}
+                    labelKosong={t.kosong}
+                    ejaan={opsi.ejaanMiliar}
+                  />
+                </div>
+
+                <div className="flex flex-wrap justify-end gap-2">
+                  <TombolSalin
+                    teks={teksNilai(hasilAngka.nilai)}
+                    label={t.salin}
+                    labelTersalin={t.tersalin}
+                    utama
+                  />
+                  <TombolSalin teks={tautan} label={t.bagikan} labelTersalin={t.tertaut} />
+                </div>
+              </div>
+            ) : (
+              <Penolakan galat={hasilAngka.galat} judul={galat[hasilAngka.galat.type] ?? ''} />
+            )}
+          </div>
         </section>
       )}
 
-      <PanelOpsi opsi={opsi} ubah={setOpsi} judul={t.opsi} />
+      <PanelOpsi opsi={opsi} ubah={setOpsi} judul={t.opsi} bawaanLabel={t.pulihkan} />
     </div>
+  );
+}
+
+/**
+ * Sakelar arah. Penanda meluncur di belakang tombol yang terpilih, sehingga
+ * perpindahan arah terbaca sebagai satu benda yang bergeser, bukan dua tombol
+ * yang berkedip.
+ */
+function SakelarArah({
+  t,
+  arah,
+  ubah,
+}: {
+  t: Teks['ubah'];
+  arah: Arah;
+  ubah: (arah: Arah) => void;
+}) {
+  const pilihan: ReadonlyArray<{ readonly nilai: Arah; readonly label: string }> = [
+    { nilai: 'angka', label: `${t.labelAngka} → ${t.labelKata}` },
+    { nilai: 'kata', label: `${t.labelKataKeAngka} → ${t.labelAngka}` },
+  ];
+
+  return (
+    <div
+      role="group"
+      aria-label={t.tukar}
+      className="relative grid w-full max-w-md grid-cols-2 rounded-full border border-guilloche bg-kertas/60 p-1"
+    >
+      <span
+        aria-hidden
+        className="absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-full bg-bank transition-transform duration-300 ease-kertas"
+        style={{ transform: `translateX(${arah === 'angka' ? '0' : '100%'})` }}
+      />
+      {pilihan.map((p) => (
+        <button
+          key={p.nilai}
+          type="button"
+          aria-pressed={arah === p.nilai}
+          onClick={() => ubah(p.nilai)}
+          className={`relative z-10 truncate rounded-full px-3 py-1.5 text-xs transition-colors duration-200 ease-kertas sm:text-sm ${
+            arah === p.nilai ? 'text-kertas' : 'text-ink/65 hover:text-bank'
+          }`}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Sakelar mode dokumen: kurung pagar dipasang di kedua ujung jumlah. */
+function Sakelar({
+  label,
+  aktif,
+  ubah,
+}: {
+  label: string;
+  aktif: boolean;
+  ubah: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={aktif}
+      onClick={ubah}
+      className="group flex items-center gap-2.5 text-sm text-ink/80"
+    >
+      <span
+        aria-hidden
+        className={`relative h-5 w-9 rounded-full border transition-colors duration-200 ease-kertas ${
+          aktif ? 'border-bank bg-bank' : 'border-guilloche bg-tint'
+        }`}
+      >
+        <span
+          className={`absolute top-0.5 h-3.5 w-3.5 rounded-full transition-all duration-300 ease-kertas ${
+            aktif ? 'left-[1.15rem] bg-kertas' : 'left-0.5 bg-guilloche'
+          }`}
+        />
+      </span>
+      {label}
+    </button>
   );
 }
 
@@ -175,34 +299,59 @@ function bagianBulat(masukan: string): bigint | undefined {
   }
 }
 
-function tampilkanNilai(nilai: { negatif: boolean; bulat: bigint; pecahan: string }): string {
-  const digit = nilai.bulat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+function teksNilai(nilai: { negatif: boolean; bulat: bigint; pecahan: string }): string {
   const pecahan = nilai.pecahan === '' ? '' : `,${nilai.pecahan}`;
-  return `${nilai.negatif ? '-' : ''}${digit}${pecahan}`;
+  return `${nilai.negatif ? '-' : ''}${tampilkan(nilai.bulat.toString())}${pecahan}`;
 }
 
-function bacaHash(hash: string): Options | undefined {
+interface Keadaan {
+  readonly arah: Arah;
+  readonly angka?: string;
+  readonly kata?: string;
+  readonly opsi: Options;
+  readonly modeDokumen: boolean;
+}
+
+function bacaHash(hash: string): Keadaan | undefined {
   if (!hash.startsWith('#')) return undefined;
   const p = new URLSearchParams(hash.slice(1));
   if ([...p.keys()].length === 0) return undefined;
 
+  const angka = p.get('n');
+  const kata = p.get('k');
+
   return {
-    sejuta: p.get('sejuta') === 'true',
-    ejaanMiliar: p.get('ejaanMiliar') === 'varian' ? 'varian' : 'baku',
-    mataUang: p.get('mataUang') === 'rupiah' ? 'rupiah' : 'tidak',
-    sen: p.get('sen') === 'sen' ? 'sen' : 'koma',
-    kapitalisasi:
-      p.get('kapitalisasi') === 'judul'
-        ? 'judul'
-        : p.get('kapitalisasi') === 'kalimat'
-          ? 'kalimat'
-          : 'tidak',
+    arah: p.get('arah') === 'kata' ? 'kata' : 'angka',
+    angka: angka === null ? undefined : angka,
+    kata: kata === null ? undefined : kata,
+    modeDokumen: p.get('dok') === 'true',
+    opsi: {
+      sejuta: p.get('sejuta') === 'true',
+      ejaanMiliar: p.get('ejaanMiliar') === 'varian' ? 'varian' : 'baku',
+      mataUang: p.get('mataUang') === 'rupiah' ? 'rupiah' : 'tidak',
+      sen: p.get('sen') === 'sen' ? 'sen' : 'koma',
+      kapitalisasi:
+        p.get('kapitalisasi') === 'judul'
+          ? 'judul'
+          : p.get('kapitalisasi') === 'kalimat'
+            ? 'kalimat'
+            : 'tidak',
+    },
   };
 }
 
-function tulisHash(opsi: Options): string {
+/** Hanya yang menyimpang dari bawaan yang ditulis, supaya alamatnya tetap pendek. */
+function tulisHash(keadaan: Keadaan): string {
   const p = new URLSearchParams();
-  for (const [kunci, nilai] of Object.entries(opsi)) {
+  if (keadaan.arah !== 'angka') p.set('arah', keadaan.arah);
+  if (keadaan.arah === 'angka') {
+    if (keadaan.angka !== undefined && keadaan.angka !== '') p.set('n', keadaan.angka);
+  } else if (keadaan.kata !== undefined && keadaan.kata !== '') {
+    p.set('k', keadaan.kata);
+  }
+  if (keadaan.modeDokumen) p.set('dok', 'true');
+
+  for (const [kunci, nilai] of Object.entries(keadaan.opsi)) {
     if (String(nilai) !== String(OPSI_BAWAAN[kunci as keyof Options])) {
       p.set(kunci, String(nilai));
     }
