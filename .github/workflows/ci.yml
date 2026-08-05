@@ -11,9 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Versi pnpm diambil dari "packageManager" di package.json — satu sumber
+      # kebenaran; menyebutkannya dua kali membuat action menolak berjalan.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - uses: actions/setup-node@v4
         with:
