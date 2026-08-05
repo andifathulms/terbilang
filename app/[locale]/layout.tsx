@@ -37,12 +37,12 @@ export default function TataLetakLokal({
       </a>
 
       <header className="sticky top-0 z-30 border-b border-guilloche/60 bg-tint/85 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-5xl items-center gap-4 px-5 sm:px-6">
+        <div className="mx-auto flex h-14 max-w-5xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
           <Link
             href={`/${lokal}/`}
-            className="flex shrink-0 items-baseline gap-1.5 font-display text-lg tracking-tight"
+            className="flex shrink-0 items-baseline gap-1.5 font-display text-base tracking-tight sm:text-lg"
           >
-            <span aria-hidden className="text-bank/70">
+            <span aria-hidden className="hidden text-bank/70 sm:inline">
               #
             </span>
             {t.judulSitus}

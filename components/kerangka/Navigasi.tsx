@@ -34,14 +34,14 @@ export function Navigasi({
             key={l.href}
             href={l.href}
             aria-current={aktif ? 'page' : undefined}
-            className={`relative shrink-0 whitespace-nowrap px-2 py-1 text-sm transition-colors duration-200 ease-kertas ${
+            className={`relative shrink-0 whitespace-nowrap px-1.5 py-1 text-sm transition-colors duration-200 ease-kertas sm:px-2 ${
               aktif ? 'text-ink' : 'text-ink/60 hover:text-bank'
             }`}
           >
             {l.label}
             <span
               aria-hidden
-              className={`absolute inset-x-2 -bottom-0.5 h-px origin-left bg-bank transition-transform duration-300 ease-kertas ${
+              className={`absolute inset-x-1.5 -bottom-0.5 h-px origin-left bg-bank transition-transform duration-300 ease-kertas sm:inset-x-2 ${
                 aktif ? 'scale-x-100' : 'scale-x-0'
               }`}
             />
