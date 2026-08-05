@@ -32,6 +32,12 @@ export type Galat =
       readonly pesan: string;
     }
   | {
+      /** Kombinasi opsi yang tidak bermakna, misalnya sen tanpa mata uang. */
+      readonly type: 'opsi-bertentangan';
+      readonly opsi: string;
+      readonly pesan: string;
+    }
+  | {
       readonly type: 'kata-tidak-dikenal';
       readonly kata: string;
       readonly posisi: number;
@@ -102,6 +108,10 @@ export function pecahanTerlaluPanjang(pecahan: string): Galat {
     pecahan,
     pesan: `Mode sen hanya menerima dua digit di belakang koma; diterima "${pecahan}".`,
   };
+}
+
+export function opsiBertentangan(opsi: string, pesan: string): Galat {
+  return { type: 'opsi-bertentangan', opsi, pesan };
 }
 
 export function kataTidakDikenal(kata: string, posisi: number): Galat {
