@@ -145,6 +145,15 @@ M0–M5 scaffolded and green. Library formats and parses with `BigInt` throughou
 
 The site's surface was reworked after M5. Palette lives in CSS variables so the night theme (`data-tema="malam"`, set before first paint by a small script in `<head>`) swaps values rather than adding `dark:` variants — components stay on semantic tokens and never learn which theme is active. Converter state — direction, input, document mode, and every option — round-trips through the URL hash, so a result is linkable. `KurungKelompok` and `GarisJumlah` are server-renderable and shared between the homepage and the converter.
 
+Brand assets: `exports/` holds the full kit and is **not tracked** — only what the
+site and README actually serve is committed, in `public/` (favicon, apple-touch,
+PWA icons, maskable, `og.png`, `manifest.webmanifest`) and `.github/assets/`
+(README lockups). The header and footer mark is not an image: `components/kerangka/Merek.tsx`
+sets the hash in the display serif on a token-coloured tile, so it inverts with
+the night theme like everything else. `metadata.manifest` emits without
+`basePath`, so the manifest link is written by hand in `app/layout.tsx` and the
+manifest itself uses relative URLs.
+
 Open items:
 
 - **Survey data is empty by design.** `pnpm survey:record <paket>` takes package names as arguments and records versions and dates; nothing is claimed about a package that was not measured. Run it to populate `data/survey/hasil.json`, then classify every disagreement in `tests/survey/klasifikasi.ts` — the differential test fails on any unexplained difference.
