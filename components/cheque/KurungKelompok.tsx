@@ -26,7 +26,7 @@ export function KurungKelompok({
         return (
           <div
             key={`${k.skala.nama}-${i}`}
-            className={`kelompok-masuk flex flex-col items-center ${kosong ? 'opacity-40' : ''}`}
+            className={`animate-kelompok-masuk flex flex-col items-center ${kosong ? 'opacity-40' : ''}`}
           >
             <span className="h-4 text-[0.65rem] uppercase tracking-widest text-ink/60">
               {label}

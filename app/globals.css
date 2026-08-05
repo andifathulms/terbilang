@@ -2,9 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Palet sebagai variabel, bukan heksa yang tersebar. Siang adalah lembar cek
+ * yang baru dicetak; malam adalah salinan karbonnya — bahan yang sama, cahaya
+ * yang berbeda. Rasio kontras teks utama terhadap latarnya dijaga di atas 4,5.
+ */
 @layer base {
+  :root {
+    --tint: 230 237 228; /* #E6EDE4 tint pengaman */
+    --kertas: 247 250 245;
+    --guilloche: 185 199 188; /* #B9C7BC garis engine-turned */
+    --ink: 28 35 31; /* #1C231F */
+    --bank: 43 76 111; /* #2B4C6F */
+    --void: 163 60 51; /* #A33C33 — hanya penolakan */
+    --segel: 138 106 47;
+    color-scheme: light;
+  }
+
+  [data-tema='malam'] {
+    --tint: 15 20 17;
+    --kertas: 24 31 27;
+    --guilloche: 66 84 71;
+    --ink: 226 235 226;
+    --bank: 148 187 224;
+    --void: 226 130 118;
+    --segel: 204 168 100;
+    color-scheme: dark;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -16,6 +45,17 @@
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum';
   }
+
+  ::selection {
+    background-color: rgb(var(--bank) / 0.22);
+  }
+
+  /* Satu gaya fokus untuk seluruh situs, terlihat di kedua tema. */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid rgb(var(--bank));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 }
 
 @layer components {
@@ -26,46 +66,97 @@
    */
   .guilloche {
     background-image:
-      repeating-linear-gradient(
-        38deg,
-        rgba(185, 199, 188, 0.55) 0 1px,
-        transparent 1px 7px
+      repeating-linear-gradient(38deg, rgb(var(--guilloche) / 0.5) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(-38deg, rgb(var(--guilloche) / 0.4) 0 1px, transparent 1px 9px);
+  }
+
+  /*
+   * Roset pengaman: pola melingkar yang dicetak di sudut cek. Sangat pucat,
+   * dan hanya di lembar utama.
+   */
+  .roset {
+    background-image:
+      repeating-radial-gradient(
+        circle at 50% 50%,
+        rgb(var(--guilloche) / 0.55) 0 1px,
+        transparent 1px 6px
       ),
-      repeating-linear-gradient(
-        -38deg,
-        rgba(185, 199, 188, 0.45) 0 1px,
-        transparent 1px 9px
+      repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        rgb(var(--guilloche) / 0.35) 0deg 1.5deg,
+        transparent 1.5deg 6deg
       );
+  }
+
+  /* Lembar cek: kertas yang terangkat dari tint di belakangnya. */
+  .lembar {
+    @apply rounded-lembar border border-guilloche/70 bg-kertas shadow-lembar;
+  }
+
+  /*
+   * Tepi perforasi di bawah lembar, seperti cek yang disobek dari bukunya.
+   * Murni tekstur; tidak membawa informasi apa pun.
+   */
+  .perforasi {
+    height: 10px;
+    background-image: radial-gradient(
+      circle at 5px 0,
+      rgb(var(--tint)) 0 4.5px,
+      transparent 4.5px
+    );
+    background-size: 10px 10px;
+    background-repeat: repeat-x;
   }
 
   /* Garis jumlah pada cek: kata berjalan di atas garis bergaris. */
   .garis-jumlah {
-    border-bottom: 1px solid rgba(28, 35, 31, 0.35);
+    border-bottom: 1px solid rgb(var(--ink) / 0.3);
+  }
+
+  /*
+   * Mikroteks: pita garis sangat rapat yang pada cek sungguhan berisi teks
+   * berulang. Dipakai sebagai pembatas tipis, bukan sebagai hiasan.
+   */
+  .mikroteks {
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgb(var(--guilloche) / 0.9) 0 1px,
+      transparent 1px 3px
+    );
+  }
+
+  /* Label kecil berhuruf besar yang berulang di seluruh situs. */
+  .label {
+    @apply text-label font-medium uppercase text-ink/55;
   }
 }
 
 /*
- * Satu-satunya gerak di halaman ini: kata setiap kelompok tiga angka
- * dirender ulang sebagai satu kesatuan, sehingga pembaca melihat bilangan
- * terurai kelompok demi kelompok, bukan huruf demi huruf.
+ * Gerak. Yang utama tetap satu: kata setiap kelompok tiga angka dirender ulang
+ * sebagai satu kesatuan, sehingga pembaca melihat bilangan terurai kelompok
+ * demi kelompok, bukan huruf demi huruf. Sisanya sekadar penanda perubahan
+ * keadaan, dan semuanya berhenti bila pengguna meminta gerak dikurangi.
  */
-@keyframes kelompok-masuk {
-  from {
-    opacity: 0;
-    transform: translateY(0.15em);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.tunda-1 {
+  animation-delay: 60ms;
 }
-
-.kelompok-masuk {
-  animation: kelompok-masuk 180ms ease-out both;
+.tunda-2 {
+  animation-delay: 120ms;
+}
+.tunda-3 {
+  animation-delay: 180ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kelompok-masuk {
-    animation: none;
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
