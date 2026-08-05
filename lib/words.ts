@@ -20,6 +20,22 @@ export const SATUAN = [
   'sembilan',
 ] as const;
 
+/**
+ * Pencarian kata satuan tanpa menyentuh `number` sama sekali — indeks larik
+ * menuntut konversi, peta bigint tidak.
+ */
+export const SATUAN_BIGINT: ReadonlyMap<bigint, string> = new Map(
+  SATUAN.map((kata, i) => [BigInt(i), kata] as const),
+);
+
+export function kataSatuan(n: bigint): string {
+  const kata = SATUAN_BIGINT.get(n);
+  if (kata === undefined) {
+    throw new RangeError(`kataSatuan menerima ${n}; hanya 0..9 yang sah`);
+  }
+  return kata;
+}
+
 export const PULUH = 'puluh';
 export const BELAS = 'belas';
 export const RATUS = 'ratus';
@@ -48,8 +64,10 @@ export const SEN = 'sen';
  * Ejaan `milyar` dan `trilyun` lazim di lapangan tetapi bukan bentuk KBBI;
  * keduanya tersedia lewat opsi `ejaanMiliar`, bukan sebagai bawaan diam-diam.
  */
+export const SKALA_SATUAN: InfoSkala = { nama: 'satuan', nilai: 1n, baku: '', varian: '' };
+
 export const SKALA: readonly InfoSkala[] = [
-  { nama: 'satuan', nilai: 1n, baku: '', varian: '' },
+  SKALA_SATUAN,
   { nama: 'ribu', nilai: 10n ** 3n, baku: 'ribu', varian: 'ribu' },
   { nama: 'juta', nilai: 10n ** 6n, baku: 'juta', varian: 'juta' },
   { nama: 'miliar', nilai: 10n ** 9n, baku: 'miliar', varian: 'milyar' },

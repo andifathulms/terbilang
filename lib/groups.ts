@@ -4,7 +4,7 @@
  */
 
 import type { Kelompok } from './types';
-import { SKALA } from './words';
+import { SKALA, SKALA_SATUAN } from './words';
 
 /**
  * Pecah bilangan bulat non-negatif menjadi kelompok tiga angka, dari skala
@@ -16,7 +16,7 @@ import { SKALA } from './words';
  */
 export function kelompokkan(bulat: bigint): Kelompok[] {
   if (bulat === 0n) {
-    return [{ nilai: 0n, skala: SKALA[0]! }];
+    return [{ nilai: 0n, skala: SKALA_SATUAN }];
   }
 
   const kelompok: Kelompok[] = [];
@@ -24,7 +24,8 @@ export function kelompokkan(bulat: bigint): Kelompok[] {
   let indeks = 0;
 
   while (sisa > 0n && indeks < SKALA.length) {
-    const skala = SKALA[indeks]!;
+    const skala = SKALA[indeks];
+    if (skala === undefined) break;
     kelompok.unshift({ nilai: sisa % 1000n, skala });
     sisa /= 1000n;
     indeks += 1;
