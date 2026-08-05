@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { TandaPagar } from '../../components/kerangka/Merek';
 import { Navigasi, PengalihBahasa } from '../../components/kerangka/Navigasi';
 import { TombolTema } from '../../components/kerangka/TombolTema';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../kamus';
@@ -40,11 +41,9 @@ export default function TataLetakLokal({
         <div className="mx-auto flex h-14 max-w-5xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
           <Link
             href={`/${lokal}/`}
-            className="flex shrink-0 items-baseline gap-1.5 font-display text-base tracking-tight sm:text-lg"
+            className="flex shrink-0 items-center gap-2 font-display text-base tracking-tight sm:text-lg"
           >
-            <span aria-hidden className="hidden text-bank/70 sm:inline">
-              #
-            </span>
+            <TandaPagar kelas="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-base" />
             {t.judulSitus}
           </Link>
 
@@ -66,8 +65,10 @@ export default function TataLetakLokal({
       <footer className="mt-6 border-t border-guilloche/60">
         <div className="mx-auto grid max-w-5xl gap-6 px-5 py-8 text-xs text-ink/60 sm:grid-cols-3 sm:px-6">
           <p className="leading-relaxed">
-            <span className="font-display text-sm text-ink/80">{t.judulSitus}</span>
-            <br />
+            <span className="flex items-center gap-1.5">
+              <TandaPagar kelas="h-4 w-4 text-[0.6rem]" />
+              <span className="font-display text-sm text-ink/80">{t.judulSitus}</span>
+            </span>
             {t.taglineSitus}
           </p>
           <p className="leading-relaxed">
