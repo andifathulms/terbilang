@@ -9,3 +9,7 @@ coverage/
 
 # survey:record scratch space — third-party packages are never committed
 .survey-tmp/
+
+# Master berkas merek. Yang dipakai situs sudah disalin ke public/ dan
+# .github/assets/ — repositori tidak perlu memikul seluruh ekspornya.
+exports/
