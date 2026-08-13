@@ -51,15 +51,7 @@ export default function Survei({ params }: { params: { locale: string } }) {
         )}
       </header>
 
-      {belumDirekam ? (
-        <section className="lembar space-y-3 p-5 sm:p-6">
-          <p className="font-display text-sedang">{t.survei.belum}</p>
-          <p className="max-w-2xl text-dasar text-ink-sedang">{t.survei.belumIsi}</p>
-          <pre className="overflow-x-auto rounded-lembar border border-guilloche/70 bg-tint/60 p-3.5 font-mono text-kecil">
-            pnpm survey:record &lt;paket&gt; [paket...]
-          </pre>
-        </section>
-      ) : (
+      {belumDirekam ? null : (
         <section className="flex flex-wrap gap-2 text-kecil">
           <span className="label mr-1 self-center">{t.survei.keterangan}</span>
           <span className="rounded-full border border-garis px-2.5 py-1 text-ink-sedang">
@@ -77,10 +69,14 @@ export default function Survei({ params }: { params: { locale: string } }) {
       {/*
         Baterai masukan selalu tampil, direkam atau belum: kolom terbilang
         adalah keluaran pustaka ini sendiri, dan itu sudah punya nilai sebagai
-        rujukan meski belum ada paket pembanding.
+        rujukan meski belum ada paket pembanding. Karena itu tabelnya
+        didahulukan, dan keterangan "belum ada paket" turun ke bawahnya —
+        pembaca yang datang ke halaman kosong tetap menemukan sesuatu yang
+        bisa dibaca, alih-alih pemberitahuan bahwa tidak ada apa-apa.
       */}
       <section className="space-y-3">
-        <h2 className="label">{lokal === 'id' ? 'Baterai masukan' : 'Input battery'}</h2>
+        <h2 className="font-display text-besar">{t.survei.baterai}</h2>
+        <p className="max-w-2xl text-dasar text-ink-sedang">{t.survei.bateraiRingkas}</p>
 
         <div className="lembar overflow-hidden">
           <div className="overflow-x-auto">
@@ -139,6 +135,17 @@ export default function Survei({ params }: { params: { locale: string } }) {
 
         <p className="max-w-2xl text-kecil text-ink-lirih">{t.survei.catatan}</p>
       </section>
+
+      {/* Cara mengisinya, sebagai keterangan di kaki — bukan penghalang di kepala. */}
+      {belumDirekam ? (
+        <section className="lembar space-y-3 p-5 sm:p-6">
+          <h2 className="font-display text-sedang">{t.survei.belum}</h2>
+          <p className="max-w-2xl text-dasar text-ink-sedang">{t.survei.belumIsi}</p>
+          <pre className="overflow-x-auto rounded-lembar border border-guilloche/70 bg-tint/60 p-3.5 font-mono text-kecil">
+            pnpm survey:record &lt;paket&gt; [paket...]
+          </pre>
+        </section>
+      ) : null}
     </div>
   );
 }

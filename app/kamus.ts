@@ -100,6 +100,8 @@ interface Teks {
     readonly catatan: string;
     readonly belum: string;
     readonly belumIsi: string;
+    readonly baterai: string;
+    readonly bateraiRingkas: string;
   };
   readonly takDitemukan: {
     readonly judul: string;
@@ -221,9 +223,12 @@ const id: Teks = {
     keterangan: 'Keterangan',
     catatan:
       'Perbedaan ditandai, lalu diklasifikasikan tertulis sebagai bug kami, bug mereka, atau varian yang sah — catatannya ada di tests/survey/.',
-    belum: 'Belum ada rekaman.',
+    belum: 'Belum ada paket yang direkam',
     belumIsi:
-      'Tabel ini hanya menampilkan hasil yang benar-benar diukur. Jalankan skrip pengembangan dengan nama paket yang ingin disurvei; setiap klaim akan membawa versi paket dan tanggal pengukurannya.',
+      'Tabel di atas hanya menampilkan hasil yang benar-benar diukur, jadi untuk sekarang ia berisi keluaran pustaka ini saja. Jalankan skrip pengembangan dengan nama paket yang ingin disurvei; setiap klaim akan membawa versi paket dan tanggal pengukurannya.',
+    baterai: 'Baterai masukan',
+    bateraiRingkas:
+      'Kolom terbilang adalah keluaran pustaka ini sendiri. Ia berlaku sebagai rujukan meski belum ada satu pun paket pembanding di sebelahnya.',
   },
   takDitemukan: {
     judul: 'Halaman tidak ditemukan',
@@ -350,9 +355,12 @@ const en: Teks = {
     keterangan: 'Legend',
     catatan:
       'Differences are marked, then classified in writing as our bug, their bug, or a legitimate variant — the record lives in tests/survey/.',
-    belum: 'Nothing recorded yet.',
+    belum: 'No packages recorded yet',
     belumIsi:
-      'This table only shows results that were actually measured. Run the development script with the package names to survey; every claim then carries the package version and the date it was measured.',
+      'The table above only shows results that were actually measured, so for now it holds this library\u2019s output alone. Run the development script with the package names to survey; every claim then carries the package version and the date it was measured.',
+    baterai: 'Input battery',
+    bateraiRingkas:
+      'The terbilang column is this library\u2019s own output. It stands as the reference even with no package beside it to compare against.',
   },
   takDitemukan: {
     judul: 'Page not found',
