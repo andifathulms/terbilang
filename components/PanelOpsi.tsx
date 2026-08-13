@@ -58,25 +58,30 @@ export function PanelOpsi({
                 ) : null}
               </legend>
 
+              {/*
+                Radio, bukan tombol beraria-pressed. Ini pilihan satu dari
+                sekian di dalam fieldset, dan sebagai radio ia mendapat tiga
+                hal sekaligus tanpa satu pun baris ARIA: posisinya disebut
+                ("2 dari 3"), panah menelusurinya, dan seluruh kelompok hanya
+                memakan satu perhentian Tab alih-alih satu per pilihan.
+                Kolomnya sendiri disembunyikan; yang tampak span di sebelahnya.
+              */}
               <div className="flex flex-wrap gap-1.5">
-                {o.pilihan.map((p) => {
-                  const aktif = terpilih === p.nilai;
-                  return (
-                    <button
-                      key={p.nilai}
-                      type="button"
-                      aria-pressed={aktif}
-                      onClick={() => ubah({ ...opsi, [o.kunci]: nilaiOpsi(o.kunci, p.nilai) })}
-                      className={`rounded-full border px-2.5 py-1 text-kendali-kecil transition-all duration-200 ease-kertas ${
-                        aktif
-                          ? 'border-bank bg-bank text-kertas'
-                          : 'border-garis text-ink-sedang hover:border-bank hover:text-bank'
-                      }`}
-                    >
+                {o.pilihan.map((p) => (
+                  <label key={p.nilai} className="cursor-pointer">
+                    <input
+                      type="radio"
+                      name={o.kunci}
+                      value={p.nilai}
+                      checked={terpilih === p.nilai}
+                      onChange={() => ubah({ ...opsi, [o.kunci]: nilaiOpsi(o.kunci, p.nilai) })}
+                      className="peer sr-only"
+                    />
+                    <span className="block rounded-full border border-garis px-2.5 py-1 text-kendali-kecil text-ink-sedang transition-all duration-200 ease-kertas hover:border-bank hover:text-bank peer-checked:border-bank peer-checked:bg-bank peer-checked:text-kertas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-bank">
                       {p.contoh}
-                    </button>
-                  );
-                })}
+                    </span>
+                  </label>
+                ))}
               </div>
 
               {dasar === undefined ? null : (

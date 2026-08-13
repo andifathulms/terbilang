@@ -255,31 +255,42 @@ function SakelarArah({
     { nilai: 'kata', label: `${t.labelKataKeAngka} → ${t.labelAngka}` },
   ];
 
+  /*
+   * Radio di dalam fieldset, bukan dua tombol beraria-pressed: arahnya satu
+   * dari dua, dan radio memberi posisi yang terucap serta penelusuran panah
+   * tanpa satu baris ARIA pun. Penanda yang meluncur tetap ada di belakangnya
+   * sebagai hiasan.
+   */
   return (
-    <div
-      role="group"
-      aria-label={t.tukar}
-      className="relative grid w-full max-w-md grid-cols-2 rounded-full border border-garis bg-kertas/60 p-1"
-    >
+    <fieldset className="relative grid w-full max-w-md grid-cols-2 rounded-full border border-garis bg-kertas/60 p-1">
+      <legend className="sr-only">{t.tukar}</legend>
+
       <span
         aria-hidden
         className="absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-full bg-bank transition-transform duration-300 ease-kertas"
         style={{ transform: `translateX(${arah === 'angka' ? '0' : '100%'})` }}
       />
+
       {pilihan.map((p) => (
-        <button
-          key={p.nilai}
-          type="button"
-          aria-pressed={arah === p.nilai}
-          onClick={() => ubah(p.nilai)}
-          className={`relative z-10 truncate rounded-full px-3 py-1.5 text-kendali-kecil transition-colors duration-200 ease-kertas sm:text-kendali ${
-            arah === p.nilai ? 'text-kertas' : 'text-ink-sedang hover:text-bank'
-          }`}
-        >
-          {p.label}
-        </button>
+        <label key={p.nilai} className="relative z-10 cursor-pointer">
+          <input
+            type="radio"
+            name="arah"
+            value={p.nilai}
+            checked={arah === p.nilai}
+            onChange={() => ubah(p.nilai)}
+            className="peer sr-only"
+          />
+          <span
+            className={`block truncate rounded-full px-3 py-1.5 text-center text-kendali-kecil transition-colors duration-200 ease-kertas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-bank sm:text-kendali ${
+              arah === p.nilai ? 'text-kertas' : 'text-ink-sedang hover:text-bank'
+            }`}
+          >
+            {p.label}
+          </span>
+        </label>
       ))}
-    </div>
+    </fieldset>
   );
 }
 
