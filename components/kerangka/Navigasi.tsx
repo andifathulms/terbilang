@@ -65,7 +65,7 @@ export function PengalihBahasa({ lokal, label }: { lokal: Lokal; label: string }
     <Link
       href={jalurLokalLain(jalur, lain)}
       aria-label={`${label}: ${lain.toUpperCase()}`}
-      className="flex h-8 items-center rounded-full border border-garis px-2.5 text-label text-ink-lirih transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
+      className="flex min-h-sasaran items-center rounded-full py-1 border border-garis px-2.5 text-label text-ink-lirih transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
     >
       <span className="text-ink">{lokal.toUpperCase()}</span>
       <span aria-hidden className="px-1 text-guilloche">

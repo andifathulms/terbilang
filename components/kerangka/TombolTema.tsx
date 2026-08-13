@@ -38,7 +38,7 @@ export function TombolTema({ label, siang, malam }: { label: string; siang: stri
       onClick={tukar}
       aria-label={`${label}: ${tema === 'siang' ? siang : malam}`}
       title={`${label}: ${tema === 'siang' ? siang : malam}`}
-      className="group flex h-8 w-8 items-center justify-center rounded-full border border-garis text-ink-lirih transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
+      className="group flex h-8 min-h-sasaran w-8 items-center justify-center rounded-full border border-garis text-ink-lirih transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
     >
       <span aria-hidden className={siap ? '' : 'opacity-0'}>
         {tema === 'siang' ? <Matahari /> : <Bulan />}

@@ -39,7 +39,7 @@ export default function TataLetakLokal({
       </a>
 
       <header className="sticky top-0 z-30 border-b border-guilloche/60 bg-tint/85 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-5xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
+        <div className="mx-auto flex min-h-kepala max-w-5xl items-center py-2 gap-2 px-4 sm:gap-4 sm:px-6">
           <Link
             href={`/${lokal}/`}
             className="flex shrink-0 items-center gap-2 font-display text-kendali tracking-tight sm:text-sedang"

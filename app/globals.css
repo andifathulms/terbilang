@@ -58,6 +58,16 @@
     --teks-jumlah: clamp(1.5rem, 4.4vw, 2.75rem);
     --teks-sorot: clamp(2rem, 4.6vw, 3.25rem);
 
+    /*
+     * Tinggi minimum sasaran yang bisa diketuk. WCAG 2.5.8 meminta 24px;
+     * keping opsi pada py-1 jatuh persis di angka itu tanpa sisa, jadi
+     * tokennya disetel sedikit di atasnya dan dipakai sebagai min-height —
+     * bukan tinggi tetap, supaya isinya tetap boleh tumbuh saat teks
+     * diperbesar. Tinggi kepala halaman memakai tangga yang sama.
+     */
+    --sasaran: 1.75rem;
+    --tinggi-kepala: 3.5rem;
+
     /* Tangga ruang, kelipatan 4px. Jarak antar bagian memakai --ruang-8. */
     --ruang-1: 0.25rem;
     --ruang-2: 0.5rem;

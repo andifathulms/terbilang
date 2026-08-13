@@ -128,7 +128,7 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
                     type="button"
                     onClick={() => setAngka(c.nilai)}
                     aria-pressed={angka === c.nilai}
-                    className={`tabular rounded-full border px-3 py-1 font-mono text-kendali-kecil transition-all duration-200 ease-kertas ${
+                    className={`tabular inline-flex min-h-sasaran items-center rounded-full border px-3 py-1 font-mono text-kendali-kecil transition-all duration-200 ease-kertas ${
                       angka === c.nilai
                         ? 'border-bank bg-bank text-kertas'
                         : 'border-garis text-ink-sedang hover:-translate-y-0.5 hover:border-bank hover:text-bank'
@@ -284,7 +284,7 @@ function SakelarArah({
             className="peer sr-only"
           />
           <span
-            className={`block truncate rounded-full px-3 py-1.5 text-center text-kendali-kecil transition-colors duration-200 ease-kertas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-bank sm:text-kendali ${
+            className={`flex min-h-sasaran items-center justify-center truncate rounded-full px-3 py-1.5 text-center text-kendali-kecil transition-colors duration-200 ease-kertas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-bank sm:text-kendali ${
               arah === p.nilai ? 'text-kertas' : 'text-ink-sedang hover:text-bank'
             }`}
           >

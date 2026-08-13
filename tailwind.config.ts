@@ -73,6 +73,9 @@ const config: Config = {
        * setiap komponen yang sudah memakainya.
        */
       spacing: {
+        /** Tinggi minimum sasaran ketuk dan tinggi kepala halaman. */
+        sasaran: 'var(--sasaran)',
+        kepala: 'var(--tinggi-kepala)',
         ruang1: 'var(--ruang-1)',
         ruang2: 'var(--ruang-2)',
         ruang3: 'var(--ruang-3)',

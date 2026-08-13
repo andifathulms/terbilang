@@ -77,7 +77,7 @@ export function PanelOpsi({
                       onChange={() => ubah({ ...opsi, [o.kunci]: nilaiOpsi(o.kunci, p.nilai) })}
                       className="peer sr-only"
                     />
-                    <span className="block rounded-full border border-garis px-2.5 py-1 text-kendali-kecil text-ink-sedang transition-all duration-200 ease-kertas hover:border-bank hover:text-bank peer-checked:border-bank peer-checked:bg-bank peer-checked:text-kertas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-bank">
+                    <span className="flex min-h-sasaran items-center rounded-full border border-garis px-2.5 py-1 text-kendali-kecil text-ink-sedang transition-all duration-200 ease-kertas hover:border-bank hover:text-bank peer-checked:border-bank peer-checked:bg-bank peer-checked:text-kertas peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-bank">
                       {p.contoh}
                     </span>
                   </label>
