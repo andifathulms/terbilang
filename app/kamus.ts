@@ -84,6 +84,7 @@ interface Teks {
     readonly tertaut: string;
     readonly kelompok: string;
     readonly kosong: string;
+    readonly kelompokRingkas: string;
     readonly opsi: string;
     readonly hasilAngka: string;
     readonly contoh: string;
@@ -205,6 +206,8 @@ const id: Teks = {
     tertaut: 'Tautan tersalin',
     kelompok: 'Kelompok tiga angka',
     kosong: 'kelompok kosong — tidak menghasilkan kata',
+    kelompokRingkas:
+      'Gambar: bilangan dipecah per tiga angka dari kanan, tiap kelompok diberi kata skalanya. Kelompok yang bernilai nol dicoret dan tidak menghasilkan kata sama sekali.',
     opsi: 'Opsi tersitasi',
     hasilAngka: 'Angka',
     contoh: 'Coba nilai ini',
@@ -337,6 +340,8 @@ const en: Teks = {
     tertaut: 'Link copied',
     kelompok: 'Three-digit groups',
     kosong: 'empty group — emits nothing',
+    kelompokRingkas:
+      'Figure: the number is split every three digits from the right, and each group takes its scale word. A group worth zero is struck through and emits no words at all.',
     opsi: 'Cited options',
     hasilAngka: 'Value',
     contoh: 'Try these',

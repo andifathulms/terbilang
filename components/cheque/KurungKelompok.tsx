@@ -11,75 +11,91 @@ import type { Kelompok, Options } from '@/lib';
  * bukan huruf demi huruf.
  *
  * Murni penyaji: seluruh dekomposisi datang dari kelompokkan() di pustaka.
- */
-/**
+ *
+ * Sebagai gambar ia bermakna secara ruang dan tidak bermakna sebagai deretan:
+ * dibacakan berurutan, isinya jadi "juta 1 ribu 000 kelompok kosong 001".
+ * Karena itu kotaknya disembunyikan dari pembacaan dan digantikan satu kalimat
+ * yang menerangkan gambarnya — kata terbilangnya sendiri sudah disebutkan utuh
+ * di garis jumlah, jadi menguraikannya lagi hanya menambah bising.
+ *
  * `padat` mengecilkan kurungnya untuk tempat yang hanya menerangkan cara
- * kerja, bukan menampilkan hasil — di beranda, misalnya, di bawah garis
- * jumlah. Ia memilih token yang lebih kecil, bukan menyusutkan seluruh blok
- * dengan transform: transform akan merender teks pada 0,9 kali nilai token,
- * yakni ukuran yang tidak ada di tangga mana pun, sekaligus menyusutkan tebal
- * garis dan menggeser keterangan kelompok kosong dari tempatnya.
+ * kerja, bukan menampilkan hasil. Ia memilih token yang lebih kecil, bukan
+ * menyusutkan seluruh blok dengan transform: transform akan merender teks pada
+ * 0,9 kali nilai token, yakni ukuran yang tidak ada di tangga mana pun.
  */
 export function KurungKelompok({
   kelompok,
   labelKosong,
+  ringkas,
   ejaan,
   padat = false,
 }: {
   kelompok: readonly Kelompok[];
   labelKosong: string;
+  /** Kalimat yang menggantikan gambarnya bagi pembaca layar. */
+  ringkas: string;
   ejaan: Options['ejaanMiliar'];
   padat?: boolean;
 }) {
+  const adaKosong = kelompok.some((k) => k.nilai === 0n) && kelompok.length > 1;
+
   return (
-    <div
-      className={`flex flex-wrap items-end gap-x-1.5 ${padat ? 'gap-y-7 pb-6' : 'gap-y-8 pb-7'}`}
-    >
-      {kelompok.map((k, i) => {
-        const kosong = k.nilai === 0n && kelompok.length > 1;
-        const digit = i === 0 ? k.nilai.toString() : k.nilai.toString().padStart(3, '0');
-        const label = ejaan === 'baku' ? k.skala.baku : k.skala.varian;
+    <figure className="m-0">
+      <figcaption className="sr-only">{ringkas}</figcaption>
 
-        return (
-          <div
-            key={`${k.skala.nama}-${digit}`}
-            className="animate-kelompok-masuk relative flex flex-col items-center"
-            style={{ animationDelay: `${i * 45}ms` }}
-          >
-            {/*
-              Kelompok kosong dibedakan oleh coretan dan batas yang lebih
-              pucat, bukan oleh teks yang diredupkan sampai tak terbaca — yang
-              runtuh tetap harus bisa dibaca untuk dimengerti bahwa ia runtuh.
-            */}
-            <span className={`h-4 text-label ${kosong ? 'text-ink-lirih' : 'text-bank'}`}>
-              {label}
-            </span>
+      <div aria-hidden className={`flex flex-wrap items-end gap-x-1.5 ${padat ? 'gap-y-3' : 'gap-y-4'}`}>
+        {kelompok.map((k, i) => {
+          const kosong = k.nilai === 0n && kelompok.length > 1;
+          const digit = i === 0 ? k.nilai.toString() : k.nilai.toString().padStart(3, '0');
+          const label = ejaan === 'baku' ? k.skala.baku : k.skala.varian;
 
-            <span
-              className={`tabular relative mt-1 rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 text-center font-mono transition-colors duration-300 ease-kertas ${
-                padat ? 'min-w-[2.9rem] text-dasar' : 'min-w-[3.4rem] text-sedang'
-              } ${
-                kosong
-                  ? 'border-guilloche text-ink-lirih line-through decoration-void/50'
-                  : 'border-garis bg-tint/50 text-ink'
-              }`}
+          return (
+            <div
+              key={`${k.skala.nama}-${digit}`}
+              className="animate-kelompok-masuk flex flex-col items-center"
+              style={{ animationDelay: `${i * 45}ms` }}
             >
-              {digit}
-            </span>
-
-            {/*
-              Keterangan kelompok kosong diletakkan di luar aliran supaya
-              kolomnya tidak ikut melebar — kelompok yang runtuh harus terlihat
-              menyempit, bukan menuntut ruang.
-            */}
-            {kosong ? (
-              <span className="absolute left-1/2 top-full w-32 -translate-x-1/2 pt-1 text-center text-kecil leading-tight text-ink-lirih">
-                {labelKosong}
+              {/*
+                Kelompok kosong dibedakan oleh coretan dan batas yang lebih
+                pucat, bukan oleh teks yang diredupkan sampai tak terbaca — yang
+                runtuh tetap harus bisa dibaca untuk dimengerti bahwa ia runtuh.
+                Tingginya minimum, bukan tetap, supaya labelnya tidak terpotong
+                pada perbesaran 200% atau saat jarak huruf dinaikkan.
+              */}
+              <span
+                className={`min-h-4 text-label ${kosong ? 'text-ink-lirih' : 'text-bank'}`}
+              >
+                {label}
               </span>
-            ) : null}
-          </div>
-        );
-      })}
-    </div>
+
+              <span
+                className={`tabular mt-1 rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 text-center font-mono transition-colors duration-300 ease-kertas ${
+                  padat ? 'min-w-[2.9rem] text-dasar' : 'min-w-[3.4rem] text-sedang'
+                } ${
+                  kosong
+                    ? 'border-guilloche text-ink-lirih line-through decoration-void/50'
+                    : 'border-garis bg-tint/50 text-ink'
+                }`}
+              >
+                {digit}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/*
+        Satu keterangan untuk seluruh deret, bukan satu yang melayang di bawah
+        tiap kelompok kosong. Yang melayang itu selebar 8rem di bawah kotak
+        selebar 3rem, jadi begitu ada lebih dari satu kelompok kosong — atau
+        begitu teksnya diperbesar — keterangannya saling menabrak kolom
+        sebelahnya.
+      */}
+      {adaKosong ? (
+        <p aria-hidden className="mt-2 text-kecil leading-tight text-ink-lirih">
+          {labelKosong}
+        </p>
+      ) : null}
+    </figure>
   );
 }

@@ -115,6 +115,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
                   <KurungKelompok
                     kelompok={kelompok}
                     labelKosong={t.ubah.kosong}
+                    ringkas={t.ubah.kelompokRingkas}
                     ejaan={OPSI_BAWAAN.ejaanMiliar}
                     padat
                   />

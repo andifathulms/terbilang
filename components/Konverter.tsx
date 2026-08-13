@@ -146,6 +146,7 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
                 <KurungKelompok
                   kelompok={kelompok}
                   labelKosong={t.kosong}
+                  ringkas={t.kelompokRingkas}
                   ejaan={opsi.ejaanMiliar}
                 />
               </div>
@@ -210,6 +211,7 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
                   <KurungKelompok
                     kelompok={kelompokTerurai}
                     labelKosong={t.kosong}
+                  ringkas={t.kelompokRingkas}
                     ejaan={opsi.ejaanMiliar}
                   />
                 </div>
