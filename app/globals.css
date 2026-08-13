@@ -204,9 +204,17 @@
     scroll-behavior: auto;
   }
 
+  /*
+   * Tundaan ikut dinolkan, bukan hanya durasi. Kerangka gerak di situs ini
+   * memakai fill-mode both dari opacity 0, dan tundaannya dipasang sebaris —
+   * sampai 420ms pada garis jumlah. Menolkan durasi saja menyisakan jumlah
+   * terbilang tak terlihat selama hampir setengah detik lalu muncul mendadak:
+   * geraknya hilang, kedipnya tinggal.
+   */
   *,
   *::before,
   *::after {
+    animation-delay: 0ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

@@ -107,16 +107,11 @@ const config: Config = {
           '65%': { opacity: '1', transform: 'rotate(-8deg) scale(0.97)' },
           to: { opacity: '1', transform: 'rotate(-8deg) scale(1)' },
         },
-        denyut: {
-          '0%,100%': { opacity: '1' },
-          '50%': { opacity: '0.3' },
-        },
       },
       animation: {
         'kelompok-masuk': 'kelompok-masuk 240ms cubic-bezier(0.22, 1, 0.36, 1) both',
         'naik-masuk': 'naik-masuk 340ms cubic-bezier(0.22, 1, 0.36, 1) both',
         'cap-turun': 'cap-turun 460ms cubic-bezier(0.22, 1, 0.36, 1) both',
-        denyut: 'denyut 1.4s ease-in-out infinite',
       },
     },
   },
