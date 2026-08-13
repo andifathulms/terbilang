@@ -122,6 +122,9 @@ interface Teks {
     readonly bawaan: string;
     readonly masukanSama: string;
     readonly kataBerubah: string;
+    readonly presisiUtuh: string;
+    readonly presisiNumber: string;
+    readonly presisiCatatan: string;
   };
   readonly survei: {
     readonly judul: string;
@@ -269,6 +272,10 @@ const id: Teks = {
     bawaan: 'bawaan',
     masukanSama: 'Masukan yang sama',
     kataBerubah: 'kata berubah',
+    presisiUtuh: 'Nilai utuh, lewat BigInt',
+    presisiNumber: 'Nilai yang sama, setelah lewat number',
+    presisiCatatan:
+      'Dijalankan sungguhan saat halaman dibangun: nilai di atas dilewatkan Number() lalu dikembalikan, persis seperti yang terjadi di implementasi berbasis number. Satu digit terakhir berubah, dan satu kata terakhir ikut berubah — tanpa galat, tanpa peringatan.',
   },
   survei: {
     judul: 'Survei implementasi',
@@ -425,6 +432,10 @@ const en: Teks = {
     bawaan: 'default',
     masukanSama: 'The same input',
     kataBerubah: 'changed',
+    presisiUtuh: 'The exact value, through BigInt',
+    presisiNumber: 'The same value, after passing through number',
+    presisiCatatan:
+      'Actually run at build time: the value above is passed through Number() and back, exactly as it would be in a number-based implementation. The last digit changes, and the last word changes with it — no error, no warning.',
   },
   survei: {
     judul: 'Implementation survey',

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { format, SITASI_OPSI } from '@/lib';
 import { BandingVarian } from '../../../components/BandingVarian';
+import { LewatNumber } from '../../../components/cheque/LewatNumber';
 import { DaftarIsi } from '../../../components/kerangka/DaftarIsi';
 import { ATURAN, type Contoh } from '../../../data/aturan';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../../kamus';
@@ -100,6 +101,16 @@ export default function Aturan({ params }: { params: { locale: string } }) {
                   <Baris key={String(c.masukan)} contoh={c} kelirul={t.aturan.keliru} />
                 ))}
               </ul>
+
+              {/* Peragaan diletakkan pada aturannya, bukan di halaman lain. */}
+              {a.kunci === 'presisi' ? (
+                <LewatNumber
+                  nilai={9_007_199_254_740_993n}
+                  labelUtuh={t.aturan.presisiUtuh}
+                  labelNumber={t.aturan.presisiNumber}
+                  catatan={t.aturan.presisiCatatan}
+                />
+              ) : null}
             </section>
           ))}
 
