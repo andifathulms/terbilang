@@ -35,7 +35,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
   const kataSorot = sorot.type === 'ok' ? sorot.nilai : null;
 
   return (
-    <div className="space-y-ruang8">
+    <div className="space-y-ruang7 sm:space-y-ruang8">
       {/*
         Sorot: judul di kiri, lembar cek di kanan pada layar lebar. Judulnya
         adalah contoh yang sudah jadi — angka, panah, kata — karena satu contoh
