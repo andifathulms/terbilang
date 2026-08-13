@@ -5,16 +5,25 @@
 /*
  * Palet sebagai variabel, bukan heksa yang tersebar. Siang adalah lembar cek
  * yang baru dicetak; malam adalah salinan karbonnya — bahan yang sama, cahaya
- * yang berbeda. Rasio kontras teks utama terhadap latarnya dijaga di atas 4,5.
+ * yang berbeda.
+ *
+ * Tingkat keredupan teks adalah token tersendiri, bukan alfa di atas --ink.
+ * Alfa terlihat cukup di tema malam dan gagal di tema siang pada nilai yang
+ * sama — ink/55 hanya mencapai 3,5:1 di atas tint siang — jadi setiap tingkat
+ * disetel tangan per tema dan rasionya dicatat di sini. Semuanya diukur
+ * terhadap latar tersulitnya: tint untuk tema siang, kertas untuk tema malam.
  */
 @layer base {
   :root {
     --tint: 230 237 228; /* #E6EDE4 tint pengaman */
     --kertas: 247 250 245;
-    --guilloche: 185 199 188; /* #B9C7BC garis engine-turned */
-    --ink: 28 35 31; /* #1C231F */
-    --bank: 43 76 111; /* #2B4C6F */
-    --void: 163 60 51; /* #A33C33 — hanya penolakan */
+    --guilloche: 185 199 188; /* #B9C7BC garis engine-turned, hairline saja */
+    --garis: 120 135 124; /* #78877C batas kendali — 3,2:1, non-teks */
+    --ink: 28 35 31; /* #1C231F — 13,4:1 */
+    --ink-sedang: 74 84 77; /* #4A544D — 6,6:1 */
+    --ink-lirih: 88 100 91; /* #58645B — 5,2:1, tingkat teredup yang boleh */
+    --bank: 43 76 111; /* #2B4C6F — 7,4:1 */
+    --void: 163 60 51; /* #A33C33 — 5,4:1, hanya penolakan */
     --segel: 138 106 47;
     color-scheme: light;
   }
@@ -23,11 +32,41 @@
     --tint: 15 20 17;
     --kertas: 24 31 27;
     --guilloche: 66 84 71;
-    --ink: 226 235 226;
-    --bank: 148 187 224;
+    --garis: 110 124 114; /* #6E7C72 — 3,8:1 */
+    --ink: 226 235 226; /* #E2EBE2 — 13,8:1 */
+    --ink-sedang: 163 175 164; /* #A3AFA4 — 7,4:1 */
+    --ink-lirih: 138 150 140; /* #8A968C — 5,5:1 */
+    --bank: 148 187 224; /* #94BBE0 — 9,3:1 */
     --void: 226 130 118;
     --segel: 204 168 100;
     color-scheme: dark;
+  }
+
+  /*
+   * Satu tangga tipe, rasio 1,2, berpangkal di 1rem. Teks bacaan tidak pernah
+   * turun di bawah --teks-dasar; --teks-kecil hanya untuk keterangan, dan
+   * --teks-label hanya untuk label huruf besar yang berspasi lebar. Tidak ada
+   * ukuran sebarang di komponen.
+   */
+  :root {
+    --teks-label: 0.694rem;
+    --teks-kecil: 0.833rem;
+    --teks-dasar: 1rem;
+    --teks-sedang: 1.2rem;
+    --teks-besar: 1.44rem;
+    --teks-judul: 1.728rem;
+    --teks-jumlah: clamp(1.5rem, 4.4vw, 2.75rem);
+    --teks-sorot: clamp(2rem, 4.6vw, 3.25rem);
+
+    /* Tangga ruang, kelipatan 4px. Jarak antar bagian memakai --ruang-8. */
+    --ruang-1: 0.25rem;
+    --ruang-2: 0.5rem;
+    --ruang-3: 0.75rem;
+    --ruang-4: 1rem;
+    --ruang-5: 1.5rem;
+    --ruang-6: 2rem;
+    --ruang-7: 3rem;
+    --ruang-8: 4rem;
   }
 
   html {
@@ -127,7 +166,16 @@
 
   /* Label kecil berhuruf besar yang berulang di seluruh situs. */
   .label {
-    @apply text-label font-medium uppercase text-ink/55;
+    @apply text-label font-medium uppercase text-ink-lirih;
+  }
+
+  /*
+   * Kolom masukan tiruan di beranda. Bukan input — hanya penampilannya, supaya
+   * lembar sorot terbaca sebagai alat yang bisa diketik alih-alih gambar.
+   * Kolom yang sesungguhnya ada di halaman pengubah dan memakai batas yang sama.
+   */
+  .kolom-semu {
+    @apply rounded-lembar border border-garis bg-kertas px-4 py-3;
   }
 }
 

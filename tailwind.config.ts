@@ -22,8 +22,16 @@ const config: Config = {
       colors: {
         tint: token('tint'),
         kertas: token('kertas'),
+        /** Hairline dekoratif. Untuk batas kendali pakai `garis`. */
         guilloche: token('guilloche'),
+        garis: token('garis'),
         ink: token('ink'),
+        /**
+         * Dua tingkat keredupan teks, disetel per tema di globals.css supaya
+         * keduanya tetap di atas 4,5:1. Jangan ganti dengan ink/xx.
+         */
+        'ink-sedang': token('ink-sedang'),
+        'ink-lirih': token('ink-lirih'),
         bank: token('bank'),
         void: token('void'),
         /** Ochre stempel. Hanya untuk cap verifikasi; tidak untuk yang lain. */
@@ -34,13 +42,37 @@ const config: Config = {
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
+      /**
+       * Satu tangga tipe, nilainya di globals.css. Teks bacaan berhenti di
+       * `dasar` (16px); `kecil` untuk keterangan, `label` untuk label huruf
+       * besar. Tidak ada text-[…] sebarang di komponen.
+       */
       fontSize: {
+        label: ['var(--teks-label)', { lineHeight: '1.2', letterSpacing: '0.14em' }],
+        kecil: ['var(--teks-kecil)', { lineHeight: '1.5' }],
+        dasar: ['var(--teks-dasar)', { lineHeight: '1.65' }],
+        sedang: ['var(--teks-sedang)', { lineHeight: '1.5' }],
+        besar: ['var(--teks-besar)', { lineHeight: '1.35' }],
+        judul: ['var(--teks-judul)', { lineHeight: '1.25', letterSpacing: '-0.01em' }],
         /** Jumlah terbilang: pahlawan halaman, ikut lebar layar. */
-        jumlah: ['clamp(1.5rem, 4.4vw, 2.75rem)', { lineHeight: '1.2' }],
+        jumlah: ['var(--teks-jumlah)', { lineHeight: '1.2' }],
         /** Sorot beranda, satu tingkat di atas jumlah. */
-        sorot: ['clamp(2rem, 4.6vw, 3.25rem)', { lineHeight: '1.1', letterSpacing: '-0.015em' }],
-        /** Label kecil berhuruf besar yang berulang di seluruh situs. */
-        label: ['0.6875rem', { lineHeight: '1.2', letterSpacing: '0.14em' }],
+        sorot: ['var(--teks-sorot)', { lineHeight: '1.1', letterSpacing: '-0.015em' }],
+      },
+      /**
+       * Tangga ruang bernama, ditambahkan di samping skala bawaan Tailwind
+       * alih-alih menimpanya — menimpa `1.5`/`2.5` akan menggeser diam-diam
+       * setiap komponen yang sudah memakainya.
+       */
+      spacing: {
+        ruang1: 'var(--ruang-1)',
+        ruang2: 'var(--ruang-2)',
+        ruang3: 'var(--ruang-3)',
+        ruang4: 'var(--ruang-4)',
+        ruang5: 'var(--ruang-5)',
+        ruang6: 'var(--ruang-6)',
+        ruang7: 'var(--ruang-7)',
+        ruang8: 'var(--ruang-8)',
       },
       borderRadius: {
         lembar: '0.75rem',
