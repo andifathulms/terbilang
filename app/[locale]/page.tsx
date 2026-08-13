@@ -194,7 +194,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
         <div className="grid gap-px overflow-hidden rounded-lembar border border-guilloche/70 bg-guilloche/60 sm:grid-cols-2 lg:grid-cols-4">
           {t.beranda.sifat.map((s) => (
             <div key={s.label} className="bg-tint p-5">
-              <p className="tabular font-display text-besar text-bank">{s.nilai}</p>
+              <p className="font-display text-besar text-bank">{s.nilai}</p>
               <p className="mt-1 text-kecil text-ink-sedang">{s.label}</p>
             </div>
           ))}
