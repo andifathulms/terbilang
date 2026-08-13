@@ -12,17 +12,29 @@ import type { Kelompok, Options } from '@/lib';
  *
  * Murni penyaji: seluruh dekomposisi datang dari kelompokkan() di pustaka.
  */
+/**
+ * `padat` mengecilkan kurungnya untuk tempat yang hanya menerangkan cara
+ * kerja, bukan menampilkan hasil — di beranda, misalnya, di bawah garis
+ * jumlah. Ia memilih token yang lebih kecil, bukan menyusutkan seluruh blok
+ * dengan transform: transform akan merender teks pada 0,9 kali nilai token,
+ * yakni ukuran yang tidak ada di tangga mana pun, sekaligus menyusutkan tebal
+ * garis dan menggeser keterangan kelompok kosong dari tempatnya.
+ */
 export function KurungKelompok({
   kelompok,
   labelKosong,
   ejaan,
+  padat = false,
 }: {
   kelompok: readonly Kelompok[];
   labelKosong: string;
   ejaan: Options['ejaanMiliar'];
+  padat?: boolean;
 }) {
   return (
-    <div className="flex flex-wrap items-end gap-x-1.5 gap-y-8 pb-7">
+    <div
+      className={`flex flex-wrap items-end gap-x-1.5 ${padat ? 'gap-y-7 pb-6' : 'gap-y-8 pb-7'}`}
+    >
       {kelompok.map((k, i) => {
         const kosong = k.nilai === 0n && kelompok.length > 1;
         const digit = i === 0 ? k.nilai.toString() : k.nilai.toString().padStart(3, '0');
@@ -47,7 +59,9 @@ export function KurungKelompok({
             </span>
 
             <span
-              className={`tabular relative mt-1 min-w-[3.4rem] rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 text-center font-mono text-sedang transition-colors duration-300 ease-kertas ${
+              className={`tabular relative mt-1 rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 text-center font-mono transition-colors duration-300 ease-kertas ${
+                padat ? 'min-w-[2.9rem] text-dasar' : 'min-w-[3.4rem] text-sedang'
+              } ${
                 kosong
                   ? 'border-guilloche text-ink-lirih line-through decoration-void/50'
                   : 'border-garis bg-tint/50 text-ink'

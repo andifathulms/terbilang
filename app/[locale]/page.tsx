@@ -119,11 +119,12 @@ export default function Beranda({ params }: { params: { locale: string } }) {
 
               <div className="border-t border-guilloche/60 pt-ruang4">
                 <span className="label">{t.beranda.caraKerja}</span>
-                <div className="mt-1.5 scale-90 origin-left">
+                <div className="mt-1.5">
                   <KurungKelompok
                     kelompok={kelompok}
                     labelKosong={t.ubah.kosong}
                     ejaan={OPSI_BAWAAN.ejaanMiliar}
+                    padat
                   />
                 </div>
               </div>
