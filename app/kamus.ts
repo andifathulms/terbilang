@@ -86,6 +86,8 @@ interface Teks {
     readonly varian: string;
     readonly varianRingkas: string;
     readonly bawaan: string;
+    readonly masukanSama: string;
+    readonly kataBerubah: string;
   };
   readonly survei: {
     readonly judul: string;
@@ -203,8 +205,10 @@ const id: Teks = {
     sumber: 'Sumber',
     varian: 'Varian tersitasi',
     varianRingkas:
-      'Setiap opsi menyebut pemakaian yang mendasari kedua sisinya. Tidak ada bawaan diam-diam.',
+      'Setiap opsi menyebut pemakaian yang mendasari kedua sisinya, dan setiap sisi dijalankan atas masukan yang sama saat halaman dibangun. Kata yang berubah ditandai, sehingga terlihat opsi mana yang menggeser satu kata dan mana yang menyusun ulang seluruh kalimat. Tidak ada bawaan diam-diam.',
     bawaan: 'bawaan',
+    masukanSama: 'Masukan yang sama',
+    kataBerubah: 'kata berubah',
   },
   survei: {
     judul: 'Survei implementasi',
@@ -330,8 +334,10 @@ const en: Teks = {
     sumber: 'Source',
     varian: 'Cited variants',
     varianRingkas:
-      'Every option names the usage behind both of its sides. There is no silent default.',
+      'Every option names the usage behind both of its sides, and every side is run against the same input at build time. The words that change are marked, so you can see which options move a single word and which rebuild the whole sentence. There is no silent default.',
     bawaan: 'default',
+    masukanSama: 'The same input',
+    kataBerubah: 'changed',
   },
   survei: {
     judul: 'Implementation survey',

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { format, SITASI_OPSI } from '@/lib';
+import { BandingVarian } from '../../../components/BandingVarian';
 import { DaftarIsi } from '../../../components/kerangka/DaftarIsi';
 import { ATURAN, type Contoh } from '../../../data/aturan';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../../kamus';
@@ -107,26 +108,13 @@ export default function Aturan({ params }: { params: { locale: string } }) {
 
             <div className="divide-y divide-guilloche/50 border-t border-guilloche/60 bg-tint/40">
               {SITASI_OPSI.map((o) => (
-                <div key={o.kunci} className="space-y-3 p-5 sm:p-6">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <code className="font-mono text-xs text-bank">{o.kunci}</code>
-                    <h3 className="text-sm font-medium">{o.judul}</h3>
-                    <span className="text-[0.7rem] text-ink/45">
-                      {t.aturan.bawaan}: {o.bawaan}
-                    </span>
-                  </div>
-
-                  <dl className="space-y-2.5">
-                    {o.pilihan.map((p) => (
-                      <div key={p.nilai} className="grid gap-1 sm:grid-cols-[12rem_1fr] sm:gap-4">
-                        <dt className="font-display text-bank">{p.contoh}</dt>
-                        <dd className="text-xs leading-relaxed text-ink/70">
-                          {p.dasar} <span className="text-ink/45">— {p.sumber}</span>
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
+                <BandingVarian
+                  key={o.kunci}
+                  opsi={o}
+                  labelMasukan={t.aturan.masukanSama}
+                  labelBerubah={t.aturan.kataBerubah}
+                  labelBawaan={t.aturan.bawaan}
+                />
               ))}
             </div>
           </section>

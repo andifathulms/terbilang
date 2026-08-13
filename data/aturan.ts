@@ -3,6 +3,7 @@
  * halaman dibangun, sehingga tidak ada contoh yang bisa basi tanpa ketahuan.
  */
 
+import type { Options } from '../lib';
 import type { Lokal } from '../app/kamus';
 
 export interface Contoh {
@@ -19,6 +20,30 @@ export interface Aturan {
   readonly sumber: string;
   readonly contoh: readonly Contoh[];
 }
+
+/**
+ * Satu masukan per varian, dijalankan lewat setiap sisinya supaya kedua bentuk
+ * bisa dibandingkan alih-alih dibayangkan bergantian. Masukannya sengaja
+ * dipilih yang benar-benar menggerakkan opsi itu: `ejaanMiliar` memakai nilai
+ * yang membawa triliun sekaligus miliar, karena satu opsi ini mengubah dua
+ * kata dan hanya terlihat kalau keduanya muncul.
+ *
+ * `dasar` melengkapi opsi yang tidak bermakna sendirian: `sen: 'sen'` menolak
+ * tanpa mata uang rupiah — pustaka mengembalikan `opsi-bertentangan` — jadi
+ * kedua sisinya dibandingkan di bawah imbuhan mata uang yang sama.
+ */
+export interface MasukanVarian {
+  readonly masukan: bigint | string;
+  readonly dasar?: Partial<Options>;
+}
+
+export const MASUKAN_VARIAN: Record<keyof Options, MasukanVarian> = {
+  sejuta: { masukan: 1_000_000n },
+  ejaanMiliar: { masukan: 1_001_000_000_000n },
+  mataUang: { masukan: 1_500n },
+  sen: { masukan: '1,25', dasar: { mataUang: 'rupiah' } },
+  kapitalisasi: { masukan: 1_500n, dasar: { mataUang: 'rupiah' } },
+};
 
 export const ATURAN: readonly Aturan[] = [
   {
