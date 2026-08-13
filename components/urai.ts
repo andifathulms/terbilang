@@ -57,6 +57,31 @@ export interface UraiKelompok {
   readonly lebur: boolean;
   /** Isi kelompok dibelah menurut nilai tempat. */
   readonly suku: readonly Suku[];
+  /** Bacaan aritmetikanya, hanya bila kelompok ini punya pengali dan lebih dari satu suku. */
+  readonly lingkup: Lingkup | null;
+}
+
+/**
+ * Bacaan aritmetika sebuah kelompok, untuk arah membaca balik.
+ *
+ * "dua ratus lima puluh ribu" adalah (2 x 100 + 5 x 10) x 1.000, bukan
+ * 200 + 50.000. Kata skala mengali seluruh frasa di depannya, dan menyelesaikan
+ * lingkup itu adalah bagian tersulit arah balik — juga bagian yang selama ini
+ * tidak pernah ditampilkan di mana pun.
+ *
+ * Keduanya dihitung dari suku yang sudah ada, jadi tidak ada aturan penguraian
+ * yang ditulis ulang: yang benar mengalikan jumlah seluruh sukunya, yang
+ * keliru hanya mengalikan suku terakhir.
+ */
+export interface Lingkup {
+  /** Suku di dalam kurung, misalnya ["2 x 100", "5 x 10"]. */
+  readonly suku: readonly string[];
+  /** Pengalinya, misalnya 1000. */
+  readonly pengali: bigint;
+  /** Hasil yang benar: jumlah suku dikali pengali. */
+  readonly benar: bigint;
+  /** Hasil bila pengalinya hanya kena suku terakhir. */
+  readonly keliru: bigint;
 }
 
 export interface Uraian {
@@ -135,6 +160,26 @@ function belahKelompok(nilai: bigint, opsi: Partial<Options>): Suku[] {
   return suku;
 }
 
+/**
+ * Bacaan aritmetika satu kelompok yang punya pengali dan lebih dari satu suku.
+ * Hanya di situ lingkupnya bisa disalahpahami; "satu ribu" tidak mendua.
+ */
+function bacaLingkup(nilai: bigint, pengali: bigint, suku: readonly Suku[]): Lingkup | null {
+  if (pengali === 1n || nilai === 0n || suku.length < 2) return null;
+
+  const jumlah = suku.reduce((a, s) => a + s.angka, 0n);
+  const terakhir = suku[suku.length - 1]?.angka ?? 0n;
+
+  return {
+    suku: suku.map((s) => (s.faktor === 1n ? s.cacah.toString() : `${s.cacah} × ${s.faktor}`)),
+    pengali,
+    benar: jumlah * pengali,
+    /* Salah paham yang lazim: pengalinya dikira hanya kena kata terdekatnya,
+       sehingga "dua ratus lima puluh ribu" terbaca 200 + 50.000. */
+    keliru: jumlah - terakhir + terakhir * pengali,
+  };
+}
+
 export function uraikan(bulat: bigint, opsi: Options): Uraian {
   const antara = opsiAntara(opsi);
   const kelompok = kelompokkan(bulat);
@@ -144,6 +189,7 @@ export function uraikan(bulat: bigint, opsi: Options): Uraian {
     const skalaKata = antara.ejaanMiliar === 'varian' ? k.skala.varian : k.skala.baku;
     const kataSendiri = kata(k.nilai, antara);
     const kataDiTempat = kata(k.nilai * k.skala.nilai, antara);
+    const suku = belahKelompok(k.nilai, antara);
 
     return {
       kelompok: k,
@@ -155,7 +201,8 @@ export function uraikan(bulat: bigint, opsi: Options): Uraian {
       /* Peleburan dikenali dengan membandingkan dua keluaran pustaka, bukan
          dengan menuliskan ulang syarat aturannya di sini. */
       lebur: k.nilai !== 0n && kataDiTempat !== `${kataSendiri} ${skalaKata}`.trim(),
-      suku: belahKelompok(k.nilai, antara),
+      suku,
+      lingkup: bacaLingkup(k.nilai, k.skala.nilai, suku),
     };
   });
 

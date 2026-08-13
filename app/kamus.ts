@@ -110,6 +110,9 @@ interface Teks {
     readonly naifJudul: string;
     readonly naifIsi: string;
     readonly sederhana: string;
+    readonly lingkupJudul: string;
+    readonly lingkupIsi: string;
+    readonly lingkupKeliru: string;
   };
   readonly aturan: {
     readonly judul: string;
@@ -263,6 +266,10 @@ const id: Teks = {
       'Rangkai saja kolom "dieja sendiri" dan sebut juga kelompok yang bernilai nol, dan inilah yang keluar — dua bentuk keliru yang paling lazim di ekosistem, bukan tiruan yang dikarang.',
     sederhana:
       'Uraian ini menampilkan bilangannya saja. Imbuhan rupiah, sen, dan kapitalisasi dipasang pada jumlah yang sudah jadi, bukan pada tiap potongan.',
+    lingkupJudul: 'Lingkup pengali',
+    lingkupIsi:
+      'Membaca balik lebih sulit daripada mengeja, dan di sinilah sulitnya: kata skala mengali seluruh frasa di depannya, bukan kata terakhir saja. Kurung di bawah menunjukkan sampai mana jangkauannya.',
+    lingkupKeliru: 'Kalau kata skala hanya mengali kata terdekatnya, hasilnya jadi',
   },
   aturan: {
     judul: 'Aturan',
@@ -429,6 +436,10 @@ const en: Teks = {
       'Just join the "spelled alone" column and name the zero groups too, and this is what comes out — the two most common wrong forms in the ecosystem, not an invented imitation.',
     sederhana:
       'This derivation shows the number alone. The rupiah suffix, sen, and capitalisation are applied to the finished amount, not to each piece.',
+    lingkupJudul: 'Multiplier scope',
+    lingkupIsi:
+      'Reading back is harder than spelling out, and this is where the difficulty lives: a scale word multiplies the whole phrase before it, not just the nearest word. The brackets below show how far its reach goes.',
+    lingkupKeliru: 'If a scale word multiplied only its nearest word, the result would be',
   },
   aturan: {
     judul: 'Rules',

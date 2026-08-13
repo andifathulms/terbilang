@@ -229,7 +229,7 @@ export function Konverter({
                   />
                 </div>
 
-                <Uraian bulat={hasilAngka.nilai.bulat} opsi={opsi} t={urai} />
+                <Uraian bulat={hasilAngka.nilai.bulat} opsi={opsi} t={urai} lingkup />
 
                 <div className="flex flex-wrap justify-end gap-2">
                   <TombolSalin

@@ -22,14 +22,19 @@ export function Uraian({
   opsi,
   t,
   tumpuk = false,
+  lingkup = false,
 }: {
   bulat: bigint;
   opsi: Options;
   t: Teks['urai'];
   /** Susun menurun, untuk kolom sempit di beranda. */
   tumpuk?: boolean;
+  /** Tampilkan bacaan aritmetikanya. Dipakai di arah membaca balik. */
+  lingkup?: boolean;
 }) {
   const u = uraikan(bulat, opsi);
+  const bertitik = (n: bigint) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const adaLingkup = u.kelompok.some((k) => k.lingkup !== null);
 
   return (
     <figure className="m-0 space-y-ruang4">
@@ -102,6 +107,18 @@ export function Uraian({
                   ) : null}
                 </p>
 
+                {/*
+                  Bacaan aritmetikanya, di kelompok tempat lingkupnya benar-benar
+                  bisa disalahpahami. Kurungnya menunjukkan sampai mana kata
+                  skala menjangkau ke belakang.
+                */}
+                {lingkup && k.lingkup !== null ? (
+                  <p className="tabular flex flex-wrap items-baseline gap-x-2 font-mono text-kecil text-ink-sedang">
+                    ({k.lingkup.suku.join(' + ')}) × {bertitik(k.lingkup.pengali)} ={' '}
+                    <span className="text-bank">{bertitik(k.lingkup.benar)}</span>
+                  </p>
+                ) : null}
+
                 {/* Kenapa belasan tidak dibelah lagi, disebut di tempat ia berhenti. */}
                 {k.suku.length === 1 && k.kelompok.nilai > 9n && k.kelompok.nilai < 20n ? (
                   <p className="text-kecil text-ink-lirih">{t.belasan}</p>
@@ -111,6 +128,28 @@ export function Uraian({
           </li>
         ))}
       </ol>
+
+      {/*
+        Lingkup pengali: bagian tersulit arah balik, dan selama ini tidak
+        ditampilkan di mana pun. Bentuk kelirunya dihitung dari suku yang sama
+        — pengali dikira hanya kena kata terdekatnya — bukan dikarang.
+      */}
+      {lingkup && adaLingkup ? (
+        <div className="space-y-1 rounded-lembar border border-garis bg-tint/40 p-3">
+          <p className="label">{t.lingkupJudul}</p>
+          <p className="max-w-2xl text-kecil text-ink-sedang">{t.lingkupIsi}</p>
+          {u.kelompok
+            .filter((k) => k.lingkup !== null)
+            .map((k) => (
+              <p key={k.digit} className="text-kecil text-ink-sedang">
+                {t.lingkupKeliru}{' '}
+                <span className="tabular font-mono text-void line-through decoration-void/50">
+                  {bertitik(k.lingkup?.keliru ?? 0n)}
+                </span>
+              </p>
+            ))}
+        </div>
+      ) : null}
 
       <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 border-t border-guilloche/60 pt-ruang3">
         <span className="label">{t.gabung}</span>
