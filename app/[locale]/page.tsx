@@ -4,10 +4,19 @@ import { format, kelompokkan, OPSI_BAWAAN } from '@/lib';
 import { Cap } from '../../components/cheque/Cap';
 import { GarisJumlah } from '../../components/cheque/GarisJumlah';
 import { KurungKelompok } from '../../components/cheque/KurungKelompok';
+import { Uraian } from '../../components/cheque/Uraian';
 import { KAMUS, lokalSah, type Lokal } from '../kamus';
 
 /** Nilai sorot dan contoh dihitung pustaka saat halaman dibangun. */
 const SOROT = 1_000_001n;
+
+/*
+ * Bilangan untuk uraian pengantar. Sengaja yang biasa saja: cukup besar untuk
+ * memakai dua kata skala dan memakai ratusan serta puluhan, tetapi tanpa satu
+ * pun kasus batas. Nilai sorot 1.000.001 justru kasus tepi — ia dipilih karena
+ * memperagakan kelompok kosong — dan kasus tepi bukan tempat memulai.
+ */
+const URAI_PENGANTAR = 4_250_000n;
 
 /** Nilai, catatan, dan bentuk keliru yang lazim muncul di implementasi lain. */
 type Baris = readonly [bigint, string, string];
@@ -164,6 +173,20 @@ export default function Beranda({ params }: { params: { locale: string } }) {
               {t.beranda.ajakanDua}
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/*
+        Contoh berjalan yang bisa diikuti sebelum menyentuh kendali apa pun.
+        Ia mendahului daftar kasus tepi dengan sengaja: pembaca perlu tahu
+        rupa bilangan biasa sebelum diperlihatkan yang ganjil.
+      */}
+      <section className="space-y-ruang4">
+        <h2 className="font-display text-besar">{t.beranda.judulUrai}</h2>
+        <p className="max-w-2xl text-dasar text-ink-sedang">{t.beranda.ringkasUrai}</p>
+
+        <div className="lembar p-5 sm:p-6">
+          <Uraian bulat={URAI_PENGANTAR} opsi={OPSI_BAWAAN} t={t.urai} />
         </div>
       </section>
 

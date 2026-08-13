@@ -64,6 +64,8 @@ interface Teks {
     readonly judulSifat: string;
     readonly sifat: readonly Sifat[];
     readonly cap: { readonly judul: string; readonly isi: string };
+    readonly judulUrai: string;
+    readonly ringkasUrai: string;
     readonly judulContoh: string;
     readonly ringkasContoh: string;
     readonly kartu: readonly Kartu[];
@@ -181,6 +183,9 @@ const id: Teks = {
       { nilai: 'BigInt', label: 'presisi tetap utuh di atas batas 2⁵³ JavaScript' },
     ],
     cap: { judul: 'Diuji tuntas', isi: '0 … 1.000.000' },
+    judulUrai: 'Satu bilangan biasa, dari awal sampai akhir',
+    ringkasUrai:
+      'Sebelum menyentuh apa pun: satu bilangan yang tidak istimewa, diurai langkah demi langkah. Setelah ini baru kasus yang bikin implementasi lain patah.',
     judulContoh: 'Tempat implementasi lain patah',
     ringkasContoh: 'Kolom kanan dihitung pustaka ini; yang dicoret adalah bentuk keliru yang lazim.',
     kartu: [
@@ -334,6 +339,9 @@ const en: Teks = {
       { nilai: 'BigInt', label: "precision stays exact past JavaScript's 2⁵³ limit" },
     ],
     cap: { judul: 'Verified whole', isi: '0 … 1,000,000' },
+    judulUrai: 'One ordinary number, end to end',
+    ringkasUrai:
+      'Before touching anything: one unremarkable number, worked through step by step. The cases that break other implementations come after.',
     judulContoh: 'Where other implementations break',
     ringkasContoh: 'The right column is computed by this library; the struck-through text is the common wrong form.',
     kartu: [
