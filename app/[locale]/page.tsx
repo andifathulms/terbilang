@@ -37,12 +37,19 @@ export default function Beranda({ params }: { params: { locale: string } }) {
   return (
     <div className="space-y-ruang7 sm:space-y-ruang8">
       {/*
-        Sorot: judul di kiri, lembar cek di kanan pada layar lebar. Judulnya
+        Sorot: teks di kiri, lembar cek di kanan pada layar lebar. Judulnya
         adalah contoh yang sudah jadi — angka, panah, kata — karena satu contoh
         menerangkan alat ini lebih cepat daripada kalimat mana pun tentangnya.
+
+        Tiga anak, bukan dua, supaya urutan di layar sempit bisa disela: judul,
+        lalu lembar cek, baru prosa dan ajakan — contoh yang bisa disentuh tidak
+        menunggu di bawah satu layar penuh teks. Urutan markahnya sudah urutan
+        itu, jadi tidak ada kelas order sama sekali dan urutan fokus mengikuti
+        apa yang terlihat. Di layar lebar penempatannya disebut tegas: kolom
+        kiri dua baris untuk teks, kolom kanan memanjang untuk lembarnya.
       */}
-      <section className="grid items-center gap-ruang7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-        <div className="animate-naik-masuk space-y-ruang5">
+      <section className="grid items-center gap-x-ruang7 gap-y-ruang5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+        <div className="animate-naik-masuk space-y-ruang5 lg:col-start-1 lg:row-start-1 lg:self-end">
           <p className="label">{t.beranda.mata}</p>
 
           <h1 className="flex flex-wrap items-baseline gap-x-ruang3 gap-y-ruang1 font-display text-sorot">
@@ -55,33 +62,6 @@ export default function Beranda({ params }: { params: { locale: string } }) {
           </h1>
 
           <p className="max-w-xl text-sedang text-ink">{t.beranda.kepala}</p>
-
-          <div className="max-w-xl space-y-ruang4 text-dasar text-ink-sedang">
-            {t.beranda.paragraf.map((p) => (
-              <p key={p.slice(0, 24)}>{p}</p>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-ruang3">
-            <Link
-              href={`/${lokal}/ubah/`}
-              className="group inline-flex items-center gap-2 rounded-full bg-bank px-5 py-2.5 text-kendali text-kertas shadow-lembar transition-transform duration-200 ease-kertas hover:-translate-y-0.5"
-            >
-              {t.beranda.ajakan}
-              <span
-                aria-hidden
-                className="transition-transform duration-200 ease-kertas group-hover:translate-x-0.5"
-              >
-                →
-              </span>
-            </Link>
-            <Link
-              href={`/${lokal}/aturan/`}
-              className="inline-flex items-center rounded-full border border-garis px-5 py-2.5 text-kendali text-ink-sedang transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
-            >
-              {t.beranda.ajakanDua}
-            </Link>
-          </div>
         </div>
 
         {/*
@@ -90,7 +70,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
           Kurung kelompok pindah ke bawah sebagai keterangan cara kerja — ia
           menerangkan mekanismenya, bukan hasil ketiga yang setara.
         */}
-        <div className="animate-naik-masuk tunda-2">
+        <div className="animate-naik-masuk tunda-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
           <Link
             href={`/${lokal}/ubah/`}
             className="lembar roset group block overflow-hidden transition-all duration-300 ease-kertas hover:-translate-y-1 hover:shadow-angkat"
@@ -142,6 +122,35 @@ export default function Beranda({ params }: { params: { locale: string } }) {
           </Link>
           {/* Tepi sobek, seperti cek yang dilepas dari bukunya. */}
           <div aria-hidden className="perforasi mx-3 -mt-[5px]" />
+        </div>
+
+        <div className="animate-naik-masuk tunda-3 space-y-ruang5 lg:col-start-1 lg:row-start-2 lg:self-start">
+          <div className="max-w-xl space-y-ruang4 text-dasar text-ink-sedang">
+            {t.beranda.paragraf.map((p) => (
+              <p key={p.slice(0, 24)}>{p}</p>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-ruang3">
+            <Link
+              href={`/${lokal}/ubah/`}
+              className="group inline-flex items-center gap-2 rounded-full bg-bank px-5 py-2.5 text-kendali text-kertas shadow-lembar transition-transform duration-200 ease-kertas hover:-translate-y-0.5"
+            >
+              {t.beranda.ajakan}
+              <span
+                aria-hidden
+                className="transition-transform duration-200 ease-kertas group-hover:translate-x-0.5"
+              >
+                →
+              </span>
+            </Link>
+            <Link
+              href={`/${lokal}/aturan/`}
+              className="inline-flex items-center rounded-full border border-garis px-5 py-2.5 text-kendali text-ink-sedang transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
+            >
+              {t.beranda.ajakanDua}
+            </Link>
+          </div>
         </div>
       </section>
 
