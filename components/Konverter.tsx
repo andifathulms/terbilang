@@ -68,10 +68,14 @@ export function Konverter({
   const hasilKata = useMemo(() => format(angka, opsi), [angka, opsi]);
   const hasilAngka = useMemo(() => parse(kata, opsi), [kata, opsi]);
 
-  const kelompok: Kelompok[] = useMemo(() => {
-    const bulat = bagianBulat(angka);
-    return bulat === undefined ? [] : kelompokkan(bulat);
-  }, [angka]);
+  /* Sejalur dengan format, parse, dan kelompokkan di atas: uraikan satu-satunya
+     hitungan jalur ketuk yang belum diingat, dan tetangganya semua sudah. */
+  const bulatAngka = useMemo(() => bagianBulat(angka), [angka]);
+
+  const kelompok: Kelompok[] = useMemo(
+    () => (bulatAngka === undefined ? [] : kelompokkan(bulatAngka)),
+    [bulatAngka],
+  );
 
   const kelompokTerurai: Kelompok[] = useMemo(
     () => (hasilAngka.type === 'ok' ? kelompokkan(hasilAngka.nilai.bulat) : []),
@@ -165,8 +169,8 @@ export function Konverter({
               <div className="space-y-4">
                 <GarisJumlah kata={teksKata} modeDokumen={modeDokumen} label={t.labelKata} bisu />
 
-                {bagianBulat(angka) === undefined ? null : (
-                  <Uraian bulat={bagianBulat(angka) ?? 0n} opsi={opsi} t={urai} />
+                {bulatAngka === undefined ? null : (
+                  <Uraian bulat={bulatAngka} opsi={opsi} t={urai} />
                 )}
 
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
