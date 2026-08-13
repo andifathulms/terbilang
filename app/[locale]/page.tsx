@@ -71,8 +71,16 @@ export default function Beranda({ params }: { params: { locale: string } }) {
           menerangkan mekanismenya, bukan hasil ketiga yang setara.
         */}
         <div className="animate-naik-masuk tunda-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          {/*
+            Nama tautannya disebut sendiri. Tanpa itu ia dirangkai dari seluruh
+            isi kartu — label, angka, jumlah terbilang, tiap kotak kelompok —
+            dan terbaca sebagai satu tautan sepanjang dua ratus aksara lebih.
+            Isinya tetap ada dan tetap bisa ditelusuri; yang dipendekkan hanya
+            namanya, waktu tautan itu disebut sebagai tautan.
+          */}
           <Link
             href={`/${lokal}/ubah/`}
+            aria-label={t.beranda.ketik}
             className="lembar roset group block overflow-hidden transition-all duration-300 ease-kertas hover:-translate-y-1 hover:shadow-angkat"
           >
             <div className="space-y-ruang4 bg-kertas/90 p-5 sm:p-6">
