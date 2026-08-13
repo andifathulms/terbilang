@@ -11,6 +11,13 @@ export interface Contoh {
   readonly masukan: bigint | string;
   /** Bentuk keliru yang lazim muncul di implementasi lain, bila ada. */
   readonly keliru?: string;
+  /**
+   * Suku antara yang menghasilkan bentuk benarnya, bila aturannya memang
+   * berupa penurunan. Contoh yang hanya berpasangan masuk-keluar cuma bisa
+   * dihafal; menyebut suku tengahnya membuat baris berikutnya bisa diterka
+   * sendiri sebelum dibaca.
+   */
+  readonly turunan?: string;
 }
 
 export interface Aturan {
@@ -55,11 +62,15 @@ export const ATURAN: readonly Aturan[] = [
     },
     sumber: 'KBBI; PUEBI/EYD, penulisan bilangan.',
     contoh: [
-      { masukan: 10n, keliru: 'satu puluh' },
-      { masukan: 11n, keliru: 'satu belas' },
-      { masukan: 100n, keliru: 'satu ratus' },
-      { masukan: 1_000n, keliru: 'satu ribu' },
-      { masukan: 1_000_000n, keliru: 'sejuta (varian, lihat opsi)' },
+      { masukan: 10n, turunan: 'se- + puluh', keliru: 'satu puluh' },
+      { masukan: 11n, turunan: 'se- + belas', keliru: 'satu belas' },
+      { masukan: 100n, turunan: 'se- + ratus', keliru: 'satu ratus' },
+      { masukan: 1_000n, turunan: 'se- + ribu', keliru: 'satu ribu' },
+      {
+        masukan: 1_000_000n,
+        turunan: 'satu + juta — peleburan berhenti di ribu',
+        keliru: 'sejuta (varian, lihat opsi)',
+      },
     ],
   },
   {
@@ -70,7 +81,11 @@ export const ATURAN: readonly Aturan[] = [
       en: '11 to 19 use belas and are not derivable from the tens pattern. Sebelas fuses; the rest compound.',
     },
     sumber: 'KBBI, lema belas.',
-    contoh: [{ masukan: 11n }, { masukan: 12n }, { masukan: 19n }],
+    contoh: [
+      { masukan: 11n, turunan: 'se- + belas' },
+      { masukan: 12n, turunan: 'dua + belas' },
+      { masukan: 19n, turunan: 'sembilan + belas' },
+    ],
   },
   {
     kunci: 'kelompok-kosong',
@@ -81,9 +96,13 @@ export const ATURAN: readonly Aturan[] = [
     },
     sumber: 'Konvensi pembacaan bilangan; PUEBI/EYD.',
     contoh: [
-      { masukan: 1_000_001n, keliru: 'satu juta nol ribu satu' },
-      { masukan: 1_000_000_001n, keliru: 'satu miliar nol juta nol ribu satu' },
-      { masukan: 101_000n },
+      { masukan: 1_000_001n, turunan: '1 juta + 000 ribu + 001', keliru: 'satu juta nol ribu satu' },
+      {
+        masukan: 1_000_000_001n,
+        turunan: '1 miliar + 000 juta + 000 ribu + 001',
+        keliru: 'satu miliar nol juta nol ribu satu',
+      },
+      { masukan: 101_000n, turunan: '101 ribu + 000' },
     ],
   },
   {
@@ -110,8 +129,8 @@ export const ATURAN: readonly Aturan[] = [
     },
     sumber: 'PUEBI/EYD, tanda koma pada angka desimal.',
     contoh: [
-      { masukan: '1,25', keliru: 'satu koma dua puluh lima' },
-      { masukan: '0,05' },
+      { masukan: '1,25', turunan: '1 + koma + 2 + 5', keliru: 'satu koma dua puluh lima' },
+      { masukan: '0,05', turunan: '0 + koma + 0 + 5' },
     ],
   },
   {

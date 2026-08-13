@@ -35,6 +35,13 @@ function Baris({ contoh, kelirul }: { contoh: Contoh; kelirul: string }) {
       <span className="tabular font-mono text-dasar text-ink-sedang">{masukan}</span>
 
       <span className="min-w-0">
+        {/* Suku tengahnya disebut, supaya barisnya bisa diterka bukan dihafal. */}
+        {contoh.turunan === undefined ? null : (
+          <span lang="id" className="mb-0.5 block font-mono text-kecil text-ink-sedang">
+            {contoh.turunan} →
+          </span>
+        )}
+
         {hasil.type === 'ok' ? (
           <span lang="id" className="block break-words font-display text-sedang text-bank">
             {hasil.nilai}
