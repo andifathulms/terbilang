@@ -38,7 +38,7 @@ export function TombolSalin({
     <button
       type="button"
       onClick={salin}
-      className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-kecil transition-all duration-200 ease-kertas ${
+      className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-kendali-kecil transition-all duration-200 ease-kertas ${
         utama
           ? 'bg-bank text-kertas hover:-translate-y-0.5'
           : 'border border-garis text-ink-sedang hover:border-bank hover:text-bank'

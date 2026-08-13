@@ -51,6 +51,14 @@ const config: Config = {
         label: ['var(--teks-label)', { lineHeight: '1.2', letterSpacing: '0.14em' }],
         kecil: ['var(--teks-kecil)', { lineHeight: '1.5' }],
         dasar: ['var(--teks-dasar)', { lineHeight: '1.65' }],
+        /*
+         * Ukuran yang sama dengan `dasar` dan `kecil`, tetapi berdaun rapat:
+         * kendali diukur oleh kotak barisnya, dan daun bacaan 1,65 menambah
+         * enam piksel pada setiap tombol tanpa memberi apa-apa. Teks yang
+         * dibaca memakai `dasar`; teks yang diklik memakai ini.
+         */
+        kendali: ['var(--teks-dasar)', { lineHeight: '1.2' }],
+        'kendali-kecil': ['var(--teks-kecil)', { lineHeight: '1.2' }],
         sedang: ['var(--teks-sedang)', { lineHeight: '1.5' }],
         besar: ['var(--teks-besar)', { lineHeight: '1.35' }],
         judul: ['var(--teks-judul)', { lineHeight: '1.25', letterSpacing: '-0.01em' }],

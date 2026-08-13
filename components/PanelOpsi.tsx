@@ -29,7 +29,7 @@ export function PanelOpsi({
           <button
             type="button"
             onClick={() => ubah(OPSI_BAWAAN)}
-            className="text-kecil text-bank underline decoration-garis underline-offset-4 transition-colors hover:decoration-bank"
+            className="text-kendali-kecil text-bank underline decoration-garis underline-offset-4 transition-colors hover:decoration-bank"
           >
             {bawaanLabel} ({bergeser.length})
           </button>
@@ -67,7 +67,7 @@ export function PanelOpsi({
                       type="button"
                       aria-pressed={aktif}
                       onClick={() => ubah({ ...opsi, [o.kunci]: nilaiOpsi(o.kunci, p.nilai) })}
-                      className={`rounded-full border px-2.5 py-1 text-kecil transition-all duration-200 ease-kertas ${
+                      className={`rounded-full border px-2.5 py-1 text-kendali-kecil transition-all duration-200 ease-kertas ${
                         aktif
                           ? 'border-bank bg-bank text-kertas'
                           : 'border-garis text-ink-sedang hover:border-bank hover:text-bank'

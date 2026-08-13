@@ -97,7 +97,7 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
                     type="button"
                     onClick={() => setAngka(c.nilai)}
                     aria-pressed={angka === c.nilai}
-                    className={`tabular rounded-full border px-3 py-1 font-mono text-kecil transition-all duration-200 ease-kertas ${
+                    className={`tabular rounded-full border px-3 py-1 font-mono text-kendali-kecil transition-all duration-200 ease-kertas ${
                       angka === c.nilai
                         ? 'border-bank bg-bank text-kertas'
                         : 'border-garis text-ink-sedang hover:-translate-y-0.5 hover:border-bank hover:text-bank'
@@ -241,7 +241,7 @@ function SakelarArah({
           type="button"
           aria-pressed={arah === p.nilai}
           onClick={() => ubah(p.nilai)}
-          className={`relative z-10 truncate rounded-full px-3 py-1.5 text-kecil transition-colors duration-200 ease-kertas sm:text-dasar ${
+          className={`relative z-10 truncate rounded-full px-3 py-1.5 text-kendali-kecil transition-colors duration-200 ease-kertas sm:text-kendali ${
             arah === p.nilai ? 'text-kertas' : 'text-ink-sedang hover:text-bank'
           }`}
         >
@@ -268,7 +268,7 @@ function Sakelar({
       role="switch"
       aria-checked={aktif}
       onClick={ubah}
-      className="group flex items-center gap-2.5 text-dasar text-ink-sedang"
+      className="group flex items-center gap-2.5 text-kendali text-ink-sedang"
     >
       <span
         aria-hidden

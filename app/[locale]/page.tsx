@@ -65,7 +65,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
           <div className="flex flex-wrap gap-ruang3">
             <Link
               href={`/${lokal}/ubah/`}
-              className="group inline-flex items-center gap-2 rounded-full bg-bank px-5 py-2.5 text-dasar text-kertas shadow-lembar transition-transform duration-200 ease-kertas hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 rounded-full bg-bank px-5 py-2.5 text-kendali text-kertas shadow-lembar transition-transform duration-200 ease-kertas hover:-translate-y-0.5"
             >
               {t.beranda.ajakan}
               <span
@@ -77,7 +77,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
             </Link>
             <Link
               href={`/${lokal}/aturan/`}
-              className="inline-flex items-center rounded-full border border-garis px-5 py-2.5 text-dasar text-ink-sedang transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
+              className="inline-flex items-center rounded-full border border-garis px-5 py-2.5 text-kendali text-ink-sedang transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
             >
               {t.beranda.ajakanDua}
             </Link>
