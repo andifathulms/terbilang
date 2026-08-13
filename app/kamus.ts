@@ -93,6 +93,22 @@ interface Teks {
     readonly tukar: string;
     readonly pulihkan: string;
   };
+  readonly urai: {
+    readonly judul: string;
+    readonly ringkas: string;
+    readonly kolomKelompok: string;
+    readonly kolomSendiri: string;
+    readonly kolomDiTempat: string;
+    readonly gabung: string;
+    readonly lebur: string;
+    readonly leburSumber: string;
+    readonly kosong: string;
+    readonly kosongSumber: string;
+    readonly belasan: string;
+    readonly naifJudul: string;
+    readonly naifIsi: string;
+    readonly sederhana: string;
+  };
   readonly aturan: {
     readonly judul: string;
     readonly ringkas: string;
@@ -215,6 +231,25 @@ const id: Teks = {
     kosongkan: 'Kosongkan',
     tukar: 'Tukar arah',
     pulihkan: 'Kembalikan ke bawaan',
+  },
+  urai: {
+    judul: 'Langkahnya',
+    ringkas:
+      'Bilangan dipotong tiap tiga angka dari kanan. Tiap potongan dieja sendiri, lalu diberi kata skalanya, lalu semuanya dirangkai. Semua kata di bawah ini dihitung pustaka, termasuk nilai antaranya.',
+    kolomKelompok: 'Kelompok',
+    kolomSendiri: 'Dieja sendiri',
+    kolomDiTempat: 'Pada tempatnya',
+    gabung: 'Dirangkai',
+    lebur: 'melebur — se-',
+    leburSumber: 'KBBI; PUEBI/EYD, penulisan bilangan.',
+    kosong: 'bernilai nol — tidak menghasilkan kata',
+    kosongSumber: 'Konvensi pembacaan bilangan; PUEBI/EYD.',
+    belasan: 'sebelas sampai sembilan belas tidak dibelah lagi: belasan punya bentuknya sendiri, bukan puluhan ditambah satuan.',
+    naifJudul: 'Kalau kedua koreksi itu tidak ada',
+    naifIsi:
+      'Rangkai saja kolom "dieja sendiri" dan sebut juga kelompok yang bernilai nol, dan inilah yang keluar — dua bentuk keliru yang paling lazim di ekosistem, bukan tiruan yang dikarang.',
+    sederhana:
+      'Uraian ini menampilkan bilangannya saja. Imbuhan rupiah, sen, dan kapitalisasi dipasang pada jumlah yang sudah jadi, bukan pada tiap potongan.',
   },
   aturan: {
     judul: 'Aturan',
@@ -349,6 +384,25 @@ const en: Teks = {
     kosongkan: 'Clear',
     tukar: 'Swap direction',
     pulihkan: 'Reset to defaults',
+  },
+  urai: {
+    judul: 'The steps',
+    ringkas:
+      'The number is cut every three digits from the right. Each piece is spelled on its own, then takes its scale word, then everything is joined. Every word below is computed by the library, intermediate values included.',
+    kolomKelompok: 'Group',
+    kolomSendiri: 'Spelled alone',
+    kolomDiTempat: 'In its place',
+    gabung: 'Joined',
+    lebur: 'fuses — se-',
+    leburSumber: 'KBBI; PUEBI/EYD, penulisan bilangan.',
+    kosong: 'worth zero — emits no words',
+    kosongSumber: 'Konvensi pembacaan bilangan; PUEBI/EYD.',
+    belasan: 'eleven to nineteen are not split further: belasan has its own form, not tens plus units.',
+    naifJudul: 'Without those two corrections',
+    naifIsi:
+      'Just join the "spelled alone" column and name the zero groups too, and this is what comes out — the two most common wrong forms in the ecosystem, not an invented imitation.',
+    sederhana:
+      'This derivation shows the number alone. The rupiah suffix, sen, and capitalisation are applied to the finished amount, not to each piece.',
   },
   aturan: {
     judul: 'Rules',

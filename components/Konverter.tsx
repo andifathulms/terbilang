@@ -6,6 +6,7 @@ import type { Teks } from '../app/kamus';
 import { GarisJumlah } from './cheque/GarisJumlah';
 import { KurungKelompok } from './cheque/KurungKelompok';
 import { Penolakan } from './cheque/Penolakan';
+import { Uraian } from './cheque/Uraian';
 import { KolomAngka } from './KolomAngka';
 import { PanelOpsi } from './PanelOpsi';
 import { TombolSalin } from './TombolSalin';
@@ -30,7 +31,15 @@ const CONTOH: ReadonlyArray<{ readonly label: string; readonly nilai: string }> 
  * Tidak ada yang dihitung di komponen ini: seluruh nilai berasal dari pustaka.
  * Yang dikerjakan di sini hanya keadaan masukan, hash URL, dan tata letak.
  */
-export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] }) {
+export function Konverter({
+  t,
+  urai,
+  galat,
+}: {
+  t: Teks['ubah'];
+  urai: Teks['urai'];
+  galat: Teks['galat'];
+}) {
   const [arah, setArah] = useState<Arah>('angka');
   const [angka, setAngka] = useState('1000001');
   const [kata, setKata] = useState('dua ratus lima puluh ribu');
@@ -156,6 +165,10 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
               <div className="space-y-4">
                 <GarisJumlah kata={teksKata} modeDokumen={modeDokumen} label={t.labelKata} bisu />
 
+                {bagianBulat(angka) === undefined ? null : (
+                  <Uraian bulat={bagianBulat(angka) ?? 0n} opsi={opsi} t={urai} />
+                )}
+
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
                   <Sakelar
                     label={t.modeDokumen}
@@ -211,10 +224,12 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
                   <KurungKelompok
                     kelompok={kelompokTerurai}
                     labelKosong={t.kosong}
-                  ringkas={t.kelompokRingkas}
+                    ringkas={t.kelompokRingkas}
                     ejaan={opsi.ejaanMiliar}
                   />
                 </div>
+
+                <Uraian bulat={hasilAngka.nilai.bulat} opsi={opsi} t={urai} />
 
                 <div className="flex flex-wrap justify-end gap-2">
                   <TombolSalin

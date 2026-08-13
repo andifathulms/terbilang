@@ -24,7 +24,7 @@ export default function Ubah({ params }: { params: { locale: string } }) {
         <p className="text-dasar text-ink-sedang">{t.ubah.ringkas}</p>
       </header>
 
-      <Konverter t={t.ubah} galat={t.galat} />
+      <Konverter t={t.ubah} urai={t.urai} galat={t.galat} />
     </div>
   );
 }
