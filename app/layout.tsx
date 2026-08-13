@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Fraunces, Inter, Roboto_Mono } from 'next/font/google';
+import { SKRIP_LOKAL } from './kamus';
 import { SKRIP_TEMA } from '../components/kerangka/TombolTema';
 import './globals.css';
 
@@ -102,8 +103,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dipindahkan. Ikon lewat `metadata.icons` sudah berawalan basis.
         */}
         <link rel="manifest" href={`${basis}/manifest.webmanifest`} />
-        {/* Tema dipasang sebelum cat pertama supaya tidak ada kedipan. */}
+        {/* Tema dan lokal dipasang sebelum cat pertama. */}
         <script dangerouslySetInnerHTML={{ __html: SKRIP_TEMA }} />
+        <script dangerouslySetInnerHTML={{ __html: SKRIP_LOKAL }} />
       </head>
       <body>{children}</body>
     </html>

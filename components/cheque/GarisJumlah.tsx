@@ -24,6 +24,7 @@ export function GarisJumlah({
       <p
         key={`${kata}-${modeDokumen}`}
         aria-hidden
+        lang="id"
         className="garis-jumlah mt-1 flex flex-wrap items-baseline gap-x-[0.3em] pb-2 font-display text-jumlah text-bank"
       >
         {modeDokumen ? <span className="animate-naik-masuk text-ink-lirih">#</span> : null}
@@ -42,7 +43,9 @@ export function GarisJumlah({
       </p>
 
       {/* Pembacaan layar mendapat kalimat utuh, bukan potongan per kata. */}
-      <span className="sr-only">{modeDokumen ? `# ${kata} #` : kata}</span>
+      <span lang="id" className="sr-only">
+        {modeDokumen ? `# ${kata} #` : kata}
+      </span>
     </div>
   );
 }

@@ -30,7 +30,7 @@ export default function TataLetakLokal({
   ];
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div lang={lokal} className="flex min-h-screen flex-col">
       <a
         href="#isi"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-bank focus:px-3 focus:py-2 focus:text-kendali focus:text-kertas"

@@ -12,6 +12,21 @@ export function lokalSah(nilai: string): nilai is Lokal {
   return (LOKAL as readonly string[]).includes(nilai);
 }
 
+/**
+ * Skrip pra-cat yang memasang lang pada <html> sesuai lokal di alamat.
+ *
+ * Akar situs merender <html>, tetapi lokalnya baru diketahui satu tingkat di
+ * bawahnya, sehingga seluruh halaman /en/ menyatakan dirinya berbahasa
+ * Indonesia dan dibacakan dengan lafal Indonesia. Ekspor statis tidak punya
+ * peladen yang bisa membetulkannya per alamat.
+ *
+ * Pencocokannya persis dua lokal yang memang ada — bukan terkaan — dan
+ * berjalan sebelum cat pertama, sama seperti skrip tema. Untuk pembaca tanpa
+ * JavaScript, isi halaman tetap dibungkus lang oleh tata letak lokal.
+ */
+export const SKRIP_LOKAL =
+  "try{var m=location.pathname.match(/\\/(id|en)(\\/|$)/);if(m)document.documentElement.lang=m[1]}catch(e){}";
+
 interface Sifat {
   readonly nilai: string;
   readonly label: string;

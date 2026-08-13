@@ -58,7 +58,11 @@ export default function Beranda({ params }: { params: { locale: string } }) {
               →
             </span>
             <span className="sr-only">{t.beranda.panah}</span>
-            {kataSorot === null ? null : <span className="text-bank">{kataSorot}</span>}
+            {kataSorot === null ? null : (
+              <span lang="id" className="text-bank">
+                {kataSorot}
+              </span>
+            )}
           </h1>
 
           <p className="max-w-xl text-sedang text-ink">{t.beranda.kepala}</p>
@@ -179,7 +183,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
                   <p className="mt-1 text-kecil text-ink-lirih">{catatan}</p>
                 </div>
                 <div className="min-w-0">
-                  <p className="break-words font-display text-sedang text-bank">
+                  <p lang="id" className="break-words font-display text-sedang text-bank">
                     {hasil.type === 'ok' ? hasil.nilai : hasil.galat.pesan}
                   </p>
                   <p className="mt-1 text-kecil text-ink-lirih">

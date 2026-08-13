@@ -34,7 +34,7 @@ function Baris({ contoh, kelirul }: { contoh: Contoh; kelirul: string }) {
 
       <span className="min-w-0">
         {hasil.type === 'ok' ? (
-          <span className="block break-words font-display text-sedang text-bank">
+          <span lang="id" className="block break-words font-display text-sedang text-bank">
             {hasil.nilai}
           </span>
         ) : (

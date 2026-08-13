@@ -99,7 +99,10 @@ export function BandingVarian({
 
               <dd className="min-w-0 space-y-1">
                 {hasil.type === 'ok' ? (
-                  <p className="flex flex-wrap gap-x-[0.3em] break-words font-display text-sedang">
+                  <p
+                    lang="id"
+                    className="flex flex-wrap gap-x-[0.3em] break-words font-display text-sedang"
+                  >
                     {tanda.map((t, k) => (
                       <span
                         key={`${k}-${t.kata}`}

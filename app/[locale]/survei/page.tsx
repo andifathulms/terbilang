@@ -107,7 +107,9 @@ export default function Survei({ params }: { params: { locale: string } }) {
                       <td className="tabular whitespace-nowrap px-4 py-3 font-mono text-kecil text-ink-sedang sm:px-5">
                         {bertitik(masukan)}
                       </td>
-                      <td className="px-4 py-3 font-display text-dasar text-bank sm:px-5">{kami}</td>
+                      <td lang="id" className="px-4 py-3 font-display text-dasar text-bank sm:px-5">
+                        {kami}
+                      </td>
 
                       {rekaman.paket.map((p) => {
                         const baris = rekaman.hasil.find(
