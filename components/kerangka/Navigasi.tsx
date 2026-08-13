@@ -35,7 +35,7 @@ export function Navigasi({
             href={l.href}
             aria-current={aktif ? 'page' : undefined}
             className={`relative shrink-0 whitespace-nowrap px-1.5 py-1 text-sm transition-colors duration-200 ease-kertas sm:px-2 ${
-              aktif ? 'text-ink' : 'text-ink/60 hover:text-bank'
+              aktif ? 'text-ink' : 'text-ink-sedang hover:text-bank'
             }`}
           >
             {l.label}
@@ -68,10 +68,10 @@ export function PengalihBahasa({ lokal, label }: { lokal: Lokal; label: string }
     <Link
       href={jalurLokalLain(jalur, lain)}
       aria-label={`${label}: ${lain.toUpperCase()}`}
-      className="flex h-8 items-center rounded-full border border-guilloche/70 px-2.5 text-label text-ink/60 transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
+      className="flex h-8 items-center rounded-full border border-garis px-2.5 text-label text-ink-lirih transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
     >
       <span className="text-ink">{lokal.toUpperCase()}</span>
-      <span aria-hidden className="px-1 text-ink/30">
+      <span aria-hidden className="px-1 text-guilloche">
         /
       </span>
       <span>{lain.toUpperCase()}</span>

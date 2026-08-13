@@ -18,7 +18,7 @@ export function GarisJumlah({
   const potongan = kata.split(' ');
 
   return (
-    <div className="guilloche relative overflow-hidden rounded-lembar border border-guilloche bg-kertas/60 px-4 py-3 sm:px-5">
+    <div className="guilloche relative overflow-hidden rounded-lembar border border-garis bg-kertas/60 px-4 py-3 sm:px-5">
       <span className="label">{label}</span>
 
       <p

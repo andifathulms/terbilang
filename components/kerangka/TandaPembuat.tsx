@@ -68,18 +68,18 @@ export function TandaPembuat() {
   const tahun = new Date().getFullYear();
 
   return (
-    <div className="flex flex-col gap-3 text-xs text-ink/60 sm:flex-row sm:items-center sm:justify-between">
-      <p className="leading-relaxed">
+    <div className="flex flex-col gap-3 text-kecil text-ink-lirih sm:flex-row sm:items-center sm:justify-between">
+      <p>
         Designed &amp; built by{' '}
         <a
           href={PEMBUAT.portofolio}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-ink/85 underline decoration-guilloche underline-offset-4 transition-colors duration-200 ease-kertas hover:text-bank hover:decoration-bank"
+          className="text-ink underline decoration-garis underline-offset-4 transition-colors duration-200 ease-kertas hover:text-bank hover:decoration-bank"
         >
           {PEMBUAT.nama}
         </a>
-        <span aria-hidden className="px-1.5 text-ink/30">
+        <span aria-hidden className="px-1.5 text-guilloche">
           ·
         </span>
         <span className="tabular font-mono">© {tahun}</span>
@@ -93,7 +93,7 @@ export function TandaPembuat() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t.nama}
-              className="flex rounded p-1.5 text-ink/50 transition-colors duration-200 ease-kertas hover:bg-guilloche/25 hover:text-bank"
+              className="flex rounded p-1.5 text-ink-lirih transition-colors duration-200 ease-kertas hover:bg-guilloche/25 hover:text-bank"
             >
               <svg
                 aria-hidden

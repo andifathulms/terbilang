@@ -34,18 +34,23 @@ export function KurungKelompok({
             className="animate-kelompok-masuk relative flex flex-col items-center"
             style={{ animationDelay: `${i * 45}ms` }}
           >
+            {/*
+              Kelompok kosong dibedakan oleh coretan dan batas yang lebih
+              pucat, bukan oleh teks yang diredupkan sampai tak terbaca — yang
+              runtuh tetap harus bisa dibaca untuk dimengerti bahwa ia runtuh.
+            */}
             <span
-              className={`h-4 text-label ${kosong ? 'text-ink/25' : 'text-bank/75'}`}
+              className={`h-4 text-label ${kosong ? 'text-ink-lirih' : 'text-bank'}`}
               aria-hidden={label === ''}
             >
               {label}
             </span>
 
             <span
-              className={`tabular relative mt-1 min-w-[3.4rem] rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 text-center font-mono text-lg transition-colors duration-300 ease-kertas ${
+              className={`tabular relative mt-1 min-w-[3.4rem] rounded-t-sm border-x border-t px-2.5 pb-1.5 pt-1 text-center font-mono text-sedang transition-colors duration-300 ease-kertas ${
                 kosong
-                  ? 'border-guilloche/50 text-ink/30 line-through decoration-guilloche'
-                  : 'border-guilloche bg-tint/50 text-ink'
+                  ? 'border-guilloche text-ink-lirih line-through decoration-void/50'
+                  : 'border-garis bg-tint/50 text-ink'
               }`}
             >
               {digit}
@@ -57,7 +62,7 @@ export function KurungKelompok({
               menyempit, bukan menuntut ruang.
             */}
             {kosong ? (
-              <span className="absolute left-1/2 top-full w-28 -translate-x-1/2 pt-1 text-center text-[0.6rem] leading-tight text-ink/45">
+              <span className="absolute left-1/2 top-full w-32 -translate-x-1/2 pt-1 text-center text-kecil leading-tight text-ink-lirih">
                 {labelKosong}
               </span>
             ) : null}

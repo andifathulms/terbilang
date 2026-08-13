@@ -74,7 +74,7 @@ export function KolomAngka({
             autoComplete="off"
             spellCheck={false}
             aria-label={label}
-            className="tabular w-full rounded-lembar border border-guilloche bg-kertas px-4 py-3 pr-11 font-mono text-xl outline-none transition-colors duration-200 ease-kertas focus:border-bank"
+            className="tabular w-full rounded-lembar border border-garis bg-kertas px-4 py-3 pr-11 font-mono text-sedang outline-none transition-colors duration-200 ease-kertas focus:border-bank"
           />
 
           {nilai === '' ? null : (
@@ -87,7 +87,7 @@ export function KolomAngka({
               }}
               aria-label={kosongkan}
               title={kosongkan}
-              className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-ink/40 transition-colors duration-200 ease-kertas hover:bg-tint hover:text-void"
+              className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-ink-lirih transition-colors duration-200 ease-kertas hover:bg-tint hover:text-void"
             >
               <span aria-hidden>×</span>
             </button>
@@ -95,7 +95,7 @@ export function KolomAngka({
         </span>
       </label>
 
-      <p className="mt-2 text-xs leading-relaxed text-ink/55">
+      <p className="mt-2 text-kecil text-ink-lirih">
         {petunjuk} <span className="hidden sm:inline">{pintas}.</span>
       </p>
     </div>
