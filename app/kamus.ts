@@ -122,6 +122,11 @@ interface Teks {
     readonly bawaan: string;
     readonly masukanSama: string;
     readonly kataBerubah: string;
+    readonly kosakata: string;
+    readonly kosakataRingkas: string;
+    readonly kolomKata: string;
+    readonly kolomBesaran: string;
+    readonly kolomArti: string;
     readonly presisiUtuh: string;
     readonly presisiNumber: string;
     readonly presisiCatatan: string;
@@ -272,6 +277,12 @@ const id: Teks = {
     bawaan: 'bawaan',
     masukanSama: 'Masukan yang sama',
     kataBerubah: 'kata berubah',
+    kosakata: 'Kata yang dipakai',
+    kosakataRingkas:
+      'Seluruh keluaran memakai kata-kata ini dan tidak yang lain. Satuan dan belasan punya bentuknya sendiri; sisanya tersusun.',
+    kolomKata: 'Kata',
+    kolomBesaran: 'Besaran',
+    kolomArti: 'Arti',
     presisiUtuh: 'Nilai utuh, lewat BigInt',
     presisiNumber: 'Nilai yang sama, setelah lewat number',
     presisiCatatan:
@@ -432,6 +443,12 @@ const en: Teks = {
     bawaan: 'default',
     masukanSama: 'The same input',
     kataBerubah: 'changed',
+    kosakata: 'The words in play',
+    kosakataRingkas:
+      'Every output uses these words and no others. Units and teens have their own forms; the rest compound.',
+    kolomKata: 'Word',
+    kolomBesaran: 'Magnitude',
+    kolomArti: 'Meaning',
     presisiUtuh: 'The exact value, through BigInt',
     presisiNumber: 'The same value, after passing through number',
     presisiCatatan:

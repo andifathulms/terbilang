@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { format, SITASI_OPSI } from '@/lib';
 import { BandingVarian } from '../../../components/BandingVarian';
+import { Kosakata } from '../../../components/cheque/Kosakata';
 import { LewatNumber } from '../../../components/cheque/LewatNumber';
 import { DaftarIsi } from '../../../components/kerangka/DaftarIsi';
 import { ATURAN, type Contoh } from '../../../data/aturan';
@@ -101,6 +102,18 @@ export default function Aturan({ params }: { params: { locale: string } }) {
                   <Baris key={String(c.masukan)} contoh={c} kelirul={t.aturan.keliru} />
                 ))}
               </ul>
+
+              {/* Daftar katanya diletakkan pada aturan skala, tempat kata itu dipakai. */}
+              {a.kunci === 'skala' ? (
+                <Kosakata
+                  lokal={lokal}
+                  judul={t.aturan.kosakata}
+                  ringkas={t.aturan.kosakataRingkas}
+                  kolomKata={t.aturan.kolomKata}
+                  kolomBesaran={t.aturan.kolomBesaran}
+                  kolomArti={t.aturan.kolomArti}
+                />
+              ) : null}
 
               {/* Peragaan diletakkan pada aturannya, bukan di halaman lain. */}
               {a.kunci === 'presisi' ? (

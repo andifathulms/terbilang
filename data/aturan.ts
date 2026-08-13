@@ -50,8 +50,8 @@ export const ATURAN: readonly Aturan[] = [
     kunci: 'se',
     judul: { id: 'Aturan se-', en: 'The se- rule' },
     isi: {
-      id: 'Untuk angka 1 di depan, katanya melebur, bukan tersusun: sepuluh, sebelas, seratus, seribu. Peleburan berhenti di ribu — pemakaian baku mengambil satu juta.',
-      en: 'For a leading 1 the word fuses rather than compounds: sepuluh, sebelas, seratus, seribu. The fusion stops at ribu — standard usage takes satu juta.',
+      id: 'se- adalah bentuk terikat dari satu. Untuk angka 1 di depan, katanya melebur alih-alih tersusun: se- + puluh jadi sepuluh, se- + ratus jadi seratus, se- + ribu jadi seribu. Peleburan berhenti di ribu — pemakaian baku mengambil satu juta, bukan sejuta.',
+      en: 'se- is the bound form of satu, "one". For a leading 1 the word fuses instead of compounding: se- + puluh gives sepuluh (ten), se- + ratus gives seratus (one hundred), se- + ribu gives seribu (one thousand). The fusion stops at ribu — standard usage takes satu juta, not sejuta.',
     },
     sumber: 'KBBI; PUEBI/EYD, penulisan bilangan.',
     contoh: [
@@ -90,8 +90,8 @@ export const ATURAN: readonly Aturan[] = [
     kunci: 'skala',
     judul: { id: 'Kata skala', en: 'Scale words' },
     isi: {
-      id: 'ribu (10³), juta (10⁶), miliar (10⁹), triliun (10¹²), kuadriliun (10¹⁵). Ejaan milyar dan trilyun lazim di lapangan tetapi bukan bentuk KBBI; keduanya tersedia sebagai opsi. Di atas kuadriliun pemakaian belum mapan, jadi pustaka menolak alih-alih mengarang kata baru.',
-      en: 'ribu (10³), juta (10⁶), miliar (10⁹), triliun (10¹²), kuadriliun (10¹⁵). The spellings milyar and trilyun are common in the field but are not KBBI forms; both are available as an option. Above kuadriliun usage is unsettled, so the library refuses rather than inventing a scale word.',
+      id: 'Kata skalanya berjarak tepat 10³ satu sama lain — ribu 10³, juta 10⁶, miliar 10⁹, triliun 10¹², kuadriliun 10¹⁵ — dan justru itulah sebabnya bilangan dipotong tiap tiga angka. Pengelompokan tiga angka bukan kebiasaan tulis, melainkan bentuk daftar kata ini. Ejaan milyar dan trilyun lazim di lapangan tetapi bukan bentuk KBBI; keduanya tersedia sebagai opsi. Di atas kuadriliun pemakaian belum mapan, jadi pustaka menolak alih-alih mengarang kata baru.',
+      en: 'The scale words sit exactly 10³ apart — ribu 10³ (thousand), juta 10⁶ (million), miliar 10⁹ (billion), triliun 10¹² (trillion), kuadriliun 10¹⁵ (quadrillion) — and that spacing is precisely why the number is cut every three digits. Grouping by threes is not a writing habit; it is the shape of this word list. The spellings milyar and trilyun are common in the field but are not KBBI forms; both are available as an option. Above kuadriliun usage is unsettled, so the library refuses rather than inventing a scale word.',
     },
     sumber: 'KBBI, lema ribu, juta, miliar, triliun, kuadriliun.',
     contoh: [
