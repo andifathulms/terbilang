@@ -72,9 +72,40 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
   const teksKata = hasilKata.type === 'ok' ? hasilKata.nilai : '';
   const teksDokumen = `# ${teksKata} #`;
 
+  /*
+   * Satu kalimat yang menyebutkan keadaan sekarang, entah hasil entah
+   * penolakan, untuk wilayah hidup di bawah. Ia disusun di sini dan bukan di
+   * dalam masing-masing komponen supaya wilayah hidupnya bisa selalu ada di
+   * markah — wilayah hidup yang baru dipasang bersama isinya tidak diumumkan.
+   */
+  const hasilKini = arah === 'angka' ? hasilKata : hasilAngka;
+  const ucapan =
+    hasilKini.type === 'ok'
+      ? arah === 'angka'
+        ? modeDokumen
+          ? `# ${teksKata} #`
+          : teksKata
+        : teksNilai(hasilAngka.type === 'ok' ? hasilAngka.nilai : NILAI_KOSONG)
+      : `${galat[hasilKini.galat.type] ?? ''} ${hasilKini.galat.pesan}`;
+
   return (
     <div className="space-y-8">
       <SakelarArah t={t} arah={arah} ubah={setArah} />
+
+      {/*
+        Wilayah hidup untuk hasilnya. Ia selalu ada di markah, kosong pun,
+        karena wilayah hidup yang baru dipasang bersama isinya tidak dibacakan
+        — itulah sebabnya penolakan dahulu paling mungkin terlewat meski sudah
+        memakai role="status". Isinya kalimat yang sama dengan yang terlihat,
+        jadi tidak ada keterangan tambahan yang perlu dijaga tetap cocok.
+      */}
+      <p
+        role="status"
+        lang={arah === 'angka' && hasilKini.type === 'ok' ? 'id' : undefined}
+        className="sr-only"
+      >
+        {ucapan}
+      </p>
 
       {arah === 'angka' ? (
         <section className="lembar roset overflow-hidden">
@@ -122,7 +153,7 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
 
             {hasilKata.type === 'ok' ? (
               <div className="space-y-4">
-                <GarisJumlah kata={teksKata} modeDokumen={modeDokumen} label={t.labelKata} />
+                <GarisJumlah kata={teksKata} modeDokumen={modeDokumen} label={t.labelKata} bisu />
 
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
                   <Sakelar
@@ -298,6 +329,8 @@ function bagianBulat(masukan: string): bigint | undefined {
     return undefined;
   }
 }
+
+const NILAI_KOSONG = { negatif: false, bulat: 0n, pecahan: '' };
 
 function teksNilai(nilai: { negatif: boolean; bulat: bigint; pecahan: string }): string {
   const pecahan = nilai.pecahan === '' ? '' : `,${nilai.pecahan}`;

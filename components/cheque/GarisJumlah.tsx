@@ -10,10 +10,17 @@ export function GarisJumlah({
   kata,
   modeDokumen,
   label,
+  bisu = false,
 }: {
   kata: string;
   modeDokumen: boolean;
   label: string;
+  /**
+   * Tahan salinan sr-only-nya. Dipakai bila pemanggilnya sudah menyediakan
+   * wilayah hidup yang menyebutkan kata yang sama — di pengubah — supaya
+   * kalimatnya tidak dibacakan dua kali dalam satu penelusuran.
+   */
+  bisu?: boolean;
 }) {
   const potongan = kata.split(' ');
 
@@ -43,9 +50,11 @@ export function GarisJumlah({
       </p>
 
       {/* Pembacaan layar mendapat kalimat utuh, bukan potongan per kata. */}
-      <span lang="id" className="sr-only">
-        {modeDokumen ? `# ${kata} #` : kata}
-      </span>
+      {bisu ? null : (
+        <span lang="id" className="sr-only">
+          {modeDokumen ? `# ${kata} #` : kata}
+        </span>
+      )}
     </div>
   );
 }
