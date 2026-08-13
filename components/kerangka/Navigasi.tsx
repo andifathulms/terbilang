@@ -34,7 +34,7 @@ export function Navigasi({
             key={l.href}
             href={l.href}
             aria-current={aktif ? 'page' : undefined}
-            className={`relative shrink-0 whitespace-nowrap px-1.5 py-1 text-sm transition-colors duration-200 ease-kertas sm:px-2 ${
+            className={`relative shrink-0 whitespace-nowrap px-1.5 py-1 text-dasar transition-colors duration-200 ease-kertas sm:px-2 ${
               aktif ? 'text-ink' : 'text-ink-sedang hover:text-bank'
             }`}
           >

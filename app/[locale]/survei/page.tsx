@@ -36,11 +36,11 @@ export default function Survei({ params }: { params: { locale: string } }) {
   return (
     <div className="space-y-8">
       <header className="max-w-2xl space-y-3">
-        <h1 className="font-display text-3xl">{t.survei.judul}</h1>
-        <p className="text-sm leading-relaxed text-ink/70">{t.survei.ringkas}</p>
+        <h1 className="font-display text-judul">{t.survei.judul}</h1>
+        <p className="text-dasar text-ink-sedang">{t.survei.ringkas}</p>
 
         {rekaman.direkamPada === null ? null : (
-          <p className="flex flex-wrap gap-2 text-[0.7rem] text-ink/55">
+          <p className="flex flex-wrap gap-2 text-kecil text-ink-lirih">
             <span className="rounded-full border border-guilloche/70 px-2.5 py-1">
               {lokal === 'id' ? 'Direkam' : 'Recorded'} {rekaman.direkamPada}
             </span>
@@ -53,22 +53,22 @@ export default function Survei({ params }: { params: { locale: string } }) {
 
       {belumDirekam ? (
         <section className="lembar space-y-3 p-5 sm:p-6">
-          <p className="font-display text-lg">{t.survei.belum}</p>
-          <p className="max-w-2xl text-sm leading-relaxed text-ink/75">{t.survei.belumIsi}</p>
-          <pre className="overflow-x-auto rounded-lembar border border-guilloche/70 bg-tint/60 p-3.5 font-mono text-xs">
+          <p className="font-display text-sedang">{t.survei.belum}</p>
+          <p className="max-w-2xl text-dasar text-ink-sedang">{t.survei.belumIsi}</p>
+          <pre className="overflow-x-auto rounded-lembar border border-guilloche/70 bg-tint/60 p-3.5 font-mono text-kecil">
             pnpm survey:record &lt;paket&gt; [paket...]
           </pre>
         </section>
       ) : (
-        <section className="flex flex-wrap gap-2 text-[0.7rem]">
+        <section className="flex flex-wrap gap-2 text-kecil">
           <span className="label mr-1 self-center">{t.survei.keterangan}</span>
-          <span className="rounded-full border border-guilloche px-2.5 py-1 text-ink/65">
+          <span className="rounded-full border border-garis px-2.5 py-1 text-ink-sedang">
             {t.survei.sama}
           </span>
           <span className="rounded-full border border-void/40 bg-void/[0.06] px-2.5 py-1 text-void">
             {t.survei.beda}
           </span>
-          <span className="rounded-full border border-guilloche/60 px-2.5 py-1 text-ink/45">
+          <span className="rounded-full border border-garis px-2.5 py-1 text-ink-lirih">
             {t.survei.menolak}
           </span>
         </section>
@@ -84,7 +84,7 @@ export default function Survei({ params }: { params: { locale: string } }) {
 
         <div className="lembar overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
+            <table className="w-full border-collapse text-dasar">
               <thead>
                 <tr className="border-b border-guilloche bg-tint/50 text-left">
                   <th className="px-4 py-2.5 font-medium sm:px-5">{t.survei.masukan}</th>
@@ -92,7 +92,7 @@ export default function Survei({ params }: { params: { locale: string } }) {
                   {rekaman.paket.map((p) => (
                     <th key={p.nama} className="px-4 py-2.5 font-medium sm:px-5">
                       {p.nama}
-                      <span className="block font-mono text-[0.65rem] font-normal text-ink/55">
+                      <span className="block font-mono text-kecil font-normal text-ink-lirih">
                         {p.versi}
                       </span>
                     </th>
@@ -108,7 +108,7 @@ export default function Survei({ params }: { params: { locale: string } }) {
                       key={masukan}
                       className="border-b border-guilloche/40 align-top transition-colors duration-200 ease-kertas last:border-0 hover:bg-tint/40"
                     >
-                      <td className="tabular whitespace-nowrap px-4 py-3 font-mono text-xs text-ink/65 sm:px-5">
+                      <td className="tabular whitespace-nowrap px-4 py-3 font-mono text-kecil text-ink-sedang sm:px-5">
                         {bertitik(masukan)}
                       </td>
                       <td className="px-4 py-3 font-display text-bank sm:px-5">{kami}</td>
@@ -122,8 +122,8 @@ export default function Survei({ params }: { params: { locale: string } }) {
                           <td
                             key={p.nama}
                             className={`px-4 py-3 sm:px-5 ${
-                              beda ? 'text-void' : 'text-ink/70'
-                            } ${baris?.galat != null ? 'text-ink/45' : ''}`}
+                              beda ? 'text-void' : 'text-ink-sedang'
+                            } ${baris?.galat != null ? 'text-ink-lirih' : ''}`}
                           >
                             {baris?.galat ?? baris?.keluaran ?? '—'}
                           </td>
@@ -137,7 +137,7 @@ export default function Survei({ params }: { params: { locale: string } }) {
           </div>
         </div>
 
-        <p className="max-w-2xl text-xs leading-relaxed text-ink/55">{t.survei.catatan}</p>
+        <p className="max-w-2xl text-kecil text-ink-lirih">{t.survei.catatan}</p>
       </section>
     </div>
   );

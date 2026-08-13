@@ -97,10 +97,10 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
                     type="button"
                     onClick={() => setAngka(c.nilai)}
                     aria-pressed={angka === c.nilai}
-                    className={`tabular rounded-full border px-3 py-1 font-mono text-xs transition-all duration-200 ease-kertas ${
+                    className={`tabular rounded-full border px-3 py-1 font-mono text-kecil transition-all duration-200 ease-kertas ${
                       angka === c.nilai
                         ? 'border-bank bg-bank text-kertas'
-                        : 'border-guilloche text-ink/70 hover:-translate-y-0.5 hover:border-bank hover:text-bank'
+                        : 'border-garis text-ink-sedang hover:-translate-y-0.5 hover:border-bank hover:text-bank'
                     }`}
                   >
                     {c.label}
@@ -157,14 +157,14 @@ export function Konverter({ t, galat }: { t: Teks['ubah']; galat: Teks['galat'] 
                 spellCheck={false}
                 autoComplete="off"
                 aria-label={t.labelKataKeAngka}
-                className="mt-1.5 w-full rounded-lembar border border-guilloche bg-kertas px-4 py-3 font-display text-xl outline-none transition-colors duration-200 ease-kertas focus:border-bank"
+                className="mt-1.5 w-full rounded-lembar border border-garis bg-kertas px-4 py-3 font-display text-besar outline-none transition-colors duration-200 ease-kertas focus:border-bank"
               />
-              <span className="mt-2 block text-xs text-ink/55">{t.petunjukKata}</span>
+              <span className="mt-2 block text-kecil text-ink-lirih">{t.petunjukKata}</span>
             </label>
 
             {hasilAngka.type === 'ok' ? (
               <div className="space-y-5">
-                <div className="guilloche rounded-lembar border border-guilloche bg-kertas/60 px-4 py-3 sm:px-5">
+                <div className="guilloche rounded-lembar border border-garis bg-kertas/60 px-4 py-3 sm:px-5">
                   <span className="label">{t.hasilAngka}</span>
                   <p
                     key={teksNilai(hasilAngka.nilai)}
@@ -228,7 +228,7 @@ function SakelarArah({
     <div
       role="group"
       aria-label={t.tukar}
-      className="relative grid w-full max-w-md grid-cols-2 rounded-full border border-guilloche bg-kertas/60 p-1"
+      className="relative grid w-full max-w-md grid-cols-2 rounded-full border border-garis bg-kertas/60 p-1"
     >
       <span
         aria-hidden
@@ -241,8 +241,8 @@ function SakelarArah({
           type="button"
           aria-pressed={arah === p.nilai}
           onClick={() => ubah(p.nilai)}
-          className={`relative z-10 truncate rounded-full px-3 py-1.5 text-xs transition-colors duration-200 ease-kertas sm:text-sm ${
-            arah === p.nilai ? 'text-kertas' : 'text-ink/65 hover:text-bank'
+          className={`relative z-10 truncate rounded-full px-3 py-1.5 text-kecil transition-colors duration-200 ease-kertas sm:text-dasar ${
+            arah === p.nilai ? 'text-kertas' : 'text-ink-sedang hover:text-bank'
           }`}
         >
           {p.label}
@@ -268,12 +268,12 @@ function Sakelar({
       role="switch"
       aria-checked={aktif}
       onClick={ubah}
-      className="group flex items-center gap-2.5 text-sm text-ink/80"
+      className="group flex items-center gap-2.5 text-dasar text-ink-sedang"
     >
       <span
         aria-hidden
         className={`relative h-5 w-9 rounded-full border transition-colors duration-200 ease-kertas ${
-          aktif ? 'border-bank bg-bank' : 'border-guilloche bg-tint'
+          aktif ? 'border-bank bg-bank' : 'border-garis bg-tint'
         }`}
       >
         <span

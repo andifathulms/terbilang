@@ -26,7 +26,7 @@ export function GarisJumlah({
         aria-hidden
         className="garis-jumlah mt-1 flex flex-wrap items-baseline gap-x-[0.3em] pb-2 font-display text-jumlah text-bank"
       >
-        {modeDokumen ? <span className="animate-naik-masuk text-bank/60">#</span> : null}
+        {modeDokumen ? <span className="animate-naik-masuk text-ink-lirih">#</span> : null}
 
         {potongan.map((p, i) => (
           <span
@@ -38,7 +38,7 @@ export function GarisJumlah({
           </span>
         ))}
 
-        {modeDokumen ? <span className="animate-naik-masuk text-bank/60">#</span> : null}
+        {modeDokumen ? <span className="animate-naik-masuk text-ink-lirih">#</span> : null}
       </p>
 
       {/* Pembacaan layar mendapat kalimat utuh, bukan potongan per kata. */}

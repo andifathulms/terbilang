@@ -30,24 +30,24 @@ function Baris({ contoh, kelirul }: { contoh: Contoh; kelirul: string }) {
 
   return (
     <li className="grid gap-x-4 gap-y-1 px-4 py-3 sm:grid-cols-[10rem_1fr] sm:px-5">
-      <span className="tabular font-mono text-sm text-ink/65">{masukan}</span>
+      <span className="tabular font-mono text-dasar text-ink-sedang">{masukan}</span>
 
       <span className="min-w-0">
         {hasil.type === 'ok' ? (
-          <span className="block break-words font-display text-lg leading-snug text-bank">
+          <span className="block break-words font-display text-sedang text-bank">
             {hasil.nilai}
           </span>
         ) : (
           <span className="flex flex-wrap items-baseline gap-2">
-            <span className="text-sm text-void">{hasil.galat.pesan}</span>
-            <span className="font-mono text-[0.6rem] uppercase tracking-widest text-void/60">
+            <span className="text-dasar text-void">{hasil.galat.pesan}</span>
+            <span className="font-mono text-label uppercase tracking-widest text-void">
               {hasil.galat.type}
             </span>
           </span>
         )}
 
         {contoh.keliru ? (
-          <span className="mt-1 block text-xs text-ink/45">
+          <span className="mt-1 block text-kecil text-ink-lirih">
             {kelirul}:{' '}
             <span className="line-through decoration-void/60">{contoh.keliru}</span>
           </span>
@@ -70,8 +70,8 @@ export default function Aturan({ params }: { params: { locale: string } }) {
   return (
     <div className="space-y-10">
       <header className="max-w-2xl space-y-2">
-        <h1 className="font-display text-3xl">{t.aturan.judul}</h1>
-        <p className="text-sm leading-relaxed text-ink/70">{t.aturan.ringkas}</p>
+        <h1 className="font-display text-judul">{t.aturan.judul}</h1>
+        <p className="text-dasar text-ink-sedang">{t.aturan.ringkas}</p>
       </header>
 
       <div className="gap-10 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)]">
@@ -83,9 +83,9 @@ export default function Aturan({ params }: { params: { locale: string } }) {
           {ATURAN.map((a) => (
             <section key={a.kunci} id={a.kunci} className="lembar scroll-mt-24 overflow-hidden">
               <div className="space-y-3 p-5 sm:p-6">
-                <h2 className="font-display text-xl">{a.judul[lokal]}</h2>
-                <p className="max-w-2xl text-sm leading-relaxed text-ink/80">{a.isi[lokal]}</p>
-                <p className="inline-flex rounded-full border border-guilloche/70 px-2.5 py-1 text-[0.7rem] text-ink/55">
+                <h2 className="font-display text-besar">{a.judul[lokal]}</h2>
+                <p className="max-w-2xl text-dasar text-ink-sedang">{a.isi[lokal]}</p>
+                <p className="inline-flex rounded-full border border-garis px-2.5 py-1 text-kecil text-ink-lirih">
                   {t.aturan.sumber}: {a.sumber}
                 </p>
               </div>
@@ -100,8 +100,8 @@ export default function Aturan({ params }: { params: { locale: string } }) {
 
           <section id="varian" className="lembar scroll-mt-24 overflow-hidden">
             <div className="space-y-2 p-5 sm:p-6">
-              <h2 className="font-display text-xl">{t.aturan.varian}</h2>
-              <p className="max-w-2xl text-sm leading-relaxed text-ink/80">
+              <h2 className="font-display text-besar">{t.aturan.varian}</h2>
+              <p className="max-w-2xl text-dasar text-ink-sedang">
                 {t.aturan.varianRingkas}
               </p>
             </div>

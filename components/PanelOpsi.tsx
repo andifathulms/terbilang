@@ -29,7 +29,7 @@ export function PanelOpsi({
           <button
             type="button"
             onClick={() => ubah(OPSI_BAWAAN)}
-            className="text-xs text-bank underline decoration-guilloche underline-offset-4 transition-colors hover:decoration-bank"
+            className="text-kecil text-bank underline decoration-garis underline-offset-4 transition-colors hover:decoration-bank"
           >
             {bawaanLabel} ({bergeser.length})
           </button>
@@ -47,7 +47,7 @@ export function PanelOpsi({
               key={o.kunci}
               className="rounded-lembar border border-guilloche/70 bg-kertas/50 p-3.5 transition-colors duration-200 ease-kertas hover:border-guilloche"
             >
-              <legend className="flex items-center gap-1.5 px-1 text-xs font-medium">
+              <legend className="flex items-center gap-1.5 px-1 text-kecil font-medium">
                 {o.judul}
                 {dariBawaan ? (
                   <span
@@ -67,10 +67,10 @@ export function PanelOpsi({
                       type="button"
                       aria-pressed={aktif}
                       onClick={() => ubah({ ...opsi, [o.kunci]: nilaiOpsi(o.kunci, p.nilai) })}
-                      className={`rounded-full border px-2.5 py-1 text-xs transition-all duration-200 ease-kertas ${
+                      className={`rounded-full border px-2.5 py-1 text-kecil transition-all duration-200 ease-kertas ${
                         aktif
                           ? 'border-bank bg-bank text-kertas'
-                          : 'border-guilloche text-ink/70 hover:border-bank hover:text-bank'
+                          : 'border-garis text-ink-sedang hover:border-bank hover:text-bank'
                       }`}
                     >
                       {p.contoh}
@@ -82,9 +82,9 @@ export function PanelOpsi({
               {dasar === undefined ? null : (
                 <p
                   key={dasar.nilai}
-                  className="animate-naik-masuk mt-2.5 text-[0.7rem] leading-relaxed text-ink/65"
+                  className="animate-naik-masuk mt-2.5 text-kecil text-ink-sedang"
                 >
-                  {dasar.dasar} <span className="text-ink/45">— {dasar.sumber}</span>
+                  {dasar.dasar} <span className="text-ink-lirih">— {dasar.sumber}</span>
                 </p>
               )}
             </fieldset>

@@ -14,15 +14,15 @@ export function Penolakan({ galat, judul }: { galat: Galat; judul: string }) {
     >
       <span
         aria-hidden
-        className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-void/50 text-xs text-void"
+        className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-void/50 text-kecil text-void"
       >
         !
       </span>
 
       <div className="min-w-0 space-y-1">
-        <p className="font-display text-lg text-void">{judul}</p>
-        <p className="text-sm leading-relaxed text-void/90">{galat.pesan}</p>
-        <p className="pt-1 font-mono text-[0.65rem] uppercase tracking-widest text-void/60">
+        <p className="font-display text-sedang text-void">{judul}</p>
+        <p className="text-dasar text-void">{galat.pesan}</p>
+        <p className="pt-1 font-mono text-kecil uppercase tracking-widest text-void">
           {galat.type}
         </p>
       </div>

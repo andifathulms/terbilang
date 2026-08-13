@@ -33,7 +33,7 @@ export default function TataLetakLokal({
     <div className="flex min-h-screen flex-col">
       <a
         href="#isi"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-bank focus:px-3 focus:py-2 focus:text-sm focus:text-kertas"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-bank focus:px-3 focus:py-2 focus:text-dasar focus:text-kertas"
       >
         {t.umum.lewatiKe}
       </a>
@@ -42,9 +42,9 @@ export default function TataLetakLokal({
         <div className="mx-auto flex h-14 max-w-5xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
           <Link
             href={`/${lokal}/`}
-            className="flex shrink-0 items-center gap-2 font-display text-base tracking-tight sm:text-lg"
+            className="flex shrink-0 items-center gap-2 font-display text-dasar tracking-tight sm:text-sedang"
           >
-            <TandaPagar kelas="h-6 w-6 text-sm sm:h-7 sm:w-7 sm:text-base" />
+            <TandaPagar kelas="h-6 w-6 text-kecil sm:h-7 sm:w-7 sm:text-dasar" />
             {t.judulSitus}
           </Link>
 

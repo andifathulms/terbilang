@@ -18,12 +18,12 @@ export default function Akar() {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center px-6">
-      <p className="font-display text-2xl">
-        <Link href="/id/" className="text-bank underline decoration-guilloche underline-offset-4">
+      <p className="font-display text-judul">
+        <Link href="/id/" className="text-bank underline decoration-garis underline-offset-4">
           Terbilang
         </Link>
       </p>
-      <p className="mt-2 text-sm text-ink/60">Bilangan Indonesia dieja menjadi kata.</p>
+      <p className="mt-2 text-dasar text-ink-sedang">Bilangan Indonesia dieja menjadi kata.</p>
     </main>
   );
 }

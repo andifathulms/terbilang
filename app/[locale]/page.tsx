@@ -146,7 +146,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
 
       {/* Tempat implementasi lain patah. Tiap baris dihitung oleh pustaka. */}
       <section className="space-y-ruang4">
-        <h2 className="font-display text-judul">{t.beranda.judulContoh}</h2>
+        <h2 className="font-display text-besar">{t.beranda.judulContoh}</h2>
         <p className="max-w-2xl text-dasar text-ink-sedang">{t.beranda.ringkasContoh}</p>
 
         <ul className="lembar divide-y divide-guilloche/60 overflow-hidden">
@@ -179,7 +179,7 @@ export default function Beranda({ params }: { params: { locale: string } }) {
         untuk yang sudah paham alatnya, bukan pengantar bagi yang belum.
       */}
       <section className="space-y-ruang4">
-        <h2 className="font-display text-judul">{t.beranda.judulSifat}</h2>
+        <h2 className="font-display text-besar">{t.beranda.judulSifat}</h2>
 
         <div className="grid gap-px overflow-hidden rounded-lembar border border-guilloche/70 bg-guilloche/60 sm:grid-cols-2 lg:grid-cols-4">
           {t.beranda.sifat.map((s) => (

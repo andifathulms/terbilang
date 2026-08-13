@@ -20,8 +20,8 @@ export default function Ubah({ params }: { params: { locale: string } }) {
   return (
     <div className="space-y-8">
       <header className="max-w-2xl space-y-2">
-        <h1 className="font-display text-3xl">{t.ubah.judul}</h1>
-        <p className="text-sm leading-relaxed text-ink/70">{t.ubah.ringkas}</p>
+        <h1 className="font-display text-judul">{t.ubah.judul}</h1>
+        <p className="text-dasar text-ink-sedang">{t.ubah.ringkas}</p>
       </header>
 
       <Konverter t={t.ubah} galat={t.galat} />

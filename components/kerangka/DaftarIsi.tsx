@@ -42,10 +42,10 @@ export function DaftarIsi({ pokok, judul }: { pokok: readonly Pokok[]; judul: st
             <a
               href={`#${p.kunci}`}
               aria-current={aktif === p.kunci ? 'true' : undefined}
-              className={`-ml-px block border-l py-1 pl-3 text-xs transition-colors duration-200 ease-kertas ${
+              className={`-ml-px block border-l py-1 pl-3 text-kecil transition-colors duration-200 ease-kertas ${
                 aktif === p.kunci
                   ? 'border-bank text-bank'
-                  : 'border-transparent text-ink/60 hover:border-guilloche hover:text-ink'
+                  : 'border-transparent text-ink-lirih hover:border-guilloche hover:text-ink'
               }`}
             >
               {p.judul}
