@@ -51,7 +51,9 @@ export function metaHalaman({
   const judulKartu = jalur === '' ? judul : `${judul} · ${KAMUS[lokal].judulSitus}`;
 
   return {
-    title: judul,
+    /* Beranda sudah menyebut nama situs di judulnya sendiri, jadi ia dilepas
+       dari template "%s · Terbilang" supaya tidak berbunyi dua kali. */
+    title: jalur === '' ? { absolute: judul } : judul,
     description: ringkas,
     alternates: {
       canonical: kanonik,

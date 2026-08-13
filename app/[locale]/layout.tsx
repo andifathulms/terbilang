@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DataTerstruktur } from '../../components/kerangka/DataTerstruktur';
 import { TandaPagar } from '../../components/kerangka/Merek';
 import { Navigasi, PengalihBahasa } from '../../components/kerangka/Navigasi';
 import { TandaPembuat } from '../../components/kerangka/TandaPembuat';
@@ -31,6 +32,8 @@ export default function TataLetakLokal({
 
   return (
     <div lang={lokal} className="flex min-h-screen flex-col">
+      <DataTerstruktur lokal={lokal} />
+
       <a
         href="#isi"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-bank focus:px-3 focus:py-2 focus:text-kendali focus:text-kertas"

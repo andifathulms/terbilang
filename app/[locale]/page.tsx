@@ -42,9 +42,16 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   return metaHalaman({
     lokal,
     jalur: '',
-    /* Beranda memakai judul lengkap situs, bukan template "· Terbilang". */
-    judul: `${t.judulSitus} — ${t.taglineSitus.replace(/\.$/, '')}`,
-    ringkas: t.beranda.paragraf.join(' '),
+    /*
+     * Beranda memakai judul lengkap situs, bukan template "· Terbilang".
+     * Taglinenya dipotong di koma: utuh ia 81 aksara dan terpenggal di hasil
+     * pencarian, sedangkan klausa pertamanya sudah menyebut seluruh pokoknya.
+     * Ringkasannya merangkai kalimat utama halaman dengan taglinenya — dua
+     * kalimat yang memang tampil di halaman, bukan salinan yang bisa
+     * menyimpang darinya.
+     */
+    judul: `${t.judulSitus} — ${t.taglineSitus.split(',')[0]}`,
+    ringkas: `${t.beranda.kepala} ${t.taglineSitus}`,
   });
 }
 
