@@ -8,6 +8,15 @@ import './globals.css';
  * Fraunces membawa halaman: ia punya kualitas terukir yang sama dengan
  * cetakan pengaman dan tetap tegak pada ukuran besar. Roboto Mono dengan
  * angka tabular untuk digit, Inter untuk kendali dan prosa.
+ *
+ * Font adalah lebih dari separuh muatan halaman ini, jadi bobotnya sempat
+ * disebut satu per satu untuk memangkas sumbu ragam yang tidak dipakai. Diukur,
+ * dan hasilnya justru sebaliknya: Fraunces dan Inter di Google Fonts hanya ada
+ * sebagai berkas ragam, sehingga tiap bobot yang diminta menerbitkan ulang
+ * berkas penuh yang sama — 115 kB jadi 226 kB. Keduanya dibiarkan ragam.
+ *
+ * Roboto Mono punya potongan statis sungguhan, dan situs ini hanya memakainya
+ * pada satu bobot, jadi menyebut bobotnya memangkas 32,0 kB jadi 12,4 kB.
  */
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -17,6 +26,7 @@ const fraunces = Fraunces({
 
 const mono = Roboto_Mono({
   subsets: ['latin'],
+  weight: ['400'],
   variable: '--font-mono',
   display: 'swap',
 });
