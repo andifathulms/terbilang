@@ -16,11 +16,9 @@ export interface Tautan {
  */
 export function Navigasi({
   tautan,
-  lokal,
   label,
 }: {
   tautan: readonly Tautan[];
-  lokal: Lokal;
   label: string;
 }) {
   const jalur = usePathname() ?? '';
@@ -48,7 +46,6 @@ export function Navigasi({
           </Link>
         );
       })}
-      <span className="sr-only">{lokal}</span>
     </nav>
   );
 }

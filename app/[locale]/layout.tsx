@@ -48,7 +48,7 @@ export default function TataLetakLokal({
             {t.judulSitus}
           </Link>
 
-          <Navigasi tautan={tautan} lokal={lokal} label={t.umum.navigasi} />
+          <Navigasi tautan={tautan} label={t.umum.navigasi} />
 
           <div className="ml-auto flex shrink-0 items-center gap-2">
             <PengalihBahasa lokal={lokal} label={t.umum.bahasa} />

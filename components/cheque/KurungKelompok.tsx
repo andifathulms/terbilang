@@ -51,10 +51,7 @@ export function KurungKelompok({
               pucat, bukan oleh teks yang diredupkan sampai tak terbaca — yang
               runtuh tetap harus bisa dibaca untuk dimengerti bahwa ia runtuh.
             */}
-            <span
-              className={`h-4 text-label ${kosong ? 'text-ink-lirih' : 'text-bank'}`}
-              aria-hidden={label === ''}
-            >
+            <span className={`h-4 text-label ${kosong ? 'text-ink-lirih' : 'text-bank'}`}>
               {label}
             </span>
 
