@@ -38,13 +38,19 @@ interface Teks {
   };
   readonly beranda: {
     readonly angkaSorot: string;
+    readonly mata: string;
+    readonly panah: string;
     readonly kepala: string;
     readonly paragraf: readonly string[];
     readonly ajakan: string;
     readonly ajakanDua: string;
+    readonly ketik: string;
+    readonly caraKerja: string;
+    readonly judulSifat: string;
     readonly sifat: readonly Sifat[];
     readonly cap: { readonly judul: string; readonly isi: string };
     readonly judulContoh: string;
+    readonly ringkasContoh: string;
     readonly kartu: readonly Kartu[];
   };
   readonly ubah: {
@@ -115,21 +121,32 @@ const id: Teks = {
   },
   beranda: {
     angkaSorot: '1.000.001',
-    kepala: 'Bilangan Indonesia dieja menjadi kata, dan dibaca kembali.',
+    /*
+     * Kening halaman menyebut tempat pemakaiannya, bukan standar yang
+     * dirujuk. Pengunjung baru mengenali "kuitansi" jauh lebih cepat daripada
+     * "PUEBI/EYD"; sitasinya tetap ada, di halaman Aturan.
+     */
+    mata: 'Untuk kuitansi, faktur, cek, dan akta',
+    /** Dibaca pembaca layar sebagai ganti panah di judul. */
+    panah: 'menjadi',
+    kepala: 'Ketik angka, dapatkan terbilangnya — atau sebaliknya.',
     paragraf: [
-      'Terbilang wajib ada di kuitansi, faktur, cek, dan akta. Hampir setiap sistem akuntansi Indonesia menuliskannya, dan sebagian besar salah di tempat yang sama: satu ribu alih-alih seribu, kelompok nol yang ikut terbaca, dan presisi yang runtuh di atas triliun.',
-      'Pustaka ini dua arah, berbasis BigInt, tanpa dependensi, dan diverifikasi lengkap untuk sejuta nilai pertama — bukan disampel.',
+      'Hampir setiap sistem akuntansi Indonesia harus menuliskan terbilang, dan sebagian besar salah di tempat yang sama: satu ribu alih-alih seribu, kelompok nol yang ikut terbaca, dan presisi yang runtuh di atas triliun.',
     ],
     ajakan: 'Coba pengubahnya',
     ajakanDua: 'Baca aturannya',
+    ketik: 'Ketik angka mana pun di pengubah',
+    caraKerja: 'Cara kerjanya: bilangan dipecah per tiga angka',
+    judulSifat: 'Pustaka di baliknya',
     sifat: [
-      { nilai: '1.000.001', label: 'nilai diuji tuntas, bukan disampel' },
-      { nilai: '0', label: 'dependensi runtime di pustaka' },
-      { nilai: '2', label: 'arah — mengeja dan membaca kembali' },
-      { nilai: '2⁵³', label: 'batas presisi yang dilewati BigInt' },
+      { nilai: '1.000.001', label: 'nilai diuji satu per satu, bukan disampel' },
+      { nilai: '2', label: 'arah: angka → kata, dan kata → angka' },
+      { nilai: '0', label: 'dependensi runtime di dalam pustaka' },
+      { nilai: 'BigInt', label: 'presisi tetap utuh di atas batas 2⁵³ JavaScript' },
     ],
     cap: { judul: 'Diuji tuntas', isi: '0 … 1.000.000' },
     judulContoh: 'Tempat implementasi lain patah',
+    ringkasContoh: 'Kolom kanan dihitung pustaka ini; yang dicoret adalah bentuk keliru yang lazim.',
     kartu: [
       {
         judul: 'Pengubah',
@@ -237,21 +254,26 @@ const en: Teks = {
   },
   beranda: {
     angkaSorot: '1,000,001',
-    kepala: 'Indonesian numbers spelled out in words, and read back again.',
+    mata: 'For receipts, invoices, cheques, and deeds',
+    panah: 'becomes',
+    kepala: 'Type a number, get it in Indonesian words — or the other way round.',
     paragraf: [
-      'Terbilang is required on Indonesian receipts, invoices, cheques, and deeds. Nearly every accounting system writes it, and most break in the same places: satu ribu for seribu, empty groups read aloud, and precision collapsing above triliun.',
-      'This library is bidirectional, BigInt-based, dependency-free, and verified completely for the first million values — not sampled.',
+      'Nearly every Indonesian accounting system has to write terbilang, and most break in the same places: satu ribu for seribu, empty groups read aloud, and precision collapsing above triliun.',
     ],
     ajakan: 'Try the converter',
     ajakanDua: 'Read the rules',
+    ketik: 'Type any number in the converter',
+    caraKerja: 'How it works: the number is split every three digits',
+    judulSifat: 'The library behind it',
     sifat: [
-      { nilai: '1,000,001', label: 'values verified exhaustively, not sampled' },
-      { nilai: '0', label: 'runtime dependencies in the library' },
-      { nilai: '2', label: 'directions — spell out and read back' },
-      { nilai: '2⁵³', label: 'the precision boundary BigInt walks past' },
+      { nilai: '1,000,001', label: 'values verified one by one, not sampled' },
+      { nilai: '2', label: 'directions: digits → words, and words → digits' },
+      { nilai: '0', label: 'runtime dependencies inside the library' },
+      { nilai: 'BigInt', label: "precision stays exact past JavaScript's 2⁵³ limit" },
     ],
     cap: { judul: 'Verified whole', isi: '0 … 1,000,000' },
     judulContoh: 'Where other implementations break',
+    ringkasContoh: 'The right column is computed by this library; the struck-through text is the common wrong form.',
     kartu: [
       {
         judul: 'Converter',
