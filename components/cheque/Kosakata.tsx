@@ -22,6 +22,25 @@ const ARTI_SKALA: Record<string, string> = {
   kuadriliun: 'quadrillion',
 };
 
+/* Padanan Inggris untuk satuan dan belasan. Terjemahan, bukan aturan — kolom
+   besaran sudah memuat angkanya, jadi mengulanginya di sini tidak menerangkan
+   apa pun. */
+const ARTI_ANGKA: Record<string, string> = {
+  '1': 'one',
+  '2': 'two',
+  '3': 'three',
+  '4': 'four',
+  '5': 'five',
+  '6': 'six',
+  '7': 'seven',
+  '8': 'eight',
+  '9': 'nine',
+  '10': 'ten',
+  '11': 'eleven',
+  '12': 'twelve',
+  '19': 'nineteen',
+};
+
 function kata(n: bigint): string {
   const h = format(n);
   return h.type === 'ok' ? h.nilai : '';
@@ -79,7 +98,9 @@ export function Kosakata({
                   {kata(n)}
                 </th>
                 <td className="tabular py-1.5 pr-4 font-mono text-ink-sedang">{n.toString()}</td>
-                {lokal === 'en' ? <td className="py-1.5 text-ink-sedang">{n.toString()}</td> : null}
+                {lokal === 'en' ? (
+                  <td className="py-1.5 text-ink-sedang">{ARTI_ANGKA[n.toString()] ?? ''}</td>
+                ) : null}
               </tr>
             ))}
 
