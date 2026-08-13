@@ -41,7 +41,7 @@ export function DaftarIsi({ pokok, judul }: { pokok: readonly Pokok[]; judul: st
           <li key={p.kunci}>
             <a
               href={`#${p.kunci}`}
-              aria-current={aktif === p.kunci ? 'true' : undefined}
+              aria-current={aktif === p.kunci ? 'location' : undefined}
               className={`-ml-px block border-l py-1 pl-3 text-kendali-kecil transition-colors duration-200 ease-kertas ${
                 aktif === p.kunci
                   ? 'border-bank text-bank'

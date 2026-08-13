@@ -81,7 +81,12 @@ export default function Aturan({ params }: { params: { locale: string } }) {
 
         <div className="min-w-0 space-y-8">
           {ATURAN.map((a) => (
-            <section key={a.kunci} id={a.kunci} className="lembar scroll-mt-24 overflow-hidden">
+            <section
+              key={a.kunci}
+              id={a.kunci}
+              tabIndex={-1}
+              className="lembar scroll-mt-24 overflow-hidden"
+            >
               <div className="space-y-3 p-5 sm:p-6">
                 <h2 className="font-display text-besar">{a.judul[lokal]}</h2>
                 <p className="max-w-2xl text-dasar text-ink-sedang">{a.isi[lokal]}</p>
@@ -98,7 +103,7 @@ export default function Aturan({ params }: { params: { locale: string } }) {
             </section>
           ))}
 
-          <section id="varian" className="lembar scroll-mt-24 overflow-hidden">
+          <section id="varian" tabIndex={-1} className="lembar scroll-mt-24 overflow-hidden">
             <div className="space-y-2 p-5 sm:p-6">
               <h2 className="font-display text-besar">{t.aturan.varian}</h2>
               <p className="max-w-2xl text-dasar text-ink-sedang">

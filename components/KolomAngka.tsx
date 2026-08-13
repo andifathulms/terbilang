@@ -37,12 +37,23 @@ export function KolomAngka({
     el.setSelectionRange(posisi, posisi);
   }, [tampilan]);
 
-  // Garis miring melompat ke kolom masukan, seperti pada kotak pencarian.
+  /*
+   * Garis miring melompat ke kolom masukan, seperti pada kotak pencarian.
+   *
+   * Pintas beraksara tunggal tidak boleh menyalip pengetikan di tempat lain,
+   * jadi ia mundur dari setiap kolom teks — termasuk yang bukan input atau
+   * textarea: contenteditable dan apa pun yang menyatakan dirinya kotak teks
+   * lewat role. Pembaca layar memakai aksara tunggal untuk melompat antar
+   * unsur, dan tanpa penjagaan ini pintasnya ikut merebut penekanan itu.
+   */
   useEffect(() => {
     function tekan(e: KeyboardEvent) {
       if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
       const fokus = document.activeElement;
       if (fokus instanceof HTMLInputElement || fokus instanceof HTMLTextAreaElement) return;
+      if (fokus instanceof HTMLElement && fokus.isContentEditable) return;
+      const peran = fokus?.getAttribute('role');
+      if (peran === 'textbox' || peran === 'searchbox' || peran === 'combobox') return;
       e.preventDefault();
       kolom.current?.focus();
       kolom.current?.select();

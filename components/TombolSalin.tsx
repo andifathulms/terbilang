@@ -50,7 +50,17 @@ export function TombolSalin({
       >
         {tersalin ? '✓' : '⧉'}
       </span>
-      <span aria-live="polite">{tersalin ? labelTersalin : label}</span>
+      <span>{label}</span>
+
+      {/*
+        Pengumumannya terpisah dari nama tombolnya. Sebelumnya wilayah hidup
+        itu adalah label tombolnya sendiri, jadi menyalin mengganti nama tombol
+        yang sedang difokus — pemakai mendengar namanya berubah alih-alih
+        mendengar bahwa penyalinannya berhasil.
+      */}
+      <span role="status" className="sr-only">
+        {tersalin ? labelTersalin : ''}
+      </span>
     </button>
   );
 }

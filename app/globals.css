@@ -109,6 +109,15 @@
     outline: 2px solid rgb(var(--bank));
     outline-offset: 2px;
   }
+
+  /*
+   * Sasaran lompatan daftar isi bisa difokus supaya fokus ikut berpindah ke
+   * bagian yang dituju, tetapi ia bukan kendali: tidak perlu bercincin, dan
+   * scroll-margin-nya menjaga judulnya tidak tertutup kepala yang melekat.
+   */
+  section[tabindex='-1']:focus {
+    outline: none;
+  }
 }
 
 @layer components {
