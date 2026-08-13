@@ -75,18 +75,31 @@ export default function Survei({ params }: { params: { locale: string } }) {
         bisa dibaca, alih-alih pemberitahuan bahwa tidak ada apa-apa.
       */}
       <section className="space-y-3">
-        <h2 className="font-display text-besar">{t.survei.baterai}</h2>
+        <h2 id="baterai" className="font-display text-besar">
+          {t.survei.baterai}
+        </h2>
         <p className="max-w-2xl text-dasar text-ink-sedang">{t.survei.bateraiRingkas}</p>
 
         <div className="lembar overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-kecil">
+            {/*
+              Tabel dinamai lewat judul bagian yang sudah terlihat, bukan
+              <caption> baru yang mengulang kalimat yang sama tepat di
+              atasnya. scope tetap dipakai — itu yang mengikat sel ke
+              kepalanya, dan tanpa itu isi kolom sebuah paket dibacakan tanpa
+              menyebut paket mana.
+            */}
+            <table aria-labelledby="baterai" className="w-full border-collapse text-kecil">
               <thead>
                 <tr className="border-b border-guilloche bg-tint/50 text-left">
-                  <th className="px-4 py-2.5 font-medium sm:px-5">{t.survei.masukan}</th>
-                  <th className="px-4 py-2.5 font-medium sm:px-5">terbilang</th>
+                  <th scope="col" className="px-4 py-2.5 font-medium sm:px-5">
+                    {t.survei.masukan}
+                  </th>
+                  <th scope="col" className="px-4 py-2.5 font-medium sm:px-5">
+                    terbilang
+                  </th>
                   {rekaman.paket.map((p) => (
-                    <th key={p.nama} className="px-4 py-2.5 font-medium sm:px-5">
+                    <th key={p.nama} scope="col" className="px-4 py-2.5 font-medium sm:px-5">
                       {p.nama}
                       <span className="block font-mono text-kecil font-normal text-ink-lirih">
                         {p.versi}
@@ -104,9 +117,12 @@ export default function Survei({ params }: { params: { locale: string } }) {
                       key={masukan}
                       className="border-b border-guilloche/40 align-top transition-colors duration-200 ease-kertas last:border-0 hover:bg-tint/40"
                     >
-                      <td className="tabular whitespace-nowrap px-4 py-3 font-mono text-kecil text-ink-sedang sm:px-5">
+                      <th
+                        scope="row"
+                        className="tabular whitespace-nowrap px-4 py-3 text-left font-mono text-kecil font-normal text-ink-sedang sm:px-5"
+                      >
                         {bertitik(masukan)}
-                      </td>
+                      </th>
                       <td lang="id" className="px-4 py-3 font-display text-dasar text-bank sm:px-5">
                         {kami}
                       </td>
