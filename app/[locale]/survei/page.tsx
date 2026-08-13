@@ -5,14 +5,16 @@ import { BATERAI } from '../../../data/survey/baterai';
 import rekamanJson from '../../../data/survey/hasil.json';
 import type { RekamanSurvei } from '../../../data/survey/skema';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../../kamus';
+import { metaHalaman } from '../../meta';
 
 export function generateStaticParams() {
   return LOKAL.map((locale) => ({ locale }));
 }
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const t = KAMUS[lokalSah(params.locale) ? params.locale : 'id'];
-  return { title: t.survei.judul, description: t.survei.ringkas };
+  const lokal: Lokal = lokalSah(params.locale) ? params.locale : 'id';
+  const t = KAMUS[lokal];
+  return metaHalaman({ lokal, jalur: 'survei', judul: t.survei.judul, ringkas: t.survei.ringkas });
 }
 
 const rekaman = rekamanJson as RekamanSurvei;

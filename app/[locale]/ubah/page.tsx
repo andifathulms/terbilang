@@ -2,14 +2,16 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Konverter } from '../../../components/Konverter';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../../kamus';
+import { metaHalaman } from '../../meta';
 
 export function generateStaticParams() {
   return LOKAL.map((locale) => ({ locale }));
 }
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const t = KAMUS[lokalSah(params.locale) ? params.locale : 'id'];
-  return { title: t.ubah.judul, description: t.ubah.ringkas };
+  const lokal: Lokal = lokalSah(params.locale) ? params.locale : 'id';
+  const t = KAMUS[lokal];
+  return metaHalaman({ lokal, jalur: 'ubah', judul: t.ubah.judul, ringkas: t.ubah.ringkas });
 }
 
 export default function Ubah({ params }: { params: { locale: string } }) {

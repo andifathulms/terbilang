@@ -65,28 +65,14 @@ export const metadata: Metadata = {
     apple: [{ url: `${basis}/apple-touch-icon.png`, sizes: '180x180' }],
   },
   appleWebApp: { capable: true, title: 'Terbilang', statusBarStyle: 'default' },
-  openGraph: {
-    type: 'website',
-    siteName: 'Terbilang',
-    locale: 'id_ID',
-    title: 'Terbilang — bilangan Indonesia dieja menjadi kata',
-    description:
-      'Pengubah dua arah, rujukan aturan bersitasi, dan survei implementasi yang berversi dan bertanggal.',
-    images: [
-      {
-        url: `${asal}${basis}/og.png`,
-        width: 1200,
-        height: 630,
-        alt: 'Terbilang — dieja jadi kata, dibaca kembali',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Terbilang — bilangan Indonesia dieja menjadi kata',
-    description: 'Pengubah dua arah, berbasis BigInt, tanpa dependensi.',
-    images: [`${asal}${basis}/og.png`],
-  },
+  /*
+   * Kartu bagi tidak lagi disebut di sini. Sebelumnya og:title dan
+   * og:description ditulis sekali di akar dan tidak pernah ditimpa, sehingga
+   * membagikan halaman Aturan memperlihatkan pratinjau beranda — pratinjau
+   * yang salah untuk enam dari delapan alamat. Sekarang tiap halaman
+   * membangunnya sendiri dari kamus lewat app/meta.ts, dari sumber yang sama
+   * dengan isinya.
+   */
 };
 
 /** Bilah alamat peramban ikut warna lembar, di kedua tema. */

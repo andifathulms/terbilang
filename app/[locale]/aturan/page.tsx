@@ -7,14 +7,16 @@ import { LewatNumber } from '../../../components/cheque/LewatNumber';
 import { DaftarIsi } from '../../../components/kerangka/DaftarIsi';
 import { ATURAN, type Contoh } from '../../../data/aturan';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../../kamus';
+import { metaHalaman } from '../../meta';
 
 export function generateStaticParams() {
   return LOKAL.map((locale) => ({ locale }));
 }
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const t = KAMUS[lokalSah(params.locale) ? params.locale : 'id'];
-  return { title: t.aturan.judul, description: t.aturan.ringkas };
+  const lokal: Lokal = lokalSah(params.locale) ? params.locale : 'id';
+  const t = KAMUS[lokal];
+  return metaHalaman({ lokal, jalur: 'aturan', judul: t.aturan.judul, ringkas: t.aturan.ringkas });
 }
 
 /**

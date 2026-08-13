@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { format, kelompokkan, OPSI_BAWAAN } from '@/lib';
@@ -6,6 +7,7 @@ import { GarisJumlah } from '../../components/cheque/GarisJumlah';
 import { KurungKelompok } from '../../components/cheque/KurungKelompok';
 import { Uraian } from '../../components/cheque/Uraian';
 import { KAMUS, lokalSah, type Lokal } from '../kamus';
+import { metaHalaman } from '../meta';
 
 /** Nilai sorot dan contoh dihitung pustaka saat halaman dibangun. */
 const SOROT = 1_000_001n;
@@ -33,6 +35,18 @@ const CONTOH: Record<Lokal, readonly Baris[]> = {
     [9_007_199_254_740_993n, 'still exact above 2⁵³', 'silently rounded by a number'],
   ],
 };
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+  const lokal: Lokal = lokalSah(params.locale) ? params.locale : 'id';
+  const t = KAMUS[lokal];
+  return metaHalaman({
+    lokal,
+    jalur: '',
+    /* Beranda memakai judul lengkap situs, bukan template "· Terbilang". */
+    judul: `${t.judulSitus} — ${t.taglineSitus.replace(/\.$/, '')}`,
+    ringkas: t.beranda.paragraf.join(' '),
+  });
+}
 
 export default function Beranda({ params }: { params: { locale: string } }) {
   if (!lokalSah(params.locale)) notFound();
