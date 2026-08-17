@@ -42,7 +42,7 @@ function Tanda({ status }: { status: StatusBaris }) {
     return (
       <span
         aria-hidden
-        className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-void/50 text-[0.6rem] leading-none text-void"
+        className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-void/50 text-label leading-none text-void"
       >
         !
       </span>
