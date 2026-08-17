@@ -33,5 +33,9 @@ jobs:
       - run: pnpm build:lib
       - run: pnpm build
 
+      # PRD.md §10: Site JS <= 100 KB gzipped. Dihitung ulang dari
+      # .next/app-build-manifest.json yang baru ditulis pnpm build di atas.
+      - run: pnpm build:size
+
       # survey:record memasang dan menjalankan paket pihak ketiga.
       # Hanya untuk pengembangan — tidak pernah di CI.

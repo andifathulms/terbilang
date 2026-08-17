@@ -36,6 +36,7 @@ pnpm test:run               # vitest once — before every commit
 pnpm test:exhaustive        # full 0..1,000,000 round-trip + structural sweep
 pnpm test:bigint            # boundary behaviour above 2^53
 pnpm survey:record          # DEV ONLY — runs other packages to regenerate survey data
+pnpm build:size             # after `pnpm build` — gates PRD.md §10's 100 KB gzip target
 pnpm typecheck
 pnpm lint
 ```

@@ -34,6 +34,7 @@
   "scripts": {
     "build:lib": "tsup",
     "build": "next build && node scripts/postbuild.mjs",
+    "build:size": "node scripts/check-bundle-size.mjs",
     "dev": "next dev",
     "preview": "node scripts/preview.mjs",
     "test": "vitest",
