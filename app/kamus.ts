@@ -147,6 +147,14 @@ interface Teks {
     readonly belumIsi: string;
     readonly baterai: string;
     readonly bateraiRingkas: string;
+    readonly judulModus: string;
+    readonly ringkasModus: string;
+    readonly kelasBugKita: string;
+    readonly kelasBugMereka: string;
+    readonly kelasVarianSah: string;
+    readonly kami: string;
+    readonly judulRujukan: string;
+    readonly ringkasRujukan: string;
   };
   readonly takDitemukan: {
     readonly judul: string;
@@ -312,6 +320,15 @@ const id: Teks = {
     baterai: 'Baterai masukan',
     bateraiRingkas:
       'Kolom terbilang adalah keluaran pustaka ini sendiri. Ia berlaku sebagai rujukan meski belum ada satu pun paket pembanding di sebelahnya.',
+    judulModus: 'Tempat paket lain patah',
+    ringkasModus:
+      'Disusun per ciri kegagalan, bukan per paket — satu tempat implementasi patah bisa muncul di beberapa masukan dan beberapa paket sekaligus.',
+    kelasBugKita: 'bug kami',
+    kelasBugMereka: 'bug mereka',
+    kelasVarianSah: 'varian sah',
+    kami: 'terbilang (kami)',
+    judulRujukan: 'Tabel lengkap',
+    ringkasRujukan: 'Rujukan presisi di balik ringkasan di atas — baris demi baris, paket demi paket.',
   },
   takDitemukan: {
     judul: 'Halaman tidak ditemukan',
@@ -482,6 +499,15 @@ const en: Teks = {
     baterai: 'Input battery',
     bateraiRingkas:
       'The terbilang column is this library\u2019s own output. It stands as the reference even with no package beside it to compare against.',
+    judulModus: 'Where other packages break',
+    ringkasModus:
+      'Organised by failure mode, not by package \u2014 one place an implementation breaks can show up across several inputs and several packages at once.',
+    kelasBugKita: 'our bug',
+    kelasBugMereka: 'their bug',
+    kelasVarianSah: 'legitimate variant',
+    kami: 'terbilang (ours)',
+    judulRujukan: 'Full table',
+    ringkasRujukan: 'The precise reference behind the summary above \u2014 row by row, package by package.',
   },
   takDitemukan: {
     judul: 'Page not found',
