@@ -113,6 +113,7 @@ interface Teks {
     readonly lingkupJudul: string;
     readonly lingkupIsi: string;
     readonly lingkupKeliru: string;
+    readonly lingkupGambar: string;
   };
   readonly aturan: {
     readonly judul: string;
@@ -278,6 +279,8 @@ const id: Teks = {
     lingkupIsi:
       'Membaca balik lebih sulit daripada mengeja, dan di sinilah sulitnya: kata skala mengali seluruh frasa di depannya, bukan kata terakhir saja. Kurung di bawah menunjukkan sampai mana jangkauannya.',
     lingkupKeliru: 'Kalau kata skala hanya mengali kata terdekatnya, hasilnya jadi',
+    lingkupGambar:
+      'Gambar: kurung di atas kata menunjukkan sampai mana kata skala menjangkau ke belakang, dengan hasil kelompok sebagai labelnya. Bentuk yang dicoret adalah salah paham yang lazim, bila pengali dikira hanya mengali kata terdekatnya.',
   },
   aturan: {
     judul: 'Aturan',
@@ -457,6 +460,8 @@ const en: Teks = {
     lingkupIsi:
       'Reading back is harder than spelling out, and this is where the difficulty lives: a scale word multiplies the whole phrase before it, not just the nearest word. The brackets below show how far its reach goes.',
     lingkupKeliru: 'If a scale word multiplied only its nearest word, the result would be',
+    lingkupGambar:
+      'Diagram: brackets over the words show how far back each scale word reaches, labelled with the group’s result. The struck-through form is the common misreading, where the multiplier is taken to multiply only the nearest word.',
   },
   aturan: {
     judul: 'Rules',

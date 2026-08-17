@@ -5,6 +5,7 @@ import { format, kelompokkan, OPSI_BAWAAN, parse, type Kelompok, type Options } 
 import type { Teks } from '../app/kamus';
 import { GarisJumlah } from './cheque/GarisJumlah';
 import { KurungKelompok } from './cheque/KurungKelompok';
+import { KurungLingkup } from './cheque/KurungLingkup';
 import { Penolakan } from './cheque/Penolakan';
 import { Uraian } from './cheque/Uraian';
 import { KolomAngka } from './KolomAngka';
@@ -232,6 +233,8 @@ export function Konverter({
                     ejaan={opsi.ejaanMiliar}
                   />
                 </div>
+
+                <KurungLingkup bulat={hasilAngka.nilai.bulat} opsi={opsi} ringkas={urai.lingkupGambar} />
 
                 <Uraian bulat={hasilAngka.nilai.bulat} opsi={opsi} t={urai} lingkup />
 
