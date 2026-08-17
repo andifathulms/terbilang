@@ -1,6 +1,418 @@
 {
-  "direkamPada": null,
-  "runtime": null,
-  "paket": [],
-  "hasil": []
+  "direkamPada": "2026-08-17",
+  "runtime": "v25.8.1",
+  "paket": [
+    {
+      "nama": "terbilang",
+      "versi": "0.0.3",
+      "ekosistem": "npm",
+      "bentuk": "module.exports"
+    },
+    {
+      "nama": "angka-terbilang",
+      "versi": "1.0.3",
+      "ekosistem": "npm",
+      "bentuk": "-",
+      "gagal": "tidak ditemukan fungsi yang bisa dipanggil pada ekspor paket"
+    },
+    {
+      "nama": "terbilang-ts",
+      "versi": "2.1.0",
+      "ekosistem": "npm",
+      "bentuk": "module.exports"
+    },
+    {
+      "nama": "angka-terbilang-ts",
+      "versi": "1.5.1",
+      "ekosistem": "npm",
+      "bentuk": "-",
+      "gagal": "tidak ditemukan fungsi yang bisa dipanggil pada ekspor paket"
+    },
+    {
+      "nama": "@develoka/angka-terbilang-js",
+      "versi": "1.4.2",
+      "ekosistem": "npm",
+      "bentuk": "module.exports"
+    }
+  ],
+  "hasil": [
+    {
+      "paket": "terbilang",
+      "masukan": "0",
+      "keluaran": "nol",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1",
+      "keluaran": "satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "10",
+      "keluaran": "sepuluh",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "11",
+      "keluaran": "sebelas",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "19",
+      "keluaran": "sembilan belas",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "20",
+      "keluaran": "dua puluh",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "100",
+      "keluaran": "seratus",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "101",
+      "keluaran": "seratus satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "110",
+      "keluaran": "seratus sepuluh",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1000",
+      "keluaran": "satu ribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1001",
+      "keluaran": "satu ribu satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1100",
+      "keluaran": "satu ribu seratus",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "10000",
+      "keluaran": "sepuluh ribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "100000",
+      "keluaran": "seratus ribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "101000",
+      "keluaran": "seratus satu ribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1000000",
+      "keluaran": "satu juta",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1000001",
+      "keluaran": "satu juta satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1000000000",
+      "keluaran": "terlalu besar / not implemented yet",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1000000000001",
+      "keluaran": "terlalu besar / not implemented yet",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "9007199254740993",
+      "keluaran": "terlalu besar / not implemented yet",
+      "galat": null
+    },
+    {
+      "paket": "terbilang",
+      "masukan": "1000000000000000",
+      "keluaran": "terlalu besar / not implemented yet",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "0",
+      "keluaran": "",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1",
+      "keluaran": "Satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "10",
+      "keluaran": "Sepuluh",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "11",
+      "keluaran": "Sebelas",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "19",
+      "keluaran": "Sembilan Belas",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "20",
+      "keluaran": "Dua Puluh",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "100",
+      "keluaran": "Seratus",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "101",
+      "keluaran": "Seratus Satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "110",
+      "keluaran": "Seratus Sepuluh",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1000",
+      "keluaran": "Seribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1001",
+      "keluaran": "Seribu Satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1100",
+      "keluaran": "Seribu Seratus",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "10000",
+      "keluaran": "Sepuluh Ribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "100000",
+      "keluaran": "Seratus Ribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "101000",
+      "keluaran": "Seratus Satu Ribu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1000000",
+      "keluaran": "Satu Juta",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1000001",
+      "keluaran": "Satu Juta Satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1000000000",
+      "keluaran": "Satu Milyar",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1000000000001",
+      "keluaran": "Satu Triliun Satu",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "9007199254740993",
+      "keluaran": "Sembilan Kuadriliun Tujuh Triliun Sembilan Milyar Dua Ratus Lima Puluh Empat Juta Tujuh Ratus Empat Puluh Ribu Sembilan Ratus Sembilan Puluh Dua",
+      "galat": null
+    },
+    {
+      "paket": "terbilang-ts",
+      "masukan": "1000000000000000",
+      "keluaran": "Satu Kuadriliun",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "0",
+      "keluaran": "nol",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1",
+      "keluaran": "satu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "10",
+      "keluaran": "sepuluh",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "11",
+      "keluaran": "sebelas",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "19",
+      "keluaran": "sembilan belas",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "20",
+      "keluaran": "dua puluh",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "100",
+      "keluaran": "seratus",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "101",
+      "keluaran": "seratus satu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "110",
+      "keluaran": "seratus sepuluh",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1000",
+      "keluaran": "seribu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1001",
+      "keluaran": "seribu satu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1100",
+      "keluaran": "seribu seratus",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "10000",
+      "keluaran": "sepuluh ribu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "100000",
+      "keluaran": "seratus ribu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "101000",
+      "keluaran": "seratus satu ribu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1000000",
+      "keluaran": "satu juta",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1000001",
+      "keluaran": "satu juta satu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1000000000",
+      "keluaran": "satu milyar",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1000000000001",
+      "keluaran": "satu triliun satu",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "9007199254740993",
+      "keluaran": "sembilan quadriliun tujuh triliun seratus sembilan puluh sembilan milyar dua ratus lima puluh empat juta tujuh ratus empat puluh ribu sembilan ratus sembilan puluh tiga",
+      "galat": null
+    },
+    {
+      "paket": "@develoka/angka-terbilang-js",
+      "masukan": "1000000000000000",
+      "keluaran": "satu quadriliun",
+      "galat": null
+    }
+  ]
 }

@@ -11,7 +11,7 @@ import { format } from '@/lib';
 import rekamanJson from '../../data/survey/hasil.json';
 import { BATERAI } from '../../data/survey/baterai';
 import type { RekamanSurvei } from '../../data/survey/skema';
-import { KLASIFIKASI, kunci } from './klasifikasi';
+import { KLASIFIKASI, MODUS, kunci } from './klasifikasi';
 
 const rekaman = rekamanJson as RekamanSurvei;
 
@@ -68,5 +68,28 @@ describe('rekaman survei', () => {
     );
 
     expect(yatim).toEqual([]);
+  });
+
+  it('setiap modus yang dipakai klasifikasi terdaftar di MODUS', () => {
+    const tanpaEntri = KLASIFIKASI.filter((k) => MODUS[k.modus] === undefined).map(
+      (k) => `${k.paket} @ ${k.masukan} -> ${k.modus}`,
+    );
+
+    expect(tanpaEntri).toEqual([]);
+  });
+
+  it('kelas setiap klasifikasi sama dengan kelas modusnya', () => {
+    const tidakCocok = KLASIFIKASI.filter((k) => MODUS[k.modus]?.kelas !== k.kelas).map(
+      (k) => `${k.paket} @ ${k.masukan}: ${k.kelas} != MODUS.${k.modus}.kelas`,
+    );
+
+    expect(tidakCocok).toEqual([]);
+  });
+
+  it('MODUS tidak menyimpan entri yang tidak dipakai klasifikasi mana pun', () => {
+    const dipakai = new Set(KLASIFIKASI.map((k) => k.modus));
+    const takTerpakai = Object.keys(MODUS).filter((m) => !dipakai.has(m));
+
+    expect(takTerpakai).toEqual([]);
   });
 });
