@@ -242,30 +242,46 @@ export default function Beranda({ params }: { params: { locale: string } }) {
       </section>
 
       {/*
-        Empat angka tentang pustakanya. Diletakkan setelah contoh: ini keterangan
-        untuk yang sudah paham alatnya, bukan pengantar bagi yang belum.
+        Empat angka tentang pustakanya, sebagai sobekan buku cek — bukan papan
+        data yang lepas dari pokok halaman. Perforasinya menyambung dari yang
+        sama dipakai di bawah lembar sorot, dan tiap fakta jadi satu baris
+        berpenggaris seperti keping pada kwitansi, bukan kartu yang berdiri
+        sendiri. Diletakkan setelah contoh: ini keterangan untuk yang sudah
+        paham alatnya, bukan pengantar bagi yang belum.
       */}
       <section className="space-y-ruang4">
         <h2 className="font-display text-besar">{t.beranda.judulSifat}</h2>
 
-        <div className="grid gap-px overflow-hidden rounded-lembar border border-guilloche/70 bg-guilloche/60 sm:grid-cols-2 lg:grid-cols-4">
-          {t.beranda.sifat.map((s) => (
-            <div key={s.label} className="bg-tint p-5">
-              <p className="font-display text-besar text-bank">{s.nilai}</p>
-              <p className="mt-1 text-kecil text-ink-sedang">{s.label}</p>
-            </div>
-          ))}
+        <div>
+          <div className="lembar overflow-hidden">
+            <dl className="divide-y divide-guilloche/50">
+              {t.beranda.sifat.map((s) => (
+                <div key={s.label} className="flex items-baseline justify-between gap-ruang4 px-5 py-3.5 sm:px-6">
+                  <dt className="text-dasar text-ink-sedang">{s.label}</dt>
+                  <dd className="tabular shrink-0 font-mono text-sedang text-bank">{s.nilai}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div aria-hidden className="perforasi mx-3 -mt-[5px]" />
         </div>
       </section>
 
-      {/* Tiga pintu ke isi situs. */}
-      <section className="grid gap-ruang4 sm:grid-cols-3">
-        {t.beranda.kartu.map((k) => (
+      {/*
+        Tiga pintu ke isi situs, sebagai satu jalur bernomor — bukan tiga
+        kartu terpisah yang mengangkat diri saat disorot. Nomornya meniru
+        garis rute pada kaki cek sungguhan: satu jalur, tiga ruas.
+      */}
+      <section className="lembar grid divide-y divide-guilloche/50 overflow-hidden sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+        {t.beranda.kartu.map((k, i) => (
           <Link
             key={k.ke}
             href={`/${lokal}/${k.ke}/`}
-            className="lembar group flex flex-col gap-ruang3 p-5 transition-all duration-300 ease-kertas hover:-translate-y-1 hover:shadow-angkat"
+            className="group flex flex-col gap-ruang2 p-5 transition-colors duration-200 ease-kertas hover:bg-tint/50 sm:p-6"
           >
+            <span className="tabular font-mono text-label text-ink-lirih">
+              {String(i + 1).padStart(2, '0')}
+            </span>
             <h3 className="font-display text-sedang">{k.judul}</h3>
             <p className="flex-1 text-dasar text-ink-sedang">{k.isi}</p>
             <span className="text-kecil text-bank">
