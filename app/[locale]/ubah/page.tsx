@@ -20,9 +20,9 @@ export default function Ubah({ params }: { params: { locale: string } }) {
   const t = KAMUS[lokal];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-ruang6">
       <header className="max-w-2xl space-y-2">
-        <h1 className="font-display text-judul">{t.ubah.judul}</h1>
+        <h1 className="font-display text-judul tracking-tight">{t.ubah.judul}</h1>
         <p className="text-dasar text-ink-sedang">{t.ubah.ringkas}</p>
       </header>
 

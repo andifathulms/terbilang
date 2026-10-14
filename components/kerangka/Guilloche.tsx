@@ -13,7 +13,14 @@
  */
 
 const PUTARAN_LUAR = Array.from({ length: 40 }, (_, i) => i * 4.5);
-const PUTARAN_DALAM = Array.from({ length: 30 }, (_, i) => i * 6);
+/*
+ * Elips yang berpusat di titik tengah tidak pernah lebih dekat ke tengah
+ * daripada jari-jari pendeknya, jadi roset elips saja berlubang dan lubang
+ * itu terbaca sebagai cakram polos. Lingkaran yang digeser dari pusat —
+ * masing-masing nyaris menyentuh titik tengah — mengisi lubang itu menjadi
+ * bunga, seperti roset pada uang kertas.
+ */
+const PUTARAN_DALAM = Array.from({ length: 60 }, (_, i) => i * 6);
 
 export function Roset({ kelas = '' }: { kelas?: string }) {
   return (
@@ -30,13 +37,12 @@ export function Roset({ kelas = '' }: { kelas?: string }) {
           <ellipse key={sudut} rx="96" ry="30" transform={`rotate(${sudut})`} />
         ))}
       </g>
-      <g strokeWidth="0.25" opacity="0.8">
+      <g strokeWidth="0.3">
         {PUTARAN_DALAM.map((sudut) => (
-          <ellipse key={sudut} rx="52" ry="19" transform={`rotate(${sudut})`} />
+          <circle key={sudut} cx="24" r="26" transform={`rotate(${sudut})`} />
         ))}
       </g>
       <circle r="98" strokeWidth="0.4" />
-      <circle r="58" strokeWidth="0.3" />
     </svg>
   );
 }

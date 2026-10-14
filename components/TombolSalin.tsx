@@ -12,11 +12,17 @@ export function TombolSalin({
   label,
   labelTersalin,
   utama = false,
+  besar = false,
+  saatTersalin,
 }: {
   teks: string;
   label: string;
   labelTersalin: string;
   utama?: boolean;
+  /** Tombol salin utama di lembar pengubah: lebih tinggi, lebih mudah diketuk. */
+  besar?: boolean;
+  /** Dipanggil setelah penyalinan berhasil — untuk cap "Tersalin" di lembar. */
+  saatTersalin?: () => void;
 }) {
   const [tersalin, setTersalin] = useState(false);
   const jam = useRef<number>();
@@ -30,6 +36,7 @@ export function TombolSalin({
       return;
     }
     setTersalin(true);
+    saatTersalin?.();
     window.clearTimeout(jam.current);
     jam.current = window.setTimeout(() => setTersalin(false), 1600);
   }
@@ -38,9 +45,11 @@ export function TombolSalin({
     <button
       type="button"
       onClick={salin}
-      className={`inline-flex min-h-sasaran items-center gap-1.5 rounded-full px-3.5 py-1.5 text-kendali-kecil transition-all duration-200 ease-kertas ${
+      className={`inline-flex min-h-sasaran items-center gap-1.5 rounded-full transition-all duration-200 ease-kertas ${
+        besar ? 'px-5 py-2.5 text-kendali' : 'px-3.5 py-1.5 text-kendali-kecil'
+      } ${
         utama
-          ? 'bg-bank text-kertas hover:-translate-y-0.5'
+          ? 'bg-bank text-kertas hover:-translate-y-0.5 hover:bg-ink'
           : 'border border-garis text-ink-sedang hover:border-bank hover:text-bank'
       }`}
     >

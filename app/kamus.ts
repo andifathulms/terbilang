@@ -96,6 +96,13 @@ interface Teks {
     readonly kosongkan: string;
     readonly tukar: string;
     readonly pulihkan: string;
+    readonly judulLembar: string;
+    readonly salinHasil: string;
+    readonly caraKerja: string;
+    readonly tabLangkah: string;
+    readonly tabKeliru: string;
+    readonly diubah: string;
+    readonly sitasi: string;
   };
   readonly urai: {
     readonly judul: string;
@@ -260,6 +267,13 @@ const id: Teks = {
     kosongkan: 'Kosongkan',
     tukar: 'Tukar arah',
     pulihkan: 'Kembalikan ke bawaan',
+    judulLembar: 'Lembar terbilang',
+    salinHasil: 'Salin hasil',
+    caraKerja: 'Cara kerjanya',
+    tabLangkah: 'Langkahnya',
+    tabKeliru: 'Bentuk keliru yang lazim',
+    diubah: 'diubah',
+    sitasi: 'Sitasi',
   },
   urai: {
     judul: 'Langkahnya',
@@ -443,6 +457,13 @@ const en: Teks = {
     kosongkan: 'Clear',
     tukar: 'Swap direction',
     pulihkan: 'Reset to defaults',
+    judulLembar: 'Terbilang slip',
+    salinHasil: 'Copy result',
+    caraKerja: 'How it works',
+    tabLangkah: 'The steps',
+    tabKeliru: 'The common wrong form',
+    diubah: 'changed',
+    sitasi: 'Citation',
   },
   urai: {
     judul: 'The steps',

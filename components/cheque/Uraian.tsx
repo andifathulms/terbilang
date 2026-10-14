@@ -23,6 +23,7 @@ export function Uraian({
   t,
   tumpuk = false,
   lingkup = false,
+  naif = true,
 }: {
   bulat: bigint;
   opsi: Options;
@@ -31,6 +32,11 @@ export function Uraian({
   tumpuk?: boolean;
   /** Tampilkan bacaan aritmetikanya. Dipakai di arah membaca balik. */
   lingkup?: boolean;
+  /**
+   * Sertakan bentuk naifnya di bawah. Pengubah mematikannya karena bentuk
+   * keliru punya tabnya sendiri di sana (lihat BentukKeliru).
+   */
+  naif?: boolean;
 }) {
   const u = uraikan(bulat, opsi);
   const bertitik = (n: bigint) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -158,24 +164,43 @@ export function Uraian({
         </span>
       </p>
 
-      {/*
-        Bentuk keliru diperagakan dari uraian yang sama, bukan dikarang:
-        rangkai kolom "dieja sendiri" dan sebut juga kelompok yang nol.
-        Ditandai merah void karena ia memang keliru, dan dicoret supaya tidak
-        pernah tertukar dengan jawaban.
-      */}
-      {u.adaKosong || u.adaLebur ? (
-        <div className="rounded-lembar border border-void/40 bg-void/[0.06] p-3">
-          <p className="label text-void">{t.naifJudul}</p>
-          <p lang="id" className="mt-1 font-display text-dasar text-void line-through decoration-void/50">
-            {u.naif}
-          </p>
-          <p className="mt-1.5 text-kecil text-ink-sedang">{t.naifIsi}</p>
-        </div>
-      ) : null}
+      {naif ? <BentukKeliru bulat={bulat} opsi={opsi} t={t} /> : null}
 
       {/* Jujur soal yang disederhanakan: uraian ini bilangannya saja. */}
       <figcaption className="text-kecil text-ink-lirih">{t.sederhana}</figcaption>
     </figure>
+  );
+}
+
+/**
+ * Bentuk keliru diperagakan dari uraian yang sama, bukan dikarang: rangkai
+ * kolom "dieja sendiri" dan sebut juga kelompok yang nol. Hanya kalimatnya
+ * yang merah void dan dicoret, karena kalimat itulah yang keliru; kotaknya
+ * netral. Kotak bertint merah di bawah setiap hasil yang benar terbaca
+ * seperti galat pada jawaban yang tidak salah.
+ *
+ * Mengembalikan null bila bilangannya tidak punya kelompok kosong maupun
+ * peleburan se- — bentuk naifnya sama dengan jawabannya.
+ */
+export function BentukKeliru({
+  bulat,
+  opsi,
+  t,
+}: {
+  bulat: bigint;
+  opsi: Options;
+  t: Teks['urai'];
+}) {
+  const u = uraikan(bulat, opsi);
+  if (!u.adaKosong && !u.adaLebur) return null;
+
+  return (
+    <div className="rounded-lembar border border-garis bg-tint/40 p-4">
+      <p className="label">{t.naifJudul}</p>
+      <p lang="id" className="mt-1.5 font-display text-sedang text-void line-through decoration-void/60">
+        {u.naif}
+      </p>
+      <p className="mt-2 max-w-2xl text-kecil text-ink-sedang">{t.naifIsi}</p>
+    </div>
   );
 }

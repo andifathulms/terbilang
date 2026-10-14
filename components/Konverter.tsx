@@ -1,17 +1,21 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { format, kelompokkan, OPSI_BAWAAN, parse, type Kelompok, type Options } from '@/lib';
 import type { Teks } from '../app/kamus';
 import { GarisJumlah } from './cheque/GarisJumlah';
 import { KurungKelompok } from './cheque/KurungKelompok';
 import { KurungLingkup } from './cheque/KurungLingkup';
+import { Cap } from './cheque/Cap';
 import { Penolakan } from './cheque/Penolakan';
-import { Uraian } from './cheque/Uraian';
+import { BentukKeliru, Uraian } from './cheque/Uraian';
+import { Roset } from './kerangka/Guilloche';
 import { KolomAngka } from './KolomAngka';
 import { PanelOpsi } from './PanelOpsi';
+import { Tab, type IsiTab } from './Tab';
 import { TombolSalin } from './TombolSalin';
 import { tampilkan } from './masukan';
+import { uraikan } from './urai';
 
 type Arah = 'angka' | 'kata';
 
@@ -102,10 +106,87 @@ export function Konverter({
         : teksNilai(hasilAngka.type === 'ok' ? hasilAngka.nilai : NILAI_KOSONG)
       : `${galat[hasilKini.galat.type] ?? ''} ${hasilKini.galat.pesan}`;
 
-  return (
-    <div className="space-y-8">
-      <SakelarArah t={t} arah={arah} ubah={setArah} />
+  /** Yang disalin tombol utama, di arah mana pun — undefined bila ditolak. */
+  const teksSalin =
+    arah === 'angka'
+      ? hasilKata.type === 'ok'
+        ? modeDokumen
+          ? teksDokumen
+          : teksKata
+        : undefined
+      : hasilAngka.type === 'ok'
+        ? teksNilai(hasilAngka.nilai)
+        : undefined;
 
+  /** Bilangan yang diuraikan di tab "cara kerjanya", di arah mana pun. */
+  const bulatUrai =
+    arah === 'angka' ? (hasilKata.type === 'ok' ? bulatAngka : undefined) : hasilAngka.type === 'ok' ? hasilAngka.nilai.bulat : undefined;
+
+  const adaKeliru = useMemo(() => {
+    if (bulatUrai === undefined) return false;
+    const u = uraikan(bulatUrai, opsi);
+    return u.adaKosong || u.adaLebur;
+  }, [bulatUrai, opsi]);
+
+  /*
+   * Cap "Tersalin" dijatuhkan ke lembar setiap penyalinan berhasil. Kuncinya
+   * hitungan, supaya menyalin dua kali berturut-turut memasang ulang capnya
+   * dan geraknya berulang.
+   */
+  const [cap, setCap] = useState(0);
+  const jamCap = useRef<number>();
+  useEffect(() => () => window.clearTimeout(jamCap.current), []);
+  function bubuhkanCap() {
+    setCap((n) => n + 1);
+    window.clearTimeout(jamCap.current);
+    jamCap.current = window.setTimeout(() => setCap(0), 1800);
+  }
+
+  /*
+   * Bilah salin di layar sempit muncul hanya ketika lembar ceknya sudah
+   * tergulir keluar layar — saat membaca opsi atau uraian di bawahnya.
+   * Selama lembarnya terlihat, tombol salin di lembar itu sendiri sudah cukup.
+   */
+  const lembar = useRef<HTMLDivElement>(null);
+  const [lembarTerlihat, setLembarTerlihat] = useState(true);
+  useEffect(() => {
+    const el = lembar.current;
+    if (el === null || typeof IntersectionObserver === 'undefined') return;
+    const pengamat = new IntersectionObserver(([e]) => setLembarTerlihat(e?.isIntersecting ?? true));
+    pengamat.observe(el);
+    return () => pengamat.disconnect();
+  }, []);
+
+  const tabUrai: IsiTab[] =
+    bulatUrai === undefined
+      ? []
+      : [
+          {
+            kunci: 'langkah',
+            label: t.tabLangkah,
+            isi:
+              arah === 'angka' ? (
+                <Uraian bulat={bulatUrai} opsi={opsi} t={urai} naif={false} />
+              ) : (
+                <div className="space-y-ruang6">
+                  <KurungLingkup bulat={bulatUrai} opsi={opsi} ringkas={urai.lingkupGambar} />
+                  <Uraian bulat={bulatUrai} opsi={opsi} t={urai} lingkup naif={false} />
+                </div>
+              ),
+          },
+          ...(adaKeliru
+            ? [
+                {
+                  kunci: 'keliru',
+                  label: t.tabKeliru,
+                  isi: <BentukKeliru bulat={bulatUrai} opsi={opsi} t={urai} />,
+                },
+              ]
+            : []),
+        ];
+
+  return (
+    <div className="space-y-ruang5 pb-24 lg:pb-0">
       {/*
         Wilayah hidup untuk hasilnya. Ia selalu ada di markah, kosong pun,
         karena wilayah hidup yang baru dipasang bersama isinya tidak dibacakan
@@ -121,84 +202,51 @@ export function Konverter({
         {ucapan}
       </p>
 
-      {arah === 'angka' ? (
-        <section className="lembar roset overflow-hidden">
-          <div className="space-y-6 bg-kertas/90 p-5 sm:p-7">
-            <KolomAngka
-              nilai={angka}
-              ubah={setAngka}
-              label={t.labelAngka}
-              petunjuk={t.petunjukAngka}
-              kosongkan={t.kosongkan}
-              pintas={t.pintas}
-            />
+      {/*
+        Meja kerja dua panel. Tiga anak, bukan dua, supaya urutan di layar
+        sempit bisa disela — masukan, lembar cek, baru opsi — tanpa satu kelas
+        order pun: urutan markah sudah urutan itu. Di layar lebar lembar ceknya
+        berdiri di kolom kanan sepanjang dua baris dan melekat saat digulir,
+        jadi setiap opsi yang diubah di kiri terlihat akibatnya di kanan tanpa
+        menggulir di antara sebab dan akibat.
+      */}
+      <div className="grid items-start gap-ruang5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:gap-x-ruang6">
+        <section className="lembar space-y-ruang5 p-5 sm:p-6 lg:col-start-1 lg:row-start-1">
+          <SakelarArah t={t} arah={arah} ubah={setArah} />
 
-            <div className="space-y-2">
-              <span className="label">{t.contoh}</span>
-              <div className="flex flex-wrap gap-1.5">
-                {CONTOH.map((c) => (
-                  <button
-                    key={c.nilai}
-                    type="button"
-                    onClick={() => setAngka(c.nilai)}
-                    aria-pressed={angka === c.nilai}
-                    className={`tabular inline-flex min-h-sasaran items-center rounded-full border px-3 py-1 font-mono text-kendali-kecil transition-all duration-200 ease-kertas ${
-                      angka === c.nilai
-                        ? 'border-bank bg-bank text-kertas'
-                        : 'border-garis text-ink-sedang hover:-translate-y-0.5 hover:border-bank hover:text-bank'
-                    }`}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+          {arah === 'angka' ? (
+            <>
+              <KolomAngka
+                nilai={angka}
+                ubah={setAngka}
+                label={t.labelAngka}
+                petunjuk={t.petunjukAngka}
+                kosongkan={t.kosongkan}
+                pintas={t.pintas}
+              />
 
-            {kelompok.length > 0 ? (
-              <div className="space-y-1.5">
-                <span className="label">{t.kelompok}</span>
-                <KurungKelompok
-                  kelompok={kelompok}
-                  labelKosong={t.kosong}
-                  ringkas={t.kelompokRingkas}
-                  ejaan={opsi.ejaanMiliar}
-                />
-              </div>
-            ) : null}
-
-            {hasilKata.type === 'ok' ? (
-              <div className="space-y-4">
-                <GarisJumlah kata={teksKata} modeDokumen={modeDokumen} label={t.labelKata} bisu />
-
-                {bulatAngka === undefined ? null : (
-                  <Uraian bulat={bulatAngka} opsi={opsi} t={urai} />
-                )}
-
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-                  <Sakelar
-                    label={t.modeDokumen}
-                    aktif={modeDokumen}
-                    ubah={() => setModeDokumen((n) => !n)}
-                  />
-                  <div className="ml-auto flex flex-wrap gap-2">
-                    <TombolSalin
-                      teks={modeDokumen ? teksDokumen : teksKata}
-                      label={modeDokumen ? t.salinDokumen : t.salin}
-                      labelTersalin={t.tersalin}
-                      utama
-                    />
-                    <TombolSalin teks={tautan} label={t.bagikan} labelTersalin={t.tertaut} />
-                  </div>
+              <div className="space-y-2">
+                <span className="label">{t.contoh}</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {CONTOH.map((c) => (
+                    <button
+                      key={c.nilai}
+                      type="button"
+                      onClick={() => setAngka(c.nilai)}
+                      aria-pressed={angka === c.nilai}
+                      className={`tabular inline-flex min-h-sasaran items-center rounded-full border px-3 py-1 font-mono text-kendali-kecil transition-all duration-200 ease-kertas ${
+                        angka === c.nilai
+                          ? 'border-bank bg-bank text-kertas'
+                          : 'border-garis text-ink-sedang hover:-translate-y-0.5 hover:border-bank hover:text-bank'
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
                 </div>
               </div>
-            ) : (
-              <Penolakan galat={hasilKata.galat} judul={galat[hasilKata.galat.type] ?? ''} />
-            )}
-          </div>
-        </section>
-      ) : (
-        <section className="lembar roset overflow-hidden">
-          <div className="space-y-6 bg-kertas/90 p-5 sm:p-7">
+            </>
+          ) : (
             <label className="block">
               <span className="label">{t.labelKataKeAngka}</span>
               <input
@@ -211,51 +259,125 @@ export function Konverter({
               />
               <span className="mt-2 block text-kecil text-ink-lirih">{t.petunjukKata}</span>
             </label>
+          )}
+        </section>
 
-            {hasilAngka.type === 'ok' ? (
-              <div className="space-y-5">
-                <div className="guilloche rounded-lembar border border-garis bg-kertas/60 px-4 py-3 sm:px-5">
-                  <span className="label">{t.hasilAngka}</span>
-                  <p
-                    key={teksNilai(hasilAngka.nilai)}
-                    className="tabular animate-kelompok-masuk mt-1 break-all font-mono text-jumlah text-bank"
-                  >
-                    {teksNilai(hasilAngka.nilai)}
-                  </p>
-                </div>
+        <div ref={lembar} className="lg:sticky lg:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <section
+            aria-label={arah === 'angka' ? t.labelKata : t.hasilAngka}
+            className="lembar relative overflow-hidden"
+          >
+            <Roset kelas="absolute -bottom-32 -right-28 h-80 w-80 text-guilloche opacity-50" />
 
-                <div className="space-y-1.5">
-                  <span className="label">{t.kelompok}</span>
+            <div className="relative space-y-ruang4 p-5 sm:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="font-display text-dasar italic text-ink-sedang">{t.judulLembar}</span>
+                {arah === 'angka' && hasilKata.type === 'ok' ? (
+                  <Sakelar
+                    label={t.modeDokumen}
+                    aktif={modeDokumen}
+                    ubah={() => setModeDokumen((n) => !n)}
+                  />
+                ) : null}
+              </div>
+
+              {arah === 'angka' ? (
+                <>
+                  {kelompok.length > 0 ? (
+                    <KurungKelompok
+                      kelompok={kelompok}
+                      labelKosong={t.kosong}
+                      ringkas={t.kelompokRingkas}
+                      ejaan={opsi.ejaanMiliar}
+                    />
+                  ) : null}
+
+                  {hasilKata.type === 'ok' ? (
+                    <GarisJumlah kata={teksKata} modeDokumen={modeDokumen} label={t.labelKata} bisu />
+                  ) : (
+                    <Penolakan galat={hasilKata.galat} judul={galat[hasilKata.galat.type] ?? ''} />
+                  )}
+                </>
+              ) : hasilAngka.type === 'ok' ? (
+                <>
+                  <div className="guilloche rounded-lembar border border-garis bg-kertas/60 px-4 py-3 sm:px-5">
+                    <span className="label">{t.hasilAngka}</span>
+                    <p
+                      key={teksNilai(hasilAngka.nilai)}
+                      className="tabular animate-kelompok-masuk mt-1 break-all font-mono text-jumlah text-bank"
+                    >
+                      {teksNilai(hasilAngka.nilai)}
+                    </p>
+                  </div>
                   <KurungKelompok
                     kelompok={kelompokTerurai}
                     labelKosong={t.kosong}
                     ringkas={t.kelompokRingkas}
                     ejaan={opsi.ejaanMiliar}
                   />
-                </div>
+                </>
+              ) : (
+                <Penolakan galat={hasilAngka.galat} judul={galat[hasilAngka.galat.type] ?? ''} />
+              )}
 
-                <KurungLingkup bulat={hasilAngka.nilai.bulat} opsi={opsi} ringkas={urai.lingkupGambar} />
-
-                <Uraian bulat={hasilAngka.nilai.bulat} opsi={opsi} t={urai} lingkup />
-
-                <div className="flex flex-wrap justify-end gap-2">
+              {teksSalin === undefined ? null : (
+                <div className="flex flex-wrap items-center gap-2 pt-1">
                   <TombolSalin
-                    teks={teksNilai(hasilAngka.nilai)}
-                    label={t.salin}
+                    teks={teksSalin}
+                    label={arah === 'angka' && modeDokumen ? t.salinDokumen : t.salinHasil}
                     labelTersalin={t.tersalin}
                     utama
+                    besar
+                    saatTersalin={bubuhkanCap}
                   />
                   <TombolSalin teks={tautan} label={t.bagikan} labelTersalin={t.tertaut} />
                 </div>
+              )}
+            </div>
+
+            {cap > 0 ? (
+              <div key={cap} className="pointer-events-none absolute right-5 top-14">
+                <Cap judul={t.tersalin} isi="✓" />
               </div>
-            ) : (
-              <Penolakan galat={hasilAngka.galat} judul={galat[hasilAngka.galat.type] ?? ''} />
-            )}
-          </div>
+            ) : null}
+          </section>
+          {/* Tepi sobek, seperti cek yang dilepas dari bukunya. */}
+          <div aria-hidden className="perforasi mx-3 -mt-[5px]" />
+        </div>
+
+        <section className="lembar p-5 sm:p-6 lg:col-start-1 lg:row-start-2">
+          <PanelOpsi
+            opsi={opsi}
+            ubah={setOpsi}
+            judul={t.opsi}
+            bawaanLabel={t.pulihkan}
+            diubahLabel={t.diubah}
+            sitasiLabel={t.sitasi}
+          />
+        </section>
+      </div>
+
+      {tabUrai.length === 0 ? null : (
+        <section className="lembar p-5 sm:p-6">
+          <Tab daftar={tabUrai} label={t.caraKerja} />
         </section>
       )}
 
-      <PanelOpsi opsi={opsi} ubah={setOpsi} judul={t.opsi} bawaanLabel={t.pulihkan} />
+      {/* Bilah salin di layar sempit, hanya saat lembarnya tak terlihat. */}
+      {teksSalin === undefined || lembarTerlihat ? null : (
+        <div className="animate-naik-masuk fixed inset-x-0 bottom-0 z-20 border-t border-guilloche bg-kertas/95 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 shadow-angkat backdrop-blur lg:hidden">
+          <div className="mx-auto flex max-w-6xl items-center gap-3">
+            <p
+              aria-hidden
+              lang={arah === 'angka' ? 'id' : undefined}
+              className={`min-w-0 flex-1 truncate text-bank ${arah === 'angka' ? 'font-display text-dasar' : 'tabular font-mono text-dasar'}`}
+            >
+              {teksSalin}
+            </p>
+            <TombolSalin teks={teksSalin} label={t.salin} labelTersalin={t.tersalin} utama />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
