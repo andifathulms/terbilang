@@ -38,7 +38,7 @@
     "dev": "next dev",
     "preview": "node scripts/preview.mjs",
     "test": "vitest",
-    "test:run": "vitest run --exclude tests/exhaustive/**",
+    "test:run": "vitest run --exclude 'tests/exhaustive/**'",
     "test:exhaustive": "vitest run tests/exhaustive",
     "test:bigint": "vitest run tests/boundaries/bigint.test.ts",
     "survey:record": "tsx scripts/survey-record.ts",
