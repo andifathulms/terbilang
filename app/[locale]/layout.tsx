@@ -2,7 +2,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DataTerstruktur } from '../../components/kerangka/DataTerstruktur';
 import { TandaPagar } from '../../components/kerangka/Merek';
-import { Navigasi, PengalihBahasa } from '../../components/kerangka/Navigasi';
+import { Gelombang } from '../../components/kerangka/Guilloche';
+import {
+  MenuPonsel,
+  Navigasi,
+  PengalihBahasa,
+  TautanPengubah,
+} from '../../components/kerangka/Navigasi';
 import { TandaPembuat } from '../../components/kerangka/TandaPembuat';
 import { TombolTema } from '../../components/kerangka/TombolTema';
 import { KAMUS, LOKAL, lokalSah, type Lokal } from '../kamus';
@@ -24,8 +30,13 @@ export default function TataLetakLokal({
   const lokal: Lokal = params.locale;
   const t = KAMUS[lokal];
 
-  const tautan = [
-    { href: `/${lokal}/ubah/`, label: t.nav.ubah },
+  /*
+   * Pengubah berdiri sendiri sebagai tombol di kepala halaman; deretan
+   * tautan sisanya adalah bacaan. Di menu ponsel keduanya kembali menjadi
+   * satu daftar, pengubah di urutan pertama.
+   */
+  const pengubah = { href: `/${lokal}/ubah/`, label: t.nav.ubah };
+  const bacaan = [
     { href: `/${lokal}/aturan/`, label: t.nav.aturan },
     { href: `/${lokal}/survei/`, label: t.nav.survei },
   ];
@@ -41,41 +52,56 @@ export default function TataLetakLokal({
         {t.umum.lewatiKe}
       </a>
 
-      <header className="sticky top-0 z-30 border-b border-guilloche/60 bg-tint/85 backdrop-blur">
-        <div className="mx-auto flex min-h-kepala max-w-5xl items-center py-2 gap-2 px-4 sm:gap-4 sm:px-6">
+      <header className="sticky top-0 z-30 border-b border-guilloche/70 bg-tint/85 backdrop-blur">
+        <div className="mx-auto flex min-h-kepala max-w-6xl items-center gap-3 px-4 py-2 sm:gap-6 sm:px-6">
           <Link
             href={`/${lokal}/`}
-            className="flex shrink-0 items-center gap-2 font-display text-kendali tracking-tight sm:text-sedang"
+            className="flex shrink-0 items-center gap-2 font-display text-sedang tracking-tight"
           >
-            <TandaPagar kelas="h-6 w-6 text-kecil sm:h-7 sm:w-7 sm:text-dasar" />
+            <TandaPagar kelas="h-7 w-7 text-dasar" />
             {t.judulSitus}
           </Link>
 
-          <Navigasi tautan={tautan} label={t.umum.navigasi} />
+          <Navigasi tautan={bacaan} label={t.umum.navigasi} />
 
           <div className="ml-auto flex shrink-0 items-center gap-2">
-            <PengalihBahasa lokal={lokal} label={t.umum.bahasa} />
-            <TombolTema label={t.umum.tema} siang={t.umum.siang} malam={t.umum.malam} />
+            <div className="hidden items-center gap-2 md:flex">
+              <PengalihBahasa lokal={lokal} label={t.umum.bahasa} />
+              <TombolTema label={t.umum.tema} siang={t.umum.siang} malam={t.umum.malam} />
+            </div>
+            <TautanPengubah tautan={pengubah} />
+            <MenuPonsel
+              tautan={[pengubah, ...bacaan]}
+              label={t.umum.menu}
+              tutup={t.umum.tutup}
+              navigasi={t.umum.navigasi}
+            >
+              <PengalihBahasa lokal={lokal} label={t.umum.bahasa} />
+              <TombolTema label={t.umum.tema} siang={t.umum.siang} malam={t.umum.malam} />
+            </MenuPonsel>
           </div>
         </div>
-        {/* Pita mikroteks: pembatas tipis, sama seperti di tepi cek. */}
-        <div aria-hidden className="mikroteks h-px opacity-60" />
       </header>
 
-      <main id="isi" className="mx-auto w-full max-w-5xl flex-1 px-5 py-10 sm:px-6 sm:py-14">
+      <main id="isi" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6 sm:py-14">
         {children}
       </main>
 
-      <footer className="mt-6 border-t border-guilloche/60">
-        <div className="mx-auto max-w-5xl px-5 py-8 sm:px-6">
-          <div className="grid gap-6 text-kecil text-ink-lirih sm:grid-cols-3">
-            <p>
-              <span className="flex items-center gap-1.5">
-                <TandaPagar kelas="h-4 w-4 text-label" />
-                <span className="font-display text-dasar text-ink">{t.judulSitus}</span>
+      {/*
+        Kaki halaman di pita hutan: penutup yang gelap di kedua tema, dengan
+        gelombang guilloche samar di tepinya seperti pinggiran uang kertas.
+      */}
+      <footer className="relative mt-ruang8 overflow-hidden bg-hutan text-hutan-lirih">
+        <Gelombang kelas="absolute inset-x-0 top-0 h-24 w-full text-hutan-garis" />
+        <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-ruang8 sm:px-6">
+          <div className="grid gap-6 text-kecil sm:grid-cols-3">
+            <div className="space-y-2">
+              <span className="flex items-center gap-2">
+                <TandaPagar kelas="h-6 w-6 text-kecil !bg-hutan-ink !text-hutan" />
+                <span className="font-display text-sedang text-hutan-ink">{t.judulSitus}</span>
               </span>
-              {t.taglineSitus}
-            </p>
+              <p className="max-w-xs">{t.taglineSitus}</p>
+            </div>
             <p>
               KBBI &amp; PUEBI/EYD
               <br />
@@ -84,13 +110,13 @@ export default function TataLetakLokal({
             <p className="flex flex-wrap gap-x-4 gap-y-1 sm:justify-end">
               <a
                 href="https://www.npmjs.com/package/terbilang"
-                className="underline decoration-garis underline-offset-4 transition-colors hover:text-bank"
+                className="text-hutan-ink underline decoration-hutan-garis underline-offset-4 transition-colors hover:text-hutan-bank"
               >
                 npm
               </a>
               <a
                 href="https://github.com/andifathulms/terbilang"
-                className="underline decoration-garis underline-offset-4 transition-colors hover:text-bank"
+                className="text-hutan-ink underline decoration-hutan-garis underline-offset-4 transition-colors hover:text-hutan-bank"
               >
                 GitHub
               </a>
@@ -98,8 +124,7 @@ export default function TataLetakLokal({
             </p>
           </div>
 
-          {/* Kredit pembuat, dipisahkan oleh ruang saja — bukan garis kedua. */}
-          <div className="mt-8">
+          <div className="mt-8 border-t border-hutan-garis pt-6">
             <TandaPembuat />
           </div>
         </div>

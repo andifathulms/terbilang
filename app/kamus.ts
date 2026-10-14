@@ -50,6 +50,8 @@ interface Teks {
     readonly malam: string;
     readonly bahasa: string;
     readonly navigasi: string;
+    readonly menu: string;
+    readonly tutup: string;
   };
   readonly beranda: {
     readonly angkaSorot: string;
@@ -168,7 +170,7 @@ interface Teks {
 const id: Teks = {
   judulSitus: 'Terbilang',
   taglineSitus: 'Bilangan Indonesia dieja menjadi kata, dan dibaca kembali.',
-  nav: { ubah: 'Ubah', aturan: 'Aturan', survei: 'Survei' },
+  nav: { ubah: 'Pengubah', aturan: 'Aturan', survei: 'Survei' },
   umum: {
     lewatiKe: 'Lewati ke isi',
     tema: 'Tema',
@@ -176,6 +178,8 @@ const id: Teks = {
     malam: 'Malam',
     bahasa: 'Bahasa',
     navigasi: 'Navigasi utama',
+    menu: 'Menu',
+    tutup: 'Tutup',
   },
   beranda: {
     angkaSorot: '1.000.001',
@@ -355,7 +359,7 @@ const id: Teks = {
 const en: Teks = {
   judulSitus: 'Terbilang',
   taglineSitus: 'Indonesian numbers spelled out in words, and read back again.',
-  nav: { ubah: 'Convert', aturan: 'Rules', survei: 'Survey' },
+  nav: { ubah: 'Converter', aturan: 'Rules', survei: 'Survey' },
   umum: {
     lewatiKe: 'Skip to content',
     tema: 'Theme',
@@ -363,6 +367,8 @@ const en: Teks = {
     malam: 'Night',
     bahasa: 'Language',
     navigasi: 'Main navigation',
+    menu: 'Menu',
+    tutup: 'Close',
   },
   beranda: {
     angkaSorot: '1,000,001',
