@@ -7,8 +7,9 @@ export { format } from './format';
 export { parse } from './parse';
 
 export type { Options } from './options';
-export { OPSI_BAWAAN, SITASI_OPSI } from './options';
-export type { OpsiTersitasi, PilihanTersitasi } from './options';
+export { OPSI_BAWAAN } from './options';
+export { SITASI_OPSI } from './sitasi';
+export type { OpsiTersitasi, PilihanTersitasi } from './sitasi';
 
 export type { Galat, KodeGalat } from './errors';
 export type { Hasil, Terurai, Kelompok, InfoSkala, NamaSkala } from './types';
