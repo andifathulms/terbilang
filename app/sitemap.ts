@@ -9,7 +9,7 @@ import { alamat } from './meta';
  */
 export const dynamic = 'force-static';
 
-const RUAS = ['', 'ubah', 'aturan', 'survei'] as const;
+const RUAS = ['', 'ubah', 'aturan', 'survei', 'pakai'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return LOKAL.flatMap((lokal) =>

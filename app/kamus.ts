@@ -36,13 +36,18 @@ interface Kartu {
   readonly judul: string;
   readonly isi: string;
   readonly tautan: string;
-  readonly ke: 'ubah' | 'aturan' | 'survei';
+  readonly ke: 'ubah' | 'aturan' | 'survei' | 'pakai';
 }
 
 interface Teks {
   readonly judulSitus: string;
   readonly taglineSitus: string;
-  readonly nav: { readonly ubah: string; readonly aturan: string; readonly survei: string };
+  readonly nav: {
+    readonly ubah: string;
+    readonly aturan: string;
+    readonly survei: string;
+    readonly pakai: string;
+  };
   readonly umum: {
     readonly lewatiKe: string;
     readonly tema: string;
@@ -54,16 +59,17 @@ interface Teks {
     readonly tutup: string;
   };
   readonly beranda: {
-    readonly angkaSorot: string;
     readonly mata: string;
-    readonly panah: string;
+    readonly judul: string;
+    readonly judulTekan: string;
     readonly kepala: string;
     readonly paragraf: readonly string[];
     readonly ajakan: string;
     readonly ajakanDua: string;
-    readonly ketik: string;
-    readonly caraKerja: string;
-    readonly judulSifat: string;
+    readonly labelLembar: string;
+    readonly coba: string;
+    readonly bukaPengubah: string;
+    readonly labelSifat: string;
     readonly sifat: readonly Sifat[];
     readonly cap: { readonly judul: string; readonly isi: string };
     readonly judulUrai: string;
@@ -166,6 +172,33 @@ interface Teks {
     readonly judulRujukan: string;
     readonly ringkasRujukan: string;
   };
+  readonly pakai: {
+    readonly judul: string;
+    readonly ringkas: string;
+    readonly statusJudul: string;
+    readonly statusIsi: string;
+    readonly pasangJudul: string;
+    readonly pasangIsi: string;
+    readonly apiJudul: string;
+    readonly apiIsi: string;
+    readonly formatIsi: string;
+    readonly parseIsi: string;
+    readonly hasilIsi: string;
+    readonly cobaDiPengubah: string;
+    readonly opsiJudul: string;
+    readonly opsiIsi: string;
+    readonly kolomKunci: string;
+    readonly kolomBawaan: string;
+    readonly kolomPilihan: string;
+    readonly galatJudul: string;
+    readonly galatIsi: string;
+    readonly kolomKode: string;
+    readonly kolomArti: string;
+    readonly jaminanJudul: string;
+    readonly jaminan: readonly string[];
+    readonly salin: string;
+    readonly tersalin: string;
+  };
   readonly takDitemukan: {
     readonly judul: string;
     readonly isi: string;
@@ -177,7 +210,7 @@ interface Teks {
 const id: Teks = {
   judulSitus: 'Terbilang',
   taglineSitus: 'Bilangan Indonesia dieja menjadi kata, dan dibaca kembali.',
-  nav: { ubah: 'Pengubah', aturan: 'Aturan', survei: 'Survei' },
+  nav: { ubah: 'Pengubah', aturan: 'Aturan', survei: 'Survei', pakai: 'Developer' },
   umum: {
     lewatiKe: 'Lewati ke isi',
     tema: 'Tema',
@@ -189,24 +222,24 @@ const id: Teks = {
     tutup: 'Tutup',
   },
   beranda: {
-    angkaSorot: '1.000.001',
     /*
      * Kening halaman menyebut tempat pemakaiannya, bukan standar yang
      * dirujuk. Pengunjung baru mengenali "kuitansi" jauh lebih cepat daripada
      * "PUEBI/EYD"; sitasinya tetap ada, di halaman Aturan.
      */
     mata: 'Untuk kuitansi, faktur, cek, dan akta',
-    /** Dibaca pembaca layar sebagai ganti panah di judul. */
-    panah: 'menjadi',
+    judul: 'Angka jadi kata.',
+    judulTekan: 'Tepat sampai kuadriliun.',
     kepala: 'Ketik angka, dapatkan terbilangnya — atau sebaliknya.',
     paragraf: [
       'Hampir setiap sistem akuntansi Indonesia harus menuliskan terbilang, dan sebagian besar salah di tempat yang sama: satu ribu alih-alih seribu, kelompok nol yang ikut terbaca, dan presisi yang runtuh di atas triliun.',
     ],
-    ajakan: 'Coba pengubahnya',
+    ajakan: 'Buka pengubah lengkap',
     ajakanDua: 'Baca aturannya',
-    ketik: 'Ketik angka mana pun di pengubah',
-    caraKerja: 'Cara kerjanya: bilangan dipecah per tiga angka',
-    judulSifat: 'Pustaka di baliknya',
+    labelLembar: 'Coba langsung: lembar terbilang',
+    coba: 'Coba',
+    bukaPengubah: 'Buka di pengubah',
+    labelSifat: 'Pustaka di baliknya',
     sifat: [
       { nilai: '1.000.001', label: 'nilai diuji satu per satu, bukan disampel' },
       { nilai: '2', label: 'arah: angka → kata, dan kata → angka' },
@@ -237,6 +270,12 @@ const id: Teks = {
         isi: 'Paket yang beredar dijalankan dengan masukan yang sama, berversi dan bertanggal. Peta masalah bersama, bukan papan skor.',
         tautan: 'Lihat survei',
         ke: 'survei',
+      },
+      {
+        judul: 'Untuk developer',
+        isi: 'format dan parse, opsinya, dan setiap jenis penolakan — dengan contoh yang dihitung pustaka saat halaman dibangun.',
+        tautan: 'Baca API-nya',
+        ke: 'pakai',
       },
     ],
   },
@@ -351,6 +390,46 @@ const id: Teks = {
     judulRujukan: 'Tabel lengkap',
     ringkasRujukan: 'Rujukan presisi di balik ringkasan di atas — baris demi baris, paket demi paket.',
   },
+  pakai: {
+    judul: 'Untuk developer',
+    ringkas:
+      'Pustakanya kecil: dua fungsi, satu objek opsi, dan galat bertipe. Setiap keluaran di halaman ini dihitung pustaka saat halaman dibangun, bukan diketik tangan.',
+    statusJudul: 'Belum dirilis ke npm',
+    statusIsi:
+      'Nama terbilang di npm sudah dipakai paket lain yang tidak berhubungan dengan proyek ini, jadi nama rilisnya belum ditetapkan. Jangan pasang paket bernama terbilang dari npm dengan harapan mendapat pustaka ini. Sampai rilis, pasang dari sumber.',
+    pasangJudul: 'Pasang dari sumber',
+    pasangIsi: 'Membangun dist/ — ESM, CJS, dan deklarasi tipe. Tanpa dependensi runtime.',
+    apiJudul: 'API',
+    apiIsi:
+      'Tidak ada pengecualian yang dilempar dari permukaan publik. Setiap pemanggilan mengembalikan Hasil: { type: "ok", nilai } atau { type: "galat", galat }.',
+    formatIsi:
+      'Bilangan ke kata. Menerima bigint atau string digit (titik ribuan dan koma desimal boleh). number ditolak dengan galat bertipe, tidak dikonversi diam-diam.',
+    parseIsi:
+      'Kata ke bilangan. Mengembalikan Terurai — negatif, bulat sebagai bigint, dan digit pecahan apa adanya.',
+    hasilIsi: 'Hasil',
+    cobaDiPengubah: 'Coba di pengubah',
+    opsiJudul: 'Opsi',
+    opsiIsi:
+      'Semua opsi boleh dilewatkan sebagian; yang tidak disebut memakai bawaan. Kuncinya stabil — kunci yang sama dipakai di hash URL pengubah. Dasar pemakaian tiap pilihan ada di halaman Aturan.',
+    kolomKunci: 'Kunci',
+    kolomBawaan: 'Bawaan',
+    kolomPilihan: 'Pilihan',
+    galatJudul: 'Penolakan',
+    galatIsi:
+      'Pustaka menolak alih-alih menebak. Setiap galat membawa type yang bisa di-switch secara tuntas dan pesan yang menyebut persis apa yang gagal.',
+    kolomKode: 'type',
+    kolomArti: 'Artinya',
+    jaminanJudul: 'Yang dijamin',
+    jaminan: [
+      'BigInt di seluruh jalur aritmetika: tetap tepat di atas 2⁵³, tempat implementasi berbasis number mulai keliru tanpa suara.',
+      'Setiap nilai 0 sampai 1.000.000 diuji bolak-balik satu per satu, di setiap commit.',
+      'format dan parse saling membalik di bawah opsi yang sama.',
+      'Nol dependensi runtime. ESM dan CJS, dengan deklarasi tipe.',
+      'Permukaan publik kecil dan stabil: Rinci memakainya untuk slip gaji.',
+    ],
+    salin: 'Salin',
+    tersalin: 'Tersalin',
+  },
   takDitemukan: {
     judul: 'Halaman tidak ditemukan',
     isi: 'Alamat ini tidak ada di situs. Seperti pustakanya: menolak, bukan menebak.',
@@ -373,7 +452,7 @@ const id: Teks = {
 const en: Teks = {
   judulSitus: 'Terbilang',
   taglineSitus: 'Indonesian numbers spelled out in words, and read back again.',
-  nav: { ubah: 'Converter', aturan: 'Rules', survei: 'Survey' },
+  nav: { ubah: 'Converter', aturan: 'Rules', survei: 'Survey', pakai: 'Developers' },
   umum: {
     lewatiKe: 'Skip to content',
     tema: 'Theme',
@@ -385,18 +464,19 @@ const en: Teks = {
     tutup: 'Close',
   },
   beranda: {
-    angkaSorot: '1,000,001',
     mata: 'For receipts, invoices, cheques, and deeds',
-    panah: 'becomes',
+    judul: 'Numbers into Indonesian words.',
+    judulTekan: 'Exact up to kuadriliun.',
     kepala: 'Type a number, get it in Indonesian words — or the other way round.',
     paragraf: [
       'Nearly every Indonesian accounting system has to write terbilang, and most break in the same places: satu ribu for seribu, empty groups read aloud, and precision collapsing above triliun.',
     ],
-    ajakan: 'Try the converter',
+    ajakan: 'Open the full converter',
     ajakanDua: 'Read the rules',
-    ketik: 'Type any number in the converter',
-    caraKerja: 'How it works: the number is split every three digits',
-    judulSifat: 'The library behind it',
+    labelLembar: 'Try it here: terbilang slip',
+    coba: 'Try',
+    bukaPengubah: 'Open in the converter',
+    labelSifat: 'The library behind it',
     sifat: [
       { nilai: '1,000,001', label: 'values verified one by one, not sampled' },
       { nilai: '2', label: 'directions: digits → words, and words → digits' },
@@ -427,6 +507,12 @@ const en: Teks = {
         isi: 'Published packages run against the same inputs, versioned and dated. A map of a shared problem, not a scoreboard.',
         tautan: 'See the survey',
         ke: 'survei',
+      },
+      {
+        judul: 'For developers',
+        isi: 'format and parse, their options, and every kind of refusal — with examples computed by the library at build time.',
+        tautan: 'Read the API',
+        ke: 'pakai',
       },
     ],
   },
@@ -540,6 +626,46 @@ const en: Teks = {
     kami: 'terbilang (ours)',
     judulRujukan: 'Full table',
     ringkasRujukan: 'The precise reference behind the summary above \u2014 row by row, package by package.',
+  },
+  pakai: {
+    judul: 'For developers',
+    ringkas:
+      'The library is small: two functions, one options object, and typed errors. Every output on this page is computed by the library at build time, not typed by hand.',
+    statusJudul: 'Not yet on npm',
+    statusIsi:
+      'The name terbilang on npm belongs to an unrelated package, so the release name is not settled yet. Do not install the npm package called terbilang expecting this library. Until a release, install from source.',
+    pasangJudul: 'Install from source',
+    pasangIsi: 'Builds dist/ — ESM, CJS, and type declarations. No runtime dependencies.',
+    apiJudul: 'API',
+    apiIsi:
+      'Nothing is thrown from the public surface. Every call returns a Hasil: { type: "ok", nilai } or { type: "galat", galat }.',
+    formatIsi:
+      'Number to words. Accepts a bigint or a digit string (thousands dots and a decimal comma are allowed). A number is refused with a typed error, never silently converted.',
+    parseIsi:
+      'Words to number. Returns a Terurai — sign, the integer part as a bigint, and the fractional digits as written.',
+    hasilIsi: 'Result',
+    cobaDiPengubah: 'Try in the converter',
+    opsiJudul: 'Options',
+    opsiIsi:
+      'Every option may be passed partially; anything omitted takes its default. The keys are stable — the converter uses the same keys in its URL hash. The usage behind each choice is on the Rules page.',
+    kolomKunci: 'Key',
+    kolomBawaan: 'Default',
+    kolomPilihan: 'Choices',
+    galatJudul: 'Refusals',
+    galatIsi:
+      'The library refuses rather than guesses. Every error carries a type you can switch over exhaustively and a message naming exactly what failed.',
+    kolomKode: 'type',
+    kolomArti: 'Meaning',
+    jaminanJudul: 'What is guaranteed',
+    jaminan: [
+      'BigInt through the whole arithmetic path: still exact above 2⁵³, where number-based implementations start going silently wrong.',
+      'Every value from 0 to 1,000,000 is round-tripped one by one, on every commit.',
+      'format and parse are exact inverses under the same options.',
+      'Zero runtime dependencies. ESM and CJS, with type declarations.',
+      'A small, stable public surface: Rinci depends on it for payslips.',
+    ],
+    salin: 'Copy',
+    tersalin: 'Copied',
   },
   takDitemukan: {
     judul: 'Page not found',

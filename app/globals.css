@@ -194,6 +194,18 @@
     background-repeat: repeat-x;
   }
 
+  /* Perforasi yang sama, untuk lembar yang berdiri di atas pita hutan. */
+  .perforasi-hutan {
+    height: 10px;
+    background-image: radial-gradient(
+      circle at 5px 0,
+      rgb(var(--hutan)) 0 4.5px,
+      transparent 4.5px
+    );
+    background-size: 10px 10px;
+    background-repeat: repeat-x;
+  }
+
   /* Garis jumlah pada cek: kata berjalan di atas garis bergaris. */
   .garis-jumlah {
     border-bottom: 1px solid rgb(var(--ink) / 0.3);
@@ -209,6 +221,24 @@
       rgb(var(--guilloche) / 0.9) 0 1px,
       transparent 1px 3px
     );
+  }
+
+  /*
+   * Pita selebar layar dari dalam kolom isi yang dibatasi lebarnya. Bayangan
+   * sebesar 100vmax mewarnai ke kiri dan kanan, dan clip-path memotongnya
+   * tepat di tinggi pitanya — tanpa 100vw, yang ikut menghitung lebar bilah
+   * gulir dan memberi halaman gulir mendatar di Windows.
+   */
+  .pita-hutan {
+    background-color: rgb(var(--hutan));
+    box-shadow: 0 0 0 100vmax rgb(var(--hutan));
+    clip-path: inset(0 -100vmax);
+  }
+
+  .pita-kertas {
+    background-color: rgb(var(--kertas));
+    box-shadow: 0 0 0 100vmax rgb(var(--kertas));
+    clip-path: inset(0 -100vmax);
   }
 
   /* Label kecil berhuruf besar yang berulang di seluruh situs. */

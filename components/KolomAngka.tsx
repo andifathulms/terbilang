@@ -106,9 +106,12 @@ export function KolomAngka({
         </span>
       </label>
 
-      <p className="mt-2 text-kecil text-ink-lirih">
-        {petunjuk} <span className="hidden sm:inline">{pintas}.</span>
-      </p>
+      {/* Petunjuk kosong berarti pemanggil tidak menginginkannya — sorot beranda. */}
+      {petunjuk === '' ? null : (
+        <p className="mt-2 text-kecil text-ink-lirih">
+          {petunjuk} <span className="hidden sm:inline">{pintas}.</span>
+        </p>
+      )}
     </div>
   );
 }

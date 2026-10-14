@@ -39,11 +39,20 @@ menebak, dan membuktikan dirinya dengan sapuan menyeluruh, bukan sampel.
 
 ## Pemasangan
 
+> **Belum dirilis ke npm.** Nama `terbilang` di npm sudah dipakai paket lain
+> yang tidak berhubungan dengan proyek ini — `pnpm add terbilang` memasang paket
+> itu, bukan pustaka ini. Nama rilisnya belum ditetapkan. Sampai rilis, pasang
+> dari sumber:
+
 ```bash
-pnpm add terbilang     # npm i terbilang · yarn add terbilang
+git clone https://github.com/andifathulms/terbilang
+cd terbilang
+pnpm install
+pnpm build:lib         # dist/: ESM, CJS, dan .d.ts
 ```
 
-ESM dan CJS, dengan tipe. Node ≥ 18.
+ESM dan CJS, dengan tipe. Node ≥ 18. Contoh di bawah memakai nama impor
+`terbilang` sebagai pengganti sementara untuk nama rilisnya.
 
 ```ts
 import { format, parse } from 'terbilang';

@@ -39,6 +39,7 @@ export default function TataLetakLokal({
   const bacaan = [
     { href: `/${lokal}/aturan/`, label: t.nav.aturan },
     { href: `/${lokal}/survei/`, label: t.nav.survei },
+    { href: `/${lokal}/pakai/`, label: t.nav.pakai },
   ];
 
   return (
@@ -108,12 +109,16 @@ export default function TataLetakLokal({
               Badan Pengembangan dan Pembinaan Bahasa
             </p>
             <p className="flex flex-wrap gap-x-4 gap-y-1 sm:justify-end">
-              <a
-                href="https://www.npmjs.com/package/terbilang"
+              {/*
+                Tidak ada tautan npm: nama terbilang di npm milik paket lain,
+                dan pustaka ini belum dirilis. Halaman developer menerangkannya.
+              */}
+              <Link
+                href={`/${lokal}/pakai/`}
                 className="text-hutan-ink underline decoration-hutan-garis underline-offset-4 transition-colors hover:text-hutan-bank"
               >
-                npm
-              </a>
+                {t.nav.pakai}
+              </Link>
               <a
                 href="https://github.com/andifathulms/terbilang"
                 className="text-hutan-ink underline decoration-hutan-garis underline-offset-4 transition-colors hover:text-hutan-bank"

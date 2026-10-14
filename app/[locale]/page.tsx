@@ -1,22 +1,20 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { format, kelompokkan, OPSI_BAWAAN } from '@/lib';
+import { format, OPSI_BAWAAN } from '@/lib';
+import { CekSorot } from '../../components/CekSorot';
 import { Cap } from '../../components/cheque/Cap';
-import { GarisJumlah } from '../../components/cheque/GarisJumlah';
-import { KurungKelompok } from '../../components/cheque/KurungKelompok';
 import { Uraian } from '../../components/cheque/Uraian';
+import { Roset } from '../../components/kerangka/Guilloche';
 import { KAMUS, lokalSah, type Lokal } from '../kamus';
 import { metaHalaman } from '../meta';
-
-/** Nilai sorot dan contoh dihitung pustaka saat halaman dibangun. */
-const SOROT = 1_000_001n;
 
 /*
  * Bilangan untuk uraian pengantar. Sengaja yang biasa saja: cukup besar untuk
  * memakai dua kata skala dan memakai ratusan serta puluhan, tetapi tanpa satu
- * pun kasus batas. Nilai sorot 1.000.001 justru kasus tepi — ia dipilih karena
- * memperagakan kelompok kosong — dan kasus tepi bukan tempat memulai.
+ * pun kasus batas. Nilai awal lembar sorot, 1.000.001, justru kasus tepi — ia
+ * dipilih karena memperagakan kelompok kosong — dan kasus tepi bukan tempat
+ * memulai sebuah uraian.
  */
 const URAI_PENGANTAR = 4_250_000n;
 
@@ -60,141 +58,90 @@ export default function Beranda({ params }: { params: { locale: string } }) {
   const lokal: Lokal = params.locale;
   const t = KAMUS[lokal];
 
-  const sorot = format(SOROT);
-  const kelompok = kelompokkan(SOROT);
-  const kataSorot = sorot.type === 'ok' ? sorot.nilai : null;
-
   return (
     <div className="space-y-ruang7 sm:space-y-ruang8">
       {/*
-        Sorot: teks di kiri, lembar cek di kanan pada layar lebar. Judulnya
-        adalah contoh yang sudah jadi — angka, panah, kata — karena satu contoh
-        menerangkan alat ini lebih cepat daripada kalimat mana pun tentangnya.
+        Sorot di pita hutan selebar layar: judul dan ajakan di kiri, lembar
+        cek yang bisa diketik di kanan. Lembar itulah alatnya — ketukan
+        pertama pengunjung adalah mengetik, bukan memuat halaman lain.
 
-        Tiga anak, bukan dua, supaya urutan di layar sempit bisa disela: judul,
-        lalu lembar cek, baru prosa dan ajakan — contoh yang bisa disentuh tidak
-        menunggu di bawah satu layar penuh teks. Urutan markahnya sudah urutan
-        itu, jadi tidak ada kelas order sama sekali dan urutan fokus mengikuti
-        apa yang terlihat. Di layar lebar penempatannya disebut tegas: kolom
-        kiri dua baris untuk teks, kolom kanan memanjang untuk lembarnya.
+        Urutan markah sudah urutan layar sempit: judul, lembar, prosa dan
+        ajakan. Di layar lebar penempatannya disebut tegas; kolom kanan
+        memanjang dua baris untuk lembarnya.
       */}
-      <section className="grid items-center gap-x-ruang7 gap-y-ruang5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-        <div className="animate-naik-masuk space-y-ruang5 lg:col-start-1 lg:row-start-1 lg:self-end">
-          <p className="label">{t.beranda.mata}</p>
+      <section className="pita-hutan relative -mt-10 overflow-hidden pb-ruang7 pt-ruang7 text-hutan-ink sm:-mt-14 sm:pt-ruang8">
+        <Roset kelas="absolute -left-40 top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 text-hutan-garis opacity-70" />
 
-          <h1 className="flex flex-wrap items-baseline gap-x-ruang3 gap-y-ruang1 font-display text-sorot">
-            <span className="tabular font-mono text-ink">{t.beranda.angkaSorot}</span>
-            <span aria-hidden className="text-ink-lirih">
-              →
-            </span>
-            <span className="sr-only">{t.beranda.panah}</span>
-            {kataSorot === null ? null : (
-              <span lang="id" className="text-bank">
-                {kataSorot}
-              </span>
-            )}
-          </h1>
+        <div className="relative grid items-center gap-x-ruang7 gap-y-ruang6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+          <div className="animate-naik-masuk space-y-ruang5 lg:col-start-1 lg:row-start-1 lg:self-end">
+            <p className="label !text-hutan-bank">{t.beranda.mata}</p>
+            <h1 className="font-display text-sorot font-light">
+              {t.beranda.judul}{' '}
+              <em className="text-hutan-bank">{t.beranda.judulTekan}</em>
+            </h1>
+            <p className="max-w-xl text-sedang text-hutan-ink">{t.beranda.kepala}</p>
+          </div>
 
-          <p className="max-w-xl text-sedang text-ink">{t.beranda.kepala}</p>
-        </div>
+          <div className="animate-naik-masuk tunda-2 relative lg:col-start-2 lg:row-span-2 lg:row-start-1">
+            <CekSorot lokal={lokal} t={t} />
+            <div className="absolute right-4 top-4 sm:right-5 sm:top-5">
+              <Cap judul={t.beranda.cap.judul} isi={t.beranda.cap.isi} />
+            </div>
+          </div>
 
-        {/*
-          Lembar cek. Urutannya kini menegaskan arah: angka masuk di kolom yang
-          berbentuk kolom masukan, panah turun, lalu kata di garis jumlah.
-          Kurung kelompok pindah ke bawah sebagai keterangan cara kerja — ia
-          menerangkan mekanismenya, bukan hasil ketiga yang setara.
-        */}
-        <div className="animate-naik-masuk tunda-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          {/*
-            Nama tautannya disebut sendiri. Tanpa itu ia dirangkai dari seluruh
-            isi kartu — label, angka, jumlah terbilang, tiap kotak kelompok —
-            dan terbaca sebagai satu tautan sepanjang dua ratus aksara lebih.
-            Isinya tetap ada dan tetap bisa ditelusuri; yang dipendekkan hanya
-            namanya, waktu tautan itu disebut sebagai tautan.
-          */}
-          <Link
-            href={`/${lokal}/ubah/`}
-            aria-label={t.beranda.ketik}
-            className="lembar roset group block overflow-hidden transition-all duration-300 ease-kertas hover:-translate-y-1 hover:shadow-angkat"
-          >
-            <div className="space-y-ruang4 bg-kertas/90 p-5 sm:p-6">
-              <div className="flex items-start justify-between gap-ruang4">
-                <div className="min-w-0 flex-1">
-                  <span className="label">{t.ubah.labelAngka}</span>
-                  <p className="kolom-semu tabular mt-1.5 font-mono text-sedang text-ink transition-colors duration-200 ease-kertas group-hover:border-bank">
-                    {t.beranda.angkaSorot}
-                  </p>
-                </div>
-                <div className="-mt-1 shrink-0">
-                  <Cap judul={t.beranda.cap.judul} isi={t.beranda.cap.isi} />
-                </div>
-              </div>
+          <div className="animate-naik-masuk tunda-3 space-y-ruang5 lg:col-start-1 lg:row-start-2 lg:self-start">
+            <div className="max-w-xl space-y-ruang4 text-dasar text-hutan-lirih">
+              {t.beranda.paragraf.map((p) => (
+                <p key={p.slice(0, 24)}>{p}</p>
+              ))}
+            </div>
 
-              {/* Arah dinyatakan, tidak disiratkan oleh susunan saja. */}
-              <p aria-hidden className="text-center text-sedang leading-none text-ink-lirih">
-                ↓
-              </p>
-
-              {kataSorot === null ? null : (
-                <GarisJumlah kata={kataSorot} modeDokumen label={t.ubah.labelKata} />
-              )}
-
-              <div className="border-t border-guilloche/60 pt-ruang4">
-                <span className="label">{t.beranda.caraKerja}</span>
-                <div className="mt-1.5">
-                  <KurungKelompok
-                    kelompok={kelompok}
-                    labelKosong={t.ubah.kosong}
-                    ringkas={t.ubah.kelompokRingkas}
-                    ejaan={OPSI_BAWAAN.ejaanMiliar}
-                    padat
-                  />
-                </div>
-              </div>
-
-              <p className="text-kecil text-bank">
-                {t.beranda.ketik}
+            <div className="flex flex-wrap gap-ruang3">
+              <Link
+                href={`/${lokal}/ubah/`}
+                className="group inline-flex min-h-sasaran items-center gap-2 rounded-full bg-hutan-bank px-5 py-2.5 text-kendali text-hutan transition-transform duration-200 ease-kertas hover:-translate-y-0.5"
+              >
+                {t.beranda.ajakan}
                 <span
                   aria-hidden
-                  className="ml-1 inline-block transition-transform duration-200 ease-kertas group-hover:translate-x-1"
+                  className="transition-transform duration-200 ease-kertas group-hover:translate-x-0.5"
                 >
                   →
                 </span>
-              </p>
-            </div>
-          </Link>
-          {/* Tepi sobek, seperti cek yang dilepas dari bukunya. */}
-          <div aria-hidden className="perforasi mx-3 -mt-[5px]" />
-        </div>
-
-        <div className="animate-naik-masuk tunda-3 space-y-ruang5 lg:col-start-1 lg:row-start-2 lg:self-start">
-          <div className="max-w-xl space-y-ruang4 text-dasar text-ink-sedang">
-            {t.beranda.paragraf.map((p) => (
-              <p key={p.slice(0, 24)}>{p}</p>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-ruang3">
-            <Link
-              href={`/${lokal}/ubah/`}
-              className="group inline-flex items-center gap-2 rounded-full bg-bank px-5 py-2.5 text-kendali text-kertas shadow-lembar transition-transform duration-200 ease-kertas hover:-translate-y-0.5"
-            >
-              {t.beranda.ajakan}
-              <span
-                aria-hidden
-                className="transition-transform duration-200 ease-kertas group-hover:translate-x-0.5"
+              </Link>
+              <Link
+                href={`/${lokal}/aturan/`}
+                className="inline-flex min-h-sasaran items-center rounded-full border border-hutan-garis px-5 py-2.5 text-kendali text-hutan-ink transition-colors duration-200 ease-kertas hover:border-hutan-bank hover:text-hutan-bank"
               >
-                →
-              </span>
-            </Link>
-            <Link
-              href={`/${lokal}/aturan/`}
-              className="inline-flex items-center rounded-full border border-garis px-5 py-2.5 text-kendali text-ink-sedang transition-colors duration-200 ease-kertas hover:border-bank hover:text-bank"
-            >
-              {t.beranda.ajakanDua}
-            </Link>
+                {t.beranda.ajakanDua}
+              </Link>
+            </div>
           </div>
         </div>
+
+        {/*
+          Empat angka tentang pustakanya, sebagai satu jalur di kaki sorot —
+          seperti baris kode di kaki cek — bukan bagian tersendiri lebih jauh
+          di bawah. Fakta yang sama, tempat yang lebih dekat ke alatnya.
+        */}
+        <dl
+          aria-label={t.beranda.labelSifat}
+          className="relative mt-ruang7 grid grid-cols-2 border-y border-hutan-garis lg:grid-cols-4"
+        >
+          {t.beranda.sifat.map((s, i) => (
+            <div
+              key={s.label}
+              className={`flex flex-col-reverse gap-1 py-ruang4 pr-ruang4 ${
+                i % 2 === 1 ? 'pl-ruang4 border-l border-hutan-garis' : ''
+              } ${i >= 2 ? 'border-t border-hutan-garis lg:border-t-0' : ''} ${
+                i === 2 ? 'lg:border-l lg:pl-ruang4' : ''
+              }`}
+            >
+              <dt className="text-kecil text-hutan-lirih">{s.label}</dt>
+              <dd className="tabular font-mono text-besar text-hutan-bank">{s.nilai}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       {/*
@@ -202,38 +149,43 @@ export default function Beranda({ params }: { params: { locale: string } }) {
         Ia mendahului daftar kasus tepi dengan sengaja: pembaca perlu tahu
         rupa bilangan biasa sebelum diperlihatkan yang ganjil.
       */}
-      <section className="space-y-ruang4">
-        <h2 className="font-display text-besar">{t.beranda.judulUrai}</h2>
-        <p className="max-w-2xl text-dasar text-ink-sedang">{t.beranda.ringkasUrai}</p>
+      <section className="grid gap-x-ruang7 gap-y-ruang4 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
+        <div className="space-y-ruang3 lg:sticky lg:top-24 lg:self-start">
+          <h2 className="font-display text-judul tracking-tight">{t.beranda.judulUrai}</h2>
+          <p className="text-dasar text-ink-sedang">{t.beranda.ringkasUrai}</p>
+        </div>
 
         <div className="lembar p-5 sm:p-6">
           <Uraian bulat={URAI_PENGANTAR} opsi={OPSI_BAWAAN} t={t.urai} />
         </div>
       </section>
 
-      {/* Tempat implementasi lain patah. Tiap baris dihitung oleh pustaka. */}
-      <section className="space-y-ruang4">
-        <h2 className="font-display text-besar">{t.beranda.judulContoh}</h2>
-        <p className="max-w-2xl text-dasar text-ink-sedang">{t.beranda.ringkasContoh}</p>
+      {/* Tempat implementasi lain patah, di pita kertas. Tiap baris dihitung oleh pustaka. */}
+      <section className="pita-kertas space-y-ruang5 py-ruang7">
+        <div className="max-w-2xl space-y-ruang3">
+          <h2 className="font-display text-judul tracking-tight">{t.beranda.judulContoh}</h2>
+          <p className="text-dasar text-ink-sedang">{t.beranda.ringkasContoh}</p>
+        </div>
 
-        <ul className="lembar divide-y divide-guilloche/60 overflow-hidden">
+        <ul className="grid items-start gap-ruang4 md:grid-cols-3">
           {CONTOH[lokal].map(([nilai, catatan, keliru]) => {
             const hasil = format(nilai);
             return (
-              <li key={nilai.toString()} className="grid gap-2 p-5 sm:grid-cols-[14rem_1fr]">
-                <div>
-                  <p className="tabular font-mono text-dasar text-ink">
-                    {nilai.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+              <li
+                key={nilai.toString()}
+                className="flex flex-col gap-ruang3 rounded-lembar border border-guilloche bg-tint/50 p-5"
+              >
+                <p className="tabular break-all font-mono text-sedang text-ink">
+                  {nilai.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                </p>
+                <p lang="id" className="break-words font-display text-sedang text-bank">
+                  {hasil.type === 'ok' ? hasil.nilai : hasil.galat.pesan}
+                </p>
+                <div className="space-y-1 border-t border-guilloche pt-ruang3">
+                  <p className="text-kecil text-ink-lirih">
+                    <span className="line-through decoration-void/70">{keliru}</span>
                   </p>
-                  <p className="mt-1 text-kecil text-ink-lirih">{catatan}</p>
-                </div>
-                <div className="min-w-0">
-                  <p lang="id" className="break-words font-display text-sedang text-bank">
-                    {hasil.type === 'ok' ? hasil.nilai : hasil.galat.pesan}
-                  </p>
-                  <p className="mt-1 text-kecil text-ink-lirih">
-                    <span className="line-through decoration-void/60">{keliru}</span>
-                  </p>
+                  <p className="text-kecil text-ink-sedang">{catatan}</p>
                 </div>
               </li>
             );
@@ -242,49 +194,24 @@ export default function Beranda({ params }: { params: { locale: string } }) {
       </section>
 
       {/*
-        Empat angka tentang pustakanya, sebagai sobekan buku cek — bukan papan
-        data yang lepas dari pokok halaman. Perforasinya menyambung dari yang
-        sama dipakai di bawah lembar sorot, dan tiap fakta jadi satu baris
-        berpenggaris seperti keping pada kwitansi, bukan kartu yang berdiri
-        sendiri. Diletakkan setelah contoh: ini keterangan untuk yang sudah
-        paham alatnya, bukan pengantar bagi yang belum.
+        Pintu ke isi situs, sebagai satu jalur — bukan kartu yang berdiri
+        sendiri-sendiri. Tanpa nomor: urutannya bukan langkah yang harus
+        diikuti, jadi nomor hanya akan berpura-pura menjadi informasi.
       */}
-      <section className="space-y-ruang4">
-        <h2 className="font-display text-besar">{t.beranda.judulSifat}</h2>
-
-        <div>
-          <div className="lembar overflow-hidden">
-            <dl className="divide-y divide-guilloche/50">
-              {t.beranda.sifat.map((s) => (
-                <div key={s.label} className="flex items-baseline justify-between gap-ruang4 px-5 py-3.5 sm:px-6">
-                  <dt className="text-dasar text-ink-sedang">{s.label}</dt>
-                  <dd className="tabular shrink-0 font-mono text-sedang text-bank">{s.nilai}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <div aria-hidden className="perforasi mx-3 -mt-[5px]" />
-        </div>
-      </section>
-
-      {/*
-        Tiga pintu ke isi situs, sebagai satu jalur bernomor — bukan tiga
-        kartu terpisah yang mengangkat diri saat disorot. Nomornya meniru
-        garis rute pada kaki cek sungguhan: satu jalur, tiga ruas.
-      */}
-      <section className="lembar grid divide-y divide-guilloche/50 overflow-hidden sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      <section className="lembar grid divide-y divide-guilloche overflow-hidden sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4">
         {t.beranda.kartu.map((k, i) => (
           <Link
             key={k.ke}
             href={`/${lokal}/${k.ke}/`}
-            className="group flex flex-col gap-ruang2 p-5 transition-colors duration-200 ease-kertas hover:bg-tint/50 sm:p-6"
+            className={`group flex flex-col gap-ruang2 p-5 transition-colors duration-200 ease-kertas hover:bg-tint/60 sm:p-6 ${
+              i % 2 === 1 ? 'sm:border-l sm:border-guilloche' : ''
+            } ${i >= 2 ? 'sm:border-t sm:border-guilloche lg:border-t-0' : ''} ${
+              i === 2 ? 'lg:border-l' : ''
+            }`}
           >
-            <span className="tabular font-mono text-label text-ink-lirih">
-              {String(i + 1).padStart(2, '0')}
-            </span>
             <h3 className="font-display text-sedang">{k.judul}</h3>
-            <p className="flex-1 text-dasar text-ink-sedang">{k.isi}</p>
-            <span className="text-kecil text-bank">
+            <p className="flex-1 text-kecil text-ink-sedang">{k.isi}</p>
+            <span className="text-kendali-kecil text-bank">
               {k.tautan}
               <span
                 aria-hidden
