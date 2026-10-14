@@ -149,6 +149,8 @@ interface Teks {
     readonly presisiUtuh: string;
     readonly presisiNumber: string;
     readonly presisiCatatan: string;
+    readonly nomor: string;
+    readonly tautanBagian: string;
   };
   readonly survei: {
     readonly judul: string;
@@ -171,6 +173,15 @@ interface Teks {
     readonly kami: string;
     readonly judulRujukan: string;
     readonly ringkasRujukan: string;
+    readonly labelRingkasan: string;
+    readonly angkaPaket: string;
+    readonly angkaPaketIsi: string;
+    readonly angkaModus: string;
+    readonly angkaVarian: string;
+    readonly angkaTanggal: string;
+    readonly paketTerukur: string;
+    readonly tidakBisaDipanggil: string;
+    readonly jumlahContoh: string;
   };
   readonly pakai: {
     readonly judul: string;
@@ -362,6 +373,8 @@ const id: Teks = {
     presisiNumber: 'Nilai yang sama, setelah lewat number',
     presisiCatatan:
       'Dijalankan sungguhan saat halaman dibangun: nilai di atas dilewatkan Number() lalu dikembalikan, persis seperti yang terjadi di implementasi berbasis number. Satu digit terakhir berubah, dan satu kata terakhir ikut berubah — tanpa galat, tanpa peringatan.',
+    nomor: 'Aturan {n} dari {dari}',
+    tautanBagian: 'Tautan ke bagian ini',
   },
   survei: {
     judul: 'Survei implementasi',
@@ -389,6 +402,15 @@ const id: Teks = {
     kami: 'terbilang (kami)',
     judulRujukan: 'Tabel lengkap',
     ringkasRujukan: 'Rujukan presisi di balik ringkasan di atas — baris demi baris, paket demi paket.',
+    labelRingkasan: 'Ringkasan survei',
+    angkaPaket: 'paket dicoba',
+    angkaPaketIsi: '{n} bisa dipanggil',
+    angkaModus: 'pola kegagalan tercatat',
+    angkaVarian: 'di antaranya varian sah, bukan galat',
+    angkaTanggal: 'tanggal diukur',
+    paketTerukur: 'Paket yang diukur',
+    tidakBisaDipanggil: 'tidak bisa dipanggil',
+    jumlahContoh: '{n} contoh',
   },
   pakai: {
     judul: 'Untuk developer',
@@ -599,6 +621,8 @@ const en: Teks = {
     presisiNumber: 'The same value, after passing through number',
     presisiCatatan:
       'Actually run at build time: the value above is passed through Number() and back, exactly as it would be in a number-based implementation. The last digit changes, and the last word changes with it — no error, no warning.',
+    nomor: 'Rule {n} of {dari}',
+    tautanBagian: 'Link to this section',
   },
   survei: {
     judul: 'Implementation survey',
@@ -626,6 +650,15 @@ const en: Teks = {
     kami: 'terbilang (ours)',
     judulRujukan: 'Full table',
     ringkasRujukan: 'The precise reference behind the summary above \u2014 row by row, package by package.',
+    labelRingkasan: 'Survey summary',
+    angkaPaket: 'packages tried',
+    angkaPaketIsi: '{n} could be called',
+    angkaModus: 'failure patterns recorded',
+    angkaVarian: 'of them legitimate variants, not errors',
+    angkaTanggal: 'date measured',
+    paketTerukur: 'Packages measured',
+    tidakBisaDipanggil: 'could not be called',
+    jumlahContoh: '{n} examples',
   },
   pakai: {
     judul: 'For developers',
