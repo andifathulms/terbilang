@@ -1,39 +1,43 @@
 import type { Metadata, Viewport } from 'next';
-import { Fraunces, Inter, Roboto_Mono } from 'next/font/google';
+import { Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google';
 import { SKRIP_LOKAL } from './kamus';
 import { SKRIP_TEMA } from '../components/kerangka/TombolTema';
 import './globals.css';
 
 /**
  * Fraunces membawa halaman: ia punya kualitas terukir yang sama dengan
- * cetakan pengaman dan tetap tegak pada ukuran besar. Roboto Mono dengan
- * angka tabular untuk digit, Inter untuk kendali dan prosa.
+ * cetakan pengaman dan tetap tegak pada ukuran besar. Sumbu opsz ikut dimuat
+ * supaya `font-optical-sizing: auto` memakai potongan tampilan pada jumlah dan
+ * judul besar — garis yang lebih tipis, lebih dekat ke ukiran — dan potongan
+ * teks pada ukuran bacaan.
  *
- * Font adalah lebih dari separuh muatan halaman ini, jadi bobotnya sempat
- * disebut satu per satu untuk memangkas sumbu ragam yang tidak dipakai. Diukur,
- * dan hasilnya justru sebaliknya: Fraunces dan Inter di Google Fonts hanya ada
- * sebagai berkas ragam, sehingga tiap bobot yang diminta menerbitkan ulang
- * berkas penuh yang sama — 115 kB jadi 226 kB. Keduanya dibiarkan ragam.
+ * IBM Plex Sans untuk kendali dan prosa, IBM Plex Mono dengan angka tabular
+ * untuk digit. Satu keluarga, satu kerangka: kolom angka dan labelnya terbaca
+ * sebagai satu formulir, dan wataknya mesin kantor, bukan antarmuka umum.
  *
- * Roboto Mono punya potongan statis sungguhan, dan situs ini hanya memakainya
- * pada satu bobot, jadi menyebut bobotnya memangkas 32,0 kB jadi 12,4 kB.
+ * Plex hanya terbit sebagai potongan statis, jadi bobotnya disebut satu per
+ * satu dan hanya yang dipakai: 400/500/600 untuk sans, 400/500 untuk mono.
+ * Fraunces tetap berkas ragam — menyebut bobotnya justru menerbitkan ulang
+ * berkas penuh per bobot (diukur dahulu: 115 kB jadi 226 kB).
  */
 const fraunces = Fraunces({
   subsets: ['latin'],
+  axes: ['opsz'],
   variable: '--font-fraunces',
   display: 'swap',
 });
 
-const mono = Roboto_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['400'],
+  weight: ['400', '500'],
   variable: '--font-mono',
   display: 'swap',
 });
 
-const inter = Inter({
+const sans = IBM_Plex_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600'],
+  variable: '--font-sans',
   display: 'swap',
 });
 
@@ -78,8 +82,8 @@ export const metadata: Metadata = {
 /** Bilah alamat peramban ikut warna lembar, di kedua tema. */
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#E6EDE4' },
-    { media: '(prefers-color-scheme: dark)', color: '#0F1411' },
+    { media: '(prefers-color-scheme: light)', color: '#E9EFE6' },
+    { media: '(prefers-color-scheme: dark)', color: '#0C1310' },
   ],
 };
 
@@ -89,7 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="id"
       data-tema="siang"
       suppressHydrationWarning
-      className={`${fraunces.variable} ${mono.variable} ${inter.variable}`}
+      className={`${fraunces.variable} ${mono.variable} ${sans.variable}`}
     >
       <head>
         {/*

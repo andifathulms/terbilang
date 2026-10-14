@@ -34,13 +34,23 @@ const config: Config = {
         'ink-lirih': token('ink-lirih'),
         bank: token('bank'),
         void: token('void'),
-        /** Ochre stempel. Hanya untuk cap verifikasi; tidak untuk yang lain. */
+        /** Ochre stempel. Untuk cap verifikasi dan penanda "diubah" pada opsi. */
         segel: token('segel'),
+        /**
+         * Pita hijau uang kertas — gelap di kedua tema. Teks di atasnya
+         * memakai hutan-ink/-lirih/-bank, tidak pernah ink: ink berbalik di
+         * tema malam, pitanya tidak.
+         */
+        hutan: token('hutan'),
+        'hutan-ink': token('hutan-ink'),
+        'hutan-lirih': token('hutan-lirih'),
+        'hutan-bank': token('hutan-bank'),
+        'hutan-garis': token('hutan-garis'),
       },
       fontFamily: {
         display: ['var(--font-fraunces)', 'Georgia', 'serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       /**
        * Satu tangga tipe, nilainya di globals.css. Teks bacaan berhenti di
@@ -89,6 +99,8 @@ const config: Config = {
         lembar: '0.75rem',
       },
       boxShadow: {
+        /** Lembar cek di atas pita hutan: bayangan hitam, bukan ink — ink terang di malam. */
+        pita: '0 30px 60px -30px rgb(0 0 0 / 0.6)',
         /** Lembar cek terangkat sedikit dari tint di belakangnya. */
         lembar: '0 1px 0 rgb(var(--ink) / 0.04), 0 12px 32px -20px rgb(var(--ink) / 0.5)',
         angkat: '0 2px 0 rgb(var(--ink) / 0.05), 0 24px 48px -24px rgb(var(--ink) / 0.6)',
@@ -105,6 +117,14 @@ const config: Config = {
           from: { opacity: '0', transform: 'translateY(0.5rem)' },
           to: { opacity: '1', transform: 'none' },
         },
+        'lembar-naik': {
+          from: { transform: 'translateY(100%)' },
+          to: { transform: 'none' },
+        },
+        'redup-masuk': {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
         'cap-turun': {
           from: { opacity: '0', transform: 'rotate(-16deg) scale(1.7)' },
           '65%': { opacity: '1', transform: 'rotate(-8deg) scale(0.97)' },
@@ -115,6 +135,8 @@ const config: Config = {
         'kelompok-masuk': 'kelompok-masuk 240ms cubic-bezier(0.22, 1, 0.36, 1) both',
         'naik-masuk': 'naik-masuk 340ms cubic-bezier(0.22, 1, 0.36, 1) both',
         'cap-turun': 'cap-turun 460ms cubic-bezier(0.22, 1, 0.36, 1) both',
+        'lembar-naik': 'lembar-naik 320ms cubic-bezier(0.22, 1, 0.36, 1) both',
+        'redup-masuk': 'redup-masuk 200ms ease-out both',
       },
     },
   },

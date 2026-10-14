@@ -201,6 +201,24 @@ describe('kepatuhan token — kontras', () => {
       it('garis (batas kendali, non-teks) terhadap latar tersulitnya >= 3:1', () => {
         expect(kontrasTerburuk(tema, 'garis')).toBeGreaterThanOrEqual(AMBANG_NON_TEKS);
       });
+
+      /*
+       * Pita hutan gelap di kedua tema dan punya token teksnya sendiri. Satu
+       * latar saja, jadi tidak ada "terburuk" yang perlu dicari.
+       */
+      it.each(['hutan-ink', 'hutan-lirih', 'hutan-bank'] as const)(
+        '%s di atas pita hutan >= 4.5:1',
+        (nama) => {
+          const token = tema[nama];
+          const pita = tema.hutan;
+          if (token === undefined || pita === undefined) throw new Error(`token tidak ditemukan: ${nama}`);
+          expect(kontras(token, pita)).toBeGreaterThanOrEqual(AMBANG_TEKS);
+        },
+      );
+
+      it('segel (cap, teks kecil) terhadap latar tersulitnya >= 4.5:1', () => {
+        expect(kontrasTerburuk(tema, 'segel')).toBeGreaterThanOrEqual(AMBANG_TEKS);
+      });
     });
   }
 });

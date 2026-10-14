@@ -7,43 +7,67 @@
  * yang baru dicetak; malam adalah salinan karbonnya — bahan yang sama, cahaya
  * yang berbeda.
  *
+ * Dibanding cetakan pertama, kontrasnya dinaikkan: kertas menjadi putih
+ * hangat yang terpisah jelas dari tint, dan bank menjadi biru tinta yang
+ * jenuh alih-alih biru batu. Bahannya tetap sama.
+ *
  * Tingkat keredupan teks adalah token tersendiri, bukan alfa di atas --ink.
  * Alfa terlihat cukup di tema malam dan gagal di tema siang pada nilai yang
- * sama — ink/55 hanya mencapai 3,5:1 di atas tint siang — jadi setiap tingkat
- * disetel tangan per tema dan rasionya dicatat di sini. Semuanya diukur
- * terhadap latar tersulitnya: tint untuk tema siang, kertas untuk tema malam.
+ * sama, jadi setiap tingkat disetel tangan per tema. Rasionya tidak disalin
+ * ke komentar: tests/token/kepatuhan.test.ts menghitungnya ulang dari nilai
+ * di bawah, terhadap latar tersulitnya, di kedua tema — termasuk teks di atas
+ * pita hutan.
  */
 @layer base {
   :root {
-    --tint: 230 237 228; /* #E6EDE4 tint pengaman */
-    --kertas: 247 250 245;
-    --guilloche: 185 199 188; /* #B9C7BC garis engine-turned, hairline saja */
-    --garis: 120 135 124; /* #78877C batas kendali — 3,2:1, non-teks */
-    --ink: 28 35 31; /* #1C231F — 13,4:1 */
-    --ink-sedang: 74 84 77; /* #4A544D — 6,6:1 */
-    --ink-lirih: 88 100 91; /* #58645B — 5,2:1, tingkat teredup yang boleh */
-    --bank: 43 76 111; /* #2B4C6F — 7,4:1 */
-    --void: 163 60 51; /* #A33C33 — 5,4:1, hanya penolakan */
-    --segel: 138 106 47;
+    --tint: 233 239 230; /* #E9EFE6 tint pengaman */
+    --kertas: 252 251 247; /* #FCFBF7 bidang tulis, putih hangat */
+    --guilloche: 188 203 191; /* #BCCBBF garis engine-turned, hairline saja */
+    --garis: 117 135 122; /* #75877A batas kendali — non-teks */
+    --ink: 20 32 26; /* #14201A */
+    --ink-sedang: 63 77 69; /* #3F4D45 */
+    --ink-lirih: 86 100 91; /* #56645B tingkat teredup yang boleh */
+    --bank: 29 68 134; /* #1D4486 tinta biru, seperti tanda tangan pulpen */
+    --void: 177 39 27; /* #B1271B hanya penolakan */
+    --segel: 134 96 15; /* #86600F */
+
+    /*
+     * Hijau uang kertas: pita gelap untuk sorot beranda dan kaki halaman.
+     * Pita ini gelap di kedua tema, jadi teks di atasnya punya tokennya
+     * sendiri dan tidak meminjam ink — ink berbalik di tema malam, pita tidak.
+     */
+    --hutan: 15 42 32; /* #0F2A20 */
+    --hutan-ink: 230 238 231; /* #E6EEE7 */
+    --hutan-lirih: 169 189 176; /* #A9BDB0 */
+    --hutan-bank: 141 182 245; /* #8DB6F5 */
+    --hutan-garis: 52 86 70; /* #345646 hairline di atas pita */
     color-scheme: light;
   }
 
   [data-tema='malam'] {
-    --tint: 15 20 17;
-    --kertas: 24 31 27;
-    --guilloche: 66 84 71;
-    --garis: 110 124 114; /* #6E7C72 — 3,8:1 */
-    --ink: 226 235 226; /* #E2EBE2 — 13,8:1 */
-    --ink-sedang: 163 175 164; /* #A3AFA4 — 7,4:1 */
-    --ink-lirih: 138 150 140; /* #8A968C — 5,5:1 */
-    --bank: 148 187 224; /* #94BBE0 — 9,3:1 */
-    --void: 226 130 118;
-    --segel: 204 168 100;
+    --tint: 12 19 16; /* #0C1310 */
+    --kertas: 20 29 25; /* #141D19 */
+    --guilloche: 58 78 66;
+    --garis: 107 125 113; /* #6B7D71 */
+    --ink: 230 238 231; /* #E6EEE7 */
+    --ink-sedang: 174 187 177; /* #AEBBB1 */
+    --ink-lirih: 143 160 149; /* #8FA095 */
+    --bank: 141 182 245; /* #8DB6F5 */
+    --void: 240 138 124; /* #F08A7C */
+    --segel: 217 174 92;
+
+    --hutan: 9 30 22; /* #091E16 — lebih hijau dari tint malam, bukan lebih terang */
+    --hutan-ink: 230 238 231;
+    --hutan-lirih: 169 189 176;
+    --hutan-bank: 141 182 245;
+    --hutan-garis: 40 70 56;
     color-scheme: dark;
   }
 
   /*
-   * Satu tangga tipe, rasio 1,2, berpangkal di 1rem. Teks bacaan tidak pernah
+   * Satu tangga tipe, rasio 1,2, berpangkal di 1rem; dua anak tangga teratas
+   * (jumlah dan sorot) melebar lebih jauh supaya jarak antara judul dan
+   * bacaan terasa, bukan sekadar terukur. Teks bacaan tidak pernah
    * turun di bawah --teks-dasar; --teks-kecil hanya untuk keterangan, dan
    * --teks-label hanya untuk label huruf besar yang berspasi lebar. Tidak ada
    * ukuran sebarang di komponen.
@@ -54,9 +78,9 @@
     --teks-dasar: 1rem;
     --teks-sedang: 1.2rem;
     --teks-besar: 1.44rem;
-    --teks-judul: 1.728rem;
-    --teks-jumlah: clamp(1.5rem, 4.4vw, 2.75rem);
-    --teks-sorot: clamp(2rem, 4.6vw, 3.25rem);
+    --teks-judul: 2.074rem;
+    --teks-jumlah: clamp(1.5rem, 4vw, 3rem);
+    --teks-sorot: clamp(2.25rem, 5.6vw, 4.25rem);
 
     /*
      * Tinggi minimum sasaran yang bisa diketuk. WCAG 2.5.8 meminta 24px;
