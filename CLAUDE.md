@@ -123,7 +123,7 @@ tests/
 - Indonesian grammatical vocabulary in identifiers and comments: `satuan`, `belasan`, `puluhan`, `ratusan`, `kelompok`. Do not translate to English approximations.
 - Comments cite the standard for any spelling rule they implement.
 - Option keys stable and readable: `sejuta`, `ejaanMiliar`, `mataUang`, `sen`. They appear in the site's URL hash.
-- Tailwind utilities inline in the site; semantic tokens in `tailwind.config.ts` — `tint`, `guilloche`, `ink`, `bank`, `void`. Never raw hex in components.
+- Tailwind utilities inline in the site; semantic tokens in `tailwind.config.ts` — `tint`, `kertas`, `guilloche`, `ink`, `bank`, `void`, `segel`, and the dark band `hutan` (+ `hutan-ink/-lirih/-bank/-garis`, which stay dark in both themes). Never raw hex in components.
 
 ## Testing rules
 
@@ -146,6 +146,24 @@ M0–M5 scaffolded and green. Library formats and parses with `BigInt` throughou
 
 The site's surface was reworked after M5. Palette lives in CSS variables so the night theme (`data-tema="malam"`, set before first paint by a small script in `<head>`) swaps values rather than adding `dark:` variants — components stay on semantic tokens and never learn which theme is active. Converter state — direction, input, document mode, and every option — round-trips through the URL hash, so a result is linkable. `KurungKelompok` and `GarisJumlah` are server-renderable and shared between the homepage and the converter.
 
+Redesign (October 2026): stronger print — warm-white `kertas`, ink-blue `bank`
+(`#1D4486`), and a banknote-green `hutan` band for the homepage hero and the
+footer. Type is Fraunces (with the `opsz` axis) for display and the words,
+IBM Plex Sans for prose and controls, IBM Plex Mono for digits. Contrast for
+every text token, in both themes and on the `hutan` band, is computed by
+`tests/token/kepatuhan.test.ts` — not recorded in comments. `components/kerangka/Guilloche.tsx`
+draws the rosette and wave as server-rendered SVG. The homepage hero is a
+live cheque (`components/CekSorot.tsx`); `/ubah` is a two-pane workbench with
+the cheque sticky on the right; `/pakai` documents the existing API with
+outputs computed at build time. Phones get a menu sheet instead of the
+header nav.
+
+Bundle headroom is thin: the homepage sits at 99.8 kB against the 100 kB
+gate. The hero stays lean on purpose — no copy button, the stamp rendered by
+the server page, a plain `<a>` instead of `next/link` — and `SITASI_OPSI`
+lives in `lib/sitasi.ts` so pages that only format do not carry citation
+text. Measure with `pnpm build:size` before adding anything to the hero.
+
 Brand assets: `exports/` holds the full kit and is **not tracked** — only what the
 site and README actually serve is committed, in `public/` (favicon, apple-touch,
 PWA icons, maskable, `og.png`, `manifest.webmanifest`) and `.github/assets/`
@@ -159,4 +177,9 @@ Open items:
 
 - **Survey data is empty by design.** `pnpm survey:record <paket>` takes package names as arguments and records versions and dates; nothing is claimed about a package that was not measured. Run it to populate `data/survey/hasil.json`, then classify every disagreement in `tests/survey/klasifikasi.ts` — the differential test fails on any unexplained difference.
 - **Scale ceiling is *kuadriliun* (10¹⁵), refusing at 10¹⁸.** Chosen because KBBI carries the lemma, and because it is what makes the above-2⁵³ tests meaningful — a *triliun* ceiling would put every in-range value below the precision boundary. Revisit if the citation does not hold.
-- Not published to npm; no tagged release yet.
+- Not published to npm; no tagged release yet. **The npm name `terbilang` is
+  taken** by an unrelated package (hengkiardo, 2014; it is one of the surveyed
+  packages). `package.json` still says `terbilang`; choosing the release name
+  (e.g. a scope) is an open decision. The site and README say so and point to
+  a source install until then — do not reintroduce an npm link or
+  `pnpm add terbilang`.
